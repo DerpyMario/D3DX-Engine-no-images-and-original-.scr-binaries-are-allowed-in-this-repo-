@@ -1,0 +1,9 @@
+; Import library definition for the Windows branding DLL (winbrand.dll).
+;
+;   MSVC:   lib /def:winbrand.def /machine:x64 /out:winbrand.lib
+;   MinGW:  x86_64-w64-mingw32-dlltool -d winbrand.def -l libwinbrand.a
+;
+LIBRARY winbrand.dll
+EXPORTS
+    BrandingFormatString
+    BrandingLoadImage

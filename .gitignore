@@ -1,0 +1,27 @@
+# Nothing binary belongs in this repository: no images, no original screen
+# savers, no symbol files.  tools/extract_assets.py writes the artwork it pulls
+# out of your own copies of the originals into /assets, which stays local.
+/assets/
+/build/
+/out/
+
+*.scr
+*.mui
+*.exe
+*.dll
+*.pdb
+*.lib
+*.obj
+*.res
+
+*.bmp
+*.tga
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.ico
+*.dds
+
+__pycache__/
+*.pyc

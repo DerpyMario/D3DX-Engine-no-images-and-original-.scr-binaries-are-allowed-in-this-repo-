@@ -1,0 +1,183 @@
+//-----------------------------------------------------------------------------
+// File: generic.rc
+//
+// Desc: Resources of the Windows Logo screen saver (logon.scr).
+//
+//       In the shipped product the language-neutral resources (bitmaps,
+//       manifest, version) live in logon.scr and the localisable ones
+//       (dialog, strings) in en-US\logon.scr.mui; this script simply builds
+//       all of them into the .scr.
+//
+//       The binary assets are NOT part of this source tree.  Run
+//       tools\extract_assets.py against your own copy of logon.scr to create
+//       the res\ directory, or build with SCRNSAVE_NO_ASSETS defined (the
+//       saver then shows nothing but the logo).
+//
+//       Original object:
+//           shell\osshell\control\scrnsave\logon\objfre\amd64\generic.res
+//-----------------------------------------------------------------------------
+#include <windows.h>
+#include <scrnsave.h>
+#include "resource.h"
+
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+
+//-----------------------------------------------------------------------------
+// Binary assets (extracted from the original, see above).  The names are
+// string names: logon.cpp builds them with "IDB_FLARE%02d".
+//
+//   IDB_FLARExx        the lens flare animation, 274 x 144 pixels, 24 bit
+//   IDB_SMALLFLARExx   the same animation for the control panel preview, 69 x 36
+//-----------------------------------------------------------------------------
+#ifndef SCRNSAVE_NO_ASSETS
+IDB_FLARE01             BITMAP  "res/flare01.bmp"
+IDB_FLARE02             BITMAP  "res/flare02.bmp"
+IDB_FLARE03             BITMAP  "res/flare03.bmp"
+IDB_FLARE04             BITMAP  "res/flare04.bmp"
+IDB_FLARE05             BITMAP  "res/flare05.bmp"
+IDB_FLARE06             BITMAP  "res/flare06.bmp"
+IDB_FLARE07             BITMAP  "res/flare07.bmp"
+IDB_FLARE08             BITMAP  "res/flare08.bmp"
+IDB_FLARE09             BITMAP  "res/flare09.bmp"
+IDB_FLARE10             BITMAP  "res/flare10.bmp"
+IDB_FLARE11             BITMAP  "res/flare11.bmp"
+IDB_FLARE12             BITMAP  "res/flare12.bmp"
+IDB_FLARE13             BITMAP  "res/flare13.bmp"
+IDB_FLARE14             BITMAP  "res/flare14.bmp"
+IDB_FLARE15             BITMAP  "res/flare15.bmp"
+IDB_FLARE16             BITMAP  "res/flare16.bmp"
+IDB_FLARE17             BITMAP  "res/flare17.bmp"
+IDB_FLARE18             BITMAP  "res/flare18.bmp"
+IDB_FLARE19             BITMAP  "res/flare19.bmp"
+IDB_FLARE20             BITMAP  "res/flare20.bmp"
+IDB_FLARE21             BITMAP  "res/flare21.bmp"
+IDB_FLARE22             BITMAP  "res/flare22.bmp"
+IDB_FLARE23             BITMAP  "res/flare23.bmp"
+IDB_FLARE24             BITMAP  "res/flare24.bmp"
+IDB_FLARE25             BITMAP  "res/flare25.bmp"
+IDB_FLARE26             BITMAP  "res/flare26.bmp"
+IDB_FLARE27             BITMAP  "res/flare27.bmp"
+IDB_FLARE28             BITMAP  "res/flare28.bmp"
+IDB_FLARE29             BITMAP  "res/flare29.bmp"
+IDB_FLARE30             BITMAP  "res/flare30.bmp"
+IDB_FLARE31             BITMAP  "res/flare31.bmp"
+IDB_FLARE32             BITMAP  "res/flare32.bmp"
+IDB_FLARE33             BITMAP  "res/flare33.bmp"
+IDB_FLARE34             BITMAP  "res/flare34.bmp"
+IDB_FLARE35             BITMAP  "res/flare35.bmp"
+IDB_FLARE36             BITMAP  "res/flare36.bmp"
+IDB_FLARE37             BITMAP  "res/flare37.bmp"
+IDB_FLARE38             BITMAP  "res/flare38.bmp"
+IDB_FLARE39             BITMAP  "res/flare39.bmp"
+IDB_FLARE40             BITMAP  "res/flare40.bmp"
+IDB_FLARE41             BITMAP  "res/flare41.bmp"
+IDB_FLARE42             BITMAP  "res/flare42.bmp"
+IDB_FLARE43             BITMAP  "res/flare43.bmp"
+IDB_FLARE44             BITMAP  "res/flare44.bmp"
+IDB_FLARE45             BITMAP  "res/flare45.bmp"
+
+IDB_SMALLFLARE01        BITMAP  "res/smallflare01.bmp"
+IDB_SMALLFLARE02        BITMAP  "res/smallflare02.bmp"
+IDB_SMALLFLARE03        BITMAP  "res/smallflare03.bmp"
+IDB_SMALLFLARE04        BITMAP  "res/smallflare04.bmp"
+IDB_SMALLFLARE05        BITMAP  "res/smallflare05.bmp"
+IDB_SMALLFLARE06        BITMAP  "res/smallflare06.bmp"
+IDB_SMALLFLARE07        BITMAP  "res/smallflare07.bmp"
+IDB_SMALLFLARE08        BITMAP  "res/smallflare08.bmp"
+IDB_SMALLFLARE09        BITMAP  "res/smallflare09.bmp"
+IDB_SMALLFLARE10        BITMAP  "res/smallflare10.bmp"
+IDB_SMALLFLARE11        BITMAP  "res/smallflare11.bmp"
+IDB_SMALLFLARE12        BITMAP  "res/smallflare12.bmp"
+IDB_SMALLFLARE13        BITMAP  "res/smallflare13.bmp"
+IDB_SMALLFLARE14        BITMAP  "res/smallflare14.bmp"
+IDB_SMALLFLARE15        BITMAP  "res/smallflare15.bmp"
+IDB_SMALLFLARE16        BITMAP  "res/smallflare16.bmp"
+IDB_SMALLFLARE17        BITMAP  "res/smallflare17.bmp"
+IDB_SMALLFLARE18        BITMAP  "res/smallflare18.bmp"
+IDB_SMALLFLARE19        BITMAP  "res/smallflare19.bmp"
+IDB_SMALLFLARE20        BITMAP  "res/smallflare20.bmp"
+IDB_SMALLFLARE21        BITMAP  "res/smallflare21.bmp"
+IDB_SMALLFLARE22        BITMAP  "res/smallflare22.bmp"
+IDB_SMALLFLARE23        BITMAP  "res/smallflare23.bmp"
+IDB_SMALLFLARE24        BITMAP  "res/smallflare24.bmp"
+IDB_SMALLFLARE25        BITMAP  "res/smallflare25.bmp"
+IDB_SMALLFLARE26        BITMAP  "res/smallflare26.bmp"
+IDB_SMALLFLARE27        BITMAP  "res/smallflare27.bmp"
+IDB_SMALLFLARE28        BITMAP  "res/smallflare28.bmp"
+IDB_SMALLFLARE29        BITMAP  "res/smallflare29.bmp"
+IDB_SMALLFLARE30        BITMAP  "res/smallflare30.bmp"
+IDB_SMALLFLARE31        BITMAP  "res/smallflare31.bmp"
+IDB_SMALLFLARE32        BITMAP  "res/smallflare32.bmp"
+IDB_SMALLFLARE33        BITMAP  "res/smallflare33.bmp"
+IDB_SMALLFLARE34        BITMAP  "res/smallflare34.bmp"
+IDB_SMALLFLARE35        BITMAP  "res/smallflare35.bmp"
+IDB_SMALLFLARE36        BITMAP  "res/smallflare36.bmp"
+IDB_SMALLFLARE37        BITMAP  "res/smallflare37.bmp"
+IDB_SMALLFLARE38        BITMAP  "res/smallflare38.bmp"
+IDB_SMALLFLARE39        BITMAP  "res/smallflare39.bmp"
+IDB_SMALLFLARE40        BITMAP  "res/smallflare40.bmp"
+IDB_SMALLFLARE41        BITMAP  "res/smallflare41.bmp"
+IDB_SMALLFLARE42        BITMAP  "res/smallflare42.bmp"
+IDB_SMALLFLARE43        BITMAP  "res/smallflare43.bmp"
+IDB_SMALLFLARE44        BITMAP  "res/smallflare44.bmp"
+IDB_SMALLFLARE45        BITMAP  "res/smallflare45.bmp"
+#endif
+
+1                       RT_MANIFEST "logon.manifest"
+
+//-----------------------------------------------------------------------------
+// Configuration "dialog": an empty template, see ScreenSaverConfigureDialog()
+//-----------------------------------------------------------------------------
+DLG_SCRNSAVECONFIGURE DIALOGEX 0, 0, 0, 0
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Logo Screen Saver"
+FONT 8, "MS Shell Dlg", 0, 0, 0x0
+BEGIN
+END
+
+//-----------------------------------------------------------------------------
+// Strings
+//-----------------------------------------------------------------------------
+STRINGTABLE
+BEGIN
+    IDS_DESCRIPTION             "Windows Logo"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_CONFIG_NOOPTIONS        "No options"
+    IDS_CONFIG_NOOPTIONS_TEXT   "This screen saver has no options that you can set."
+    IDS_CONFIG_TITLE            "Windows Logo Screen Saver"
+END
+
+//-----------------------------------------------------------------------------
+// Version
+//-----------------------------------------------------------------------------
+VS_VERSION_INFO VERSIONINFO
+FILEVERSION     6,0,6001,18000
+PRODUCTVERSION  6,0,6001,18000
+FILEFLAGSMASK   VS_FFI_FILEFLAGSMASK
+FILEFLAGS       0x0L
+FILEOS          VOS_NT_WINDOWS32
+FILETYPE        VFT_APP
+FILESUBTYPE     VFT2_UNKNOWN
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904B0"
+        BEGIN
+            VALUE "CompanyName",      "Microsoft Corporation"
+            VALUE "FileDescription",  "Logon Screen Saver"
+            VALUE "FileVersion",      "6.0.6001.18000 (longhorn_rtm.080118-1840)"
+            VALUE "InternalName",     "logon"
+            VALUE "LegalCopyright",   L"\x00a9 Microsoft Corporation. All rights reserved."
+            VALUE "OriginalFilename", "logon"
+            VALUE "ProductName",      L"Microsoft\x00ae Windows\x00ae Operating System"
+            VALUE "ProductVersion",   "6.0.6001.18000"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x0409, 0x04B0
+    END
+END
