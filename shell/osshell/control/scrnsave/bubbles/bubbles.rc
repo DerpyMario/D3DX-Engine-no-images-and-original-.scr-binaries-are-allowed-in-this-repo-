@@ -1,0 +1,118 @@
+//-----------------------------------------------------------------------------
+// File: bubbles.rc
+//
+// Desc: Resources of the Bubbles screen saver.
+//
+//       In the shipped product the language-neutral resources (icon, textures,
+//       manifest, version) live in Bubbles.scr and the localisable ones
+//       (dialogs, strings) in en-US\Bubbles.scr.mui; this script simply
+//       builds all of them into the .scr.
+//
+//       The binary assets are NOT part of this source tree.  Run
+//       tools\extract_assets.py against your own copy of Bubbles.scr to create
+//       the res\ directory, or build with SCRNSAVE_NO_ASSETS defined.
+//
+//       Original object:
+//           shell\osshell\control\scrnsave\bubbles\objfre\amd64\bubbles.res
+//-----------------------------------------------------------------------------
+#include <windows.h>
+#include <commctrl.h>
+#include "resource.h"
+
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+
+//-----------------------------------------------------------------------------
+// Binary assets (extracted from the original, see above).  The textures are
+// Targa files, in spite of the resource type.
+//-----------------------------------------------------------------------------
+#ifndef SCRNSAVE_NO_ASSETS
+IDI_MAIN_ICON           ICON    "res/bubbles.ico"
+IDR_SHADOW              BMP     "res/shadow.tga"
+IDR_SPHERE_LIT          BMP     "res/sphere_lit.tga"
+IDR_SPHERE_SOLID        BMP     "res/sphere_solid.tga"
+IDR_SPHERE_HIGHLIGHT    BMP     "res/sphere_highlight.tga"
+IDR_SPHERE_GLASS        BMP     "res/sphere_glass.tga"
+#endif
+
+1                       RT_MANIFEST "bubbles.manifest"
+
+//-----------------------------------------------------------------------------
+// Settings dialog (unused, see bubblesconfig.cpp)
+//-----------------------------------------------------------------------------
+IDD_BUBBLES_SETTINGS DIALOGEX 0, 0, 370, 246
+STYLE DS_SHELLFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Bubbles Settings"
+FONT 8, "MS Shell Dlg", 0, 0, 0x0
+BEGIN
+    CONTROL         "OK", IDOK, "Button", BS_DEFPUSHBUTTON | WS_TABSTOP, 282, 156, 78, 18
+    CONTROL         "Cancel", IDCANCEL, "Button", BS_PUSHBUTTON | WS_TABSTOP, 282, 180, 78, 18
+    CONTROL         "&Display Settings...", IDC_SCREENSETTINGS, "Button", BS_PUSHBUTTON | WS_TABSTOP, 282, 204, 78, 18
+    CONTROL         "Number of Spheres", IDC_NUMSPHERES_BOX, "Button", BS_GROUPBOX, 6, 6, 174, 36
+    CONTROL         "", IDC_NUMSPHERES, "msctls_trackbar32", TBS_BOTH | TBS_NOTICKS | WS_TABSTOP, 12, 18, 165, 18
+    CONTROL         "Turbulence Octaves", IDC_TURBULENCEOCTAVES_BOX, "Button", BS_GROUPBOX, 186, 6, 174, 36
+    CONTROL         "", IDC_TURBULENCEOCTAVES, "msctls_trackbar32", TBS_BOTH | TBS_NOTICKS | WS_TABSTOP, 192, 18, 162, 18
+    CONTROL         "Turbulence Speed", IDC_TURBULENCESPEED_BOX, "Button", BS_GROUPBOX, 186, 48, 174, 36
+    CONTROL         "", IDC_TURBULENCESPEED, "msctls_trackbar32", TBS_BOTH | TBS_NOTICKS | WS_TABSTOP, 192, 60, 162, 18
+    CONTROL         "Screensaver by Stephen Coy", -1, "Static", SS_RIGHT | WS_GROUP, 246, 231, 114, 12
+    CONTROL         "Preset 1", IDC_PRESET1, "Button", BS_PUSHBUTTON | WS_TABSTOP, 6, 156, 78, 18
+    CONTROL         "Preset 2", IDC_PRESET2, "Button", BS_PUSHBUTTON | WS_TABSTOP, 6, 180, 78, 18
+    CONTROL         "Preset 3", IDC_PRESET3, "Button", BS_PUSHBUTTON | WS_TABSTOP, 6, 204, 78, 18
+    CONTROL         "a handful of glass spheres floating over the desktop", -1, "Static", SS_CENTER | SS_SUNKEN | 0x20 | WS_GROUP, 84, 156, 96, 20
+    CONTROL         "small, glass spheres over the desktop", -1, "Static", SS_CENTER | SS_SUNKEN | 0x20 | WS_GROUP, 84, 180, 96, 18
+    CONTROL         "lots of small spheres", -1, "Static", SS_CENTER | SS_CENTERIMAGE | SS_SUNKEN | 0x20 | WS_GROUP, 84, 204, 96, 18
+    CONTROL         "Sphere Radius", IDC_RADIUS_BOX, "Button", BS_GROUPBOX, 6, 48, 174, 36
+    CONTROL         "", IDC_RADIUS, "msctls_trackbar32", TBS_BOTH | TBS_NOTICKS | WS_TABSTOP, 12, 60, 165, 18
+    CONTROL         "Turbulence Force", IDC_TURBULENCEFORCE_BOX, "Button", BS_GROUPBOX, 186, 90, 174, 36
+    CONTROL         "", IDC_TURBULENCEFORCE, "msctls_trackbar32", TBS_BOTH | TBS_NOTICKS | WS_TABSTOP, 192, 102, 162, 18
+    CONTROL         "Show Bubbles", IDC_SHOWBUBBLES, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 90, 90, 61, 10
+    CONTROL         "Show Shadows", IDC_SHOWSHADOWS, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 90, 108, 64, 10
+    CONTROL         "Solid", IDC_MATERIAL_SOLID, "Button", BS_AUTORADIOBUTTON, 18, 102, 31, 10
+    CONTROL         "Glass", IDC_MATERIAL_GLASS, "Button", BS_AUTORADIOBUTTON, 18, 120, 33, 10
+    CONTROL         "Span Multiple Monitors", IDC_SPANMULTIMON, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 90, 126, 87, 10
+    CONTROL         "Sphere Material", -1, "Button", BS_GROUPBOX, 6, 90, 72, 48
+END
+
+STRINGTABLE
+BEGIN
+    IDS_DESCRIPTION                 "Bubbles"
+    IDS_CONFIG_TITLE                "Bubbles Screen Saver"
+    IDS_CONFIG_NOOPTIONS            "No options"
+    IDS_CONFIG_NOOPTIONS_TEXT       "This screen saver has no options that you can set."
+END
+
+//-----------------------------------------------------------------------------
+// Version
+//-----------------------------------------------------------------------------
+VS_VERSION_INFO VERSIONINFO
+FILEVERSION     6,0,6000,16386
+PRODUCTVERSION  6,0,6000,16386
+FILEFLAGSMASK   VS_FFI_FILEFLAGSMASK
+FILEFLAGS       0x0L
+FILEOS          VOS_NT_WINDOWS32
+FILETYPE        VFT_APP
+FILESUBTYPE     VFT2_UNKNOWN
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904B0"
+        BEGIN
+            VALUE "CompanyName",      "Microsoft Corporation"
+            VALUE "FileDescription",  "Bubbles Screen Saver"
+            VALUE "FileVersion",      "6.0.6000.16386 (vista_rtm.061101-2205)"
+            VALUE "InternalName",     "Bubbles"
+            VALUE "LegalCopyright",   L"\x00a9 Microsoft Corporation. All rights reserved."
+            VALUE "OriginalFilename", "Bubbles"
+            VALUE "ProductName",      L"Microsoft\x00ae Windows\x00ae Operating System"
+            VALUE "ProductVersion",   "6.0.6000.16386"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x0409, 0x04B0
+    END
+END
+
+//-----------------------------------------------------------------------------
+// D3DSaver9 framework resources (display-settings dialogs, error strings)
+//-----------------------------------------------------------------------------
+#include "../d3dsaver9/d3dsaver9.rc"

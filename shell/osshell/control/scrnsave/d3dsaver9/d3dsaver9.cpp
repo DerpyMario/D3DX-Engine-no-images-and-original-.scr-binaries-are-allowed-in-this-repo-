@@ -33,14 +33,8 @@
 #error D3DSaver9 is a Unicode-only library
 #endif
 
-#ifndef SAFE_DELETE
-#define SAFE_DELETE(p)  { if(p) { delete (p);     (p)=NULL; } }
-#endif
-#ifndef SAFE_RELEASE
-#define SAFE_RELEASE(p) { if(p) { (p)->Release(); (p)=NULL; } }
-#endif
-
-// Resource ID for the tab names / mode list; see d3dsaver9res.h
+// The error message of a screen saver that cannot run: a block of text that
+// fades in, stays for a while, fades out and then moves somewhere else.
 #define ERRORBOX_WIDTH      500.0f
 #define ERRORBOX_HEIGHT     200.0f
 #define ERRORBOX_FADEIN       1.0f      // seconds

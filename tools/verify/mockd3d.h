@@ -344,6 +344,16 @@ static ULONG_PTR MockTextureHandler( MockObject* pThis, int iSlot, ULONG_PTR* pA
         return result;
     switch( iSlot )
     {
+        case 17:    // GetLevelDesc( Level, pDesc )
+        {
+            D3DSURFACE_DESC* pDesc = (D3DSURFACE_DESC*)pArgs[1];
+            memset( pDesc, 0, sizeof(*pDesc) );
+            pDesc->Format = pThis->pChild->format;
+            pDesc->Type = D3DRTYPE_SURFACE;
+            pDesc->Width = pThis->pChild->uWidth;
+            pDesc->Height = pThis->pChild->uHeight;
+            break;
+        }
         case 18:    // GetSurfaceLevel( Level, ppSurfaceLevel )
             pThis->pChild->cRef++;
             *(MockObject**)pArgs[1] = pThis->pChild;
@@ -423,6 +433,23 @@ static ULONG_PTR MockDeviceHandler( MockObject* pThis, int iSlot, ULONG_PTR* pAr
             break;
         }
 
+        case 83:    // DrawPrimitiveUP( PrimitiveType, PrimitiveCount, pVertexStreamZeroData, VertexStreamZeroStride )
+        {
+            UINT cPrimitives = (UINT)pArgs[1];
+            UINT cVertices = 0;
+            switch( (UINT)pArgs[0] )
+            {
+                case D3DPT_POINTLIST:     cVertices = cPrimitives; break;
+                case D3DPT_LINELIST:      cVertices = cPrimitives * 2; break;
+                case D3DPT_LINESTRIP:     cVertices = cPrimitives + 1; break;
+                case D3DPT_TRIANGLELIST:  cVertices = cPrimitives * 3; break;
+                case D3DPT_TRIANGLESTRIP:
+                case D3DPT_TRIANGLEFAN:   cVertices = cPrimitives + 2; break;
+            }
+            MockPayload( pRecord, (void*)pArgs[2], (size_t)cVertices * (UINT)pArgs[3] );
+            break;
+        }
+
         case 44:    // SetTransform( State, pMatrix )
             MockPayload( pRecord, (void*)pArgs[1], sizeof(D3DMATRIX) );
             break;
@@ -445,6 +472,20 @@ static ULONG_PTR MockDeviceHandler( MockObject* pThis, int iSlot, ULONG_PTR* pAr
             break;
     }
     return 0;
+}
+
+// A texture that was not created through the mock device (to pre-load slots)
+static inline MockObject* MockCreateTexture( CallLog* pLog, UINT uWidth, UINT uHeight )
+{
+    MockObject* pSurface = MockCreate( "IDirect3DSurface9", MOCK_SLOTS( IDirect3DSurface9 ), pLog, MockSurfaceHandler );
+    pSurface->uWidth = uWidth;
+    pSurface->uHeight = uHeight;
+    pSurface->uPitch = uWidth * 4;
+    pSurface->format = D3DFMT_A8R8G8B8;
+    pSurface->buffer.assign( (size_t)pSurface->uPitch * uHeight + 64, 0xCD );
+    MockObject* pTexture = MockCreate( "IDirect3DTexture9", MOCK_SLOTS( IDirect3DTexture9 ), pLog, MockTextureHandler );
+    pTexture->pChild = pSurface;
+    return pTexture;
 }
 
 static inline MockObject* MockCreateDevice( CallLog* pLog )

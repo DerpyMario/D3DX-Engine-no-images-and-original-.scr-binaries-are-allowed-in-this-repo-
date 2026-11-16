@@ -150,11 +150,11 @@ ASSETS = {
     ],
     "bubbles.scr": [
         (14, 101, "ico", "bubbles/res/bubbles.ico"),
-        ("BMP", 117, "raw", "bubbles/res/117.tga"),
-        ("BMP", 118, "raw", "bubbles/res/118.tga"),
-        ("BMP", 119, "raw", "bubbles/res/119.tga"),
-        ("BMP", 120, "raw", "bubbles/res/120.tga"),
-        ("BMP", 121, "raw", "bubbles/res/121.tga"),
+        ("BMP", 117, "raw", "bubbles/res/shadow.tga"),
+        ("BMP", 118, "raw", "bubbles/res/sphere_lit.tga"),
+        ("BMP", 119, "raw", "bubbles/res/sphere_solid.tga"),
+        ("BMP", 120, "raw", "bubbles/res/sphere_highlight.tga"),
+        ("BMP", 121, "raw", "bubbles/res/sphere_glass.tga"),
     ],
     "sstext3d.scr": [
         (14, 101, "ico", "text3d/res/text3d.ico"),

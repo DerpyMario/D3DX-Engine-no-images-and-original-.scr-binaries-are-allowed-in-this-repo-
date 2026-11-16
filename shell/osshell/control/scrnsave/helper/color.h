@@ -41,4 +41,24 @@ inline DWORD ColorToARGB( float r, float g, float b, float a )
            ( (DWORD)ColorFloatToByte( b ) );
 }
 
+// HSL -> RGB, all components in 0..1 (hue as a fraction of a full turn)
+inline void HSLToRGB( float h, float s, float l, float* pr, float* pg, float* pb )
+{
+    if( s == 0.0f )
+    {
+        *pr = l;
+        *pg = l;
+        *pb = l;
+    }
+    else
+    {
+        float v2 = ( l < 0.5f ) ? l * ( 1.0f + s ) : ( s + l ) - s * l;
+        float v1 = 2.0f * l - v2;
+
+        *pr = HueToRGB( v1, v2, h + ( 1.0f / 3.0f ) );
+        *pg = HueToRGB( v1, v2, h );
+        *pb = HueToRGB( v1, v2, h - ( 1.0f / 3.0f ) );
+    }
+}
+
 #endif // _HELPER_COLOR_H
