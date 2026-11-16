@@ -1,0 +1,1 @@
+# D3DX-Engine-no-images-and-original-.scr-binaries-are-allowed-in-this-repo-
