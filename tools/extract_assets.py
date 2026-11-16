@@ -161,6 +161,9 @@ ASSETS = {
         ("JPG", 102, "raw", "text3d/res/102.jpg"),
         ("JPG", 103, "raw", "text3d/res/103.jpg"),
     ],
+    "logon.scr":
+        [(2, "IDB_FLARE%02d" % n, "bmp", "logon/res/flare%02d.bmp" % n) for n in range(1, 46)] +
+        [(2, "IDB_SMALLFLARE%02d" % n, "bmp", "logon/res/smallflare%02d.bmp" % n) for n in range(1, 46)],
 }
 
 
