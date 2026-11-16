@@ -47,7 +47,7 @@ static const int s_Permutation[256] =
 //-----------------------------------------------------------------------------
 static inline float Fade( float t )
 {
-    return ( ( t * t * 6.0f - t * 15.0f ) + 10.0f ) * t * t * t;
+    return t * t * t * ( t * t * 6.0f - t * 15.0f + 10.0f );
 }
 
 
