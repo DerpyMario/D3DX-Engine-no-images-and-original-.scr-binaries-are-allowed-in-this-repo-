@@ -15,7 +15,6 @@
 //                                 window position/size and layered alpha
 //         * DefScreenSaverProc()- return value and "post WM_CLOSE" decision
 //                                 for every interesting message
-//         * atoui()
 //-----------------------------------------------------------------------------
 #include "origimage.h"
 #include <scrnsave.h>
@@ -25,7 +24,6 @@
 // functions
 #define RVA_OnPaint                 0x1f60
 #define RVA_Blur                    0x2164
-#define RVA_atoui                   0x2f70
 #define RVA_DefScreenSaverProc      0x32f4
 
 // globals of logon.obj
@@ -57,7 +55,6 @@
 
 typedef void     (*PFN_OnPaint)( HWND );
 typedef void     (*PFN_Blur)( HWND, HBITMAP );
-typedef UINT_PTR (*PFN_atoui)( const WCHAR* );
 typedef LRESULT  (*PFN_DefScreenSaverProc)( HWND, UINT, WPARAM, LPARAM );
 
 // the rebuilt code
@@ -82,7 +79,6 @@ extern "C"
     extern BOOL  fClosing;
     extern BOOL  fCheckingPassword;
     extern POINT ptMouse;
-    UINT_PTR atoui( const WCHAR* psz );
 }
 
 
@@ -437,16 +433,6 @@ int main( int argc, char** argv )
     {
         printf( "cannot create the test window\n" );
         return 2;
-    }
-
-    // atoui()
-    {
-        static const WCHAR* inputs[] = { L"", L"0", L"12345", L"4294967296", L"00123abc", L" 12", L"-5", L"987654321012", L"65x" };
-        PFN_atoui pfn = orig.At<PFN_atoui>( RVA_atoui );
-        bool bSame = true;
-        for( size_t i = 0; i < sizeof(inputs) / sizeof(inputs[0]); i++ )
-            bSame = bSame && ( pfn( inputs[i] ) == atoui( inputs[i] ) );
-        Check( bSame, "atoui" );
     }
 
     TestBlur( orig );

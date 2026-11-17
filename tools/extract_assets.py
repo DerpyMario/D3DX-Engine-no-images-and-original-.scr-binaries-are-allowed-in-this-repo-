@@ -158,8 +158,8 @@ ASSETS = {
     ],
     "sstext3d.scr": [
         (14, 101, "ico", "text3d/res/text3d.ico"),
-        ("JPG", 102, "raw", "text3d/res/102.jpg"),
-        ("JPG", 103, "raw", "text3d/res/103.jpg"),
+        ("JPG", 102, "raw", "text3d/res/texture.jpg"),
+        ("JPG", 103, "raw", "text3d/res/environment.jpg"),
     ],
     "logon.scr":
         [(2, "IDB_FLARE%02d" % n, "bmp", "logon/res/flare%02d.bmp" % n) for n in range(1, 46)] +
