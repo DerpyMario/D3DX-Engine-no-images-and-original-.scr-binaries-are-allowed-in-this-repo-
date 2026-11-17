@@ -11,10 +11,11 @@
  *       ScreenSaverConfigureDialog() (see <scrnsave.h>).
  *
  *       Reconstructed from logon.scr 6.0.6001.18000 (amd64).  Function and
- *       global names that appear in the public symbols are used as is; the
- *       names of statics (fOnWin95, fSwitchL, uShellAutoPlayQueryMessage,
- *       LoadPwdDLL, HogMachine, ...) and of all locals are descriptive
- *       choices of this reconstruction.
+ *       global names are the ones of the symbol file, which also records the
+ *       names of the static functions.  The names of the static variables
+ *       (fOnWin95, fSwitchL, uShellAutoPlayQueryMessage), of the inlined
+ *       helper HogMachine() and of all locals are descriptive choices of
+ *       this reconstruction.
  *
  *       Original object:
  *           shell\osshell\control\scrnsave\common\scrnsavw\objfre\amd64\scrnsave.obj
@@ -123,7 +124,7 @@ INT_PTR PASCAL          WinMainN(HINSTANCE hInst, HINSTANCE hPrev, LPTSTR pszCmd
 LRESULT CALLBACK        RealScreenSaverProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 static INT_PTR          DoScreenSave(HWND hParent);
 static BOOL             DoPasswordCheck(HWND hParent);
-static void             LoadPwdDLL(void);
+static void             InitRealScreenSave(void);
 void                    UnloadPwdDLL(void);
 void                    DummyEntry(void);
 
@@ -148,7 +149,7 @@ static void HogMachine(BOOL fDisable)
  * Name: atoui()
  * Desc: Minimal unsigned decimal parser (window handles on the command line).
  *---------------------------------------------------------------------------*/
-UINT_PTR atoui(LPCTSTR psz)
+static UINT_PTR atoui(LPCTSTR psz)
 {
     UINT_PTR n = 0;
 
@@ -596,7 +597,7 @@ static INT_PTR DoScreenSave(HWND hParent)
 
         bACLineStatus = GetSystemPowerStatus(&sps) ? sps.ACLineStatus : AC_LINE_UNKNOWN;
 
-        LoadPwdDLL();
+        InitRealScreenSave();
     }
 
     if (fOnWin95)
@@ -691,11 +692,12 @@ static BOOL DoPasswordCheck(HWND hParent)
 
 
 /*-----------------------------------------------------------------------------
- * Name: LoadPwdDLL()
- * Desc: Windows 95 only: loads the password provider if the user asked for a
- *       password protected screen saver.
+ * Name: InitRealScreenSave()
+ * Desc: Preparations for a real (full screen) run.  Windows 95 only: loads
+ *       the password provider if the user asked for a password protected
+ *       screen saver.
  *---------------------------------------------------------------------------*/
-static void LoadPwdDLL(void)
+static void InitRealScreenSave(void)
 {
     HKEY hKey;
 

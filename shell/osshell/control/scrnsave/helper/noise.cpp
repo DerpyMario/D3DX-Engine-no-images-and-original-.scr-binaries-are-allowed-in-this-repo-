@@ -80,10 +80,10 @@ static inline int Floor( float f )
 
 
 //-----------------------------------------------------------------------------
-// Name: Grad()
+// Name: GDot()
 // Desc: Dot product of (x, y, z) with one of the gradient directions.
 //-----------------------------------------------------------------------------
-static float Grad( float x, float y, float z, int nHash )
+static float GDot( float x, float y, float z, int nHash )
 {
     switch( nHash )
     {
@@ -135,14 +135,14 @@ float __cdecl Noise( const Point3f& p )
     int BA = perm[B & 255] + X;
     int BB = perm[( B + 1 ) & 255] + X;
 
-    float g000 = Grad( x,        y,        z,        perm[AA & 255] & 15 );
-    float g100 = Grad( x - 1.0f, y,        z,        perm[( AA + 1 ) & 255] & 15 );
-    float g010 = Grad( x,        y - 1.0f, z,        perm[AB & 255] & 15 );
-    float g110 = Grad( x - 1.0f, y - 1.0f, z,        perm[( AB + 1 ) & 255] & 15 );
-    float g001 = Grad( x,        y,        z - 1.0f, perm[BA & 255] & 15 );
-    float g101 = Grad( x - 1.0f, y,        z - 1.0f, perm[( BA + 1 ) & 255] & 15 );
-    float g011 = Grad( x,        y - 1.0f, z - 1.0f, perm[BB & 255] & 15 );
-    float g111 = Grad( x - 1.0f, y - 1.0f, z - 1.0f, perm[( BB + 1 ) & 255] & 15 );
+    float g000 = GDot( x,        y,        z,        perm[AA & 255] & 15 );
+    float g100 = GDot( x - 1.0f, y,        z,        perm[( AA + 1 ) & 255] & 15 );
+    float g010 = GDot( x,        y - 1.0f, z,        perm[AB & 255] & 15 );
+    float g110 = GDot( x - 1.0f, y - 1.0f, z,        perm[( AB + 1 ) & 255] & 15 );
+    float g001 = GDot( x,        y,        z - 1.0f, perm[BA & 255] & 15 );
+    float g101 = GDot( x - 1.0f, y,        z - 1.0f, perm[( BA + 1 ) & 255] & 15 );
+    float g011 = GDot( x,        y - 1.0f, z - 1.0f, perm[BB & 255] & 15 );
+    float g111 = GDot( x - 1.0f, y - 1.0f, z - 1.0f, perm[( BB + 1 ) & 255] & 15 );
 
     // Blend the eight contributions
     float u = Fade( x );

@@ -1,0 +1,180 @@
+//-----------------------------------------------------------------------------
+// File: text3d.rc
+//
+// Desc: Resources of the 3D Text screen saver (ssText3d.scr).
+//
+//       In the shipped product the language-neutral resources (icon, pictures,
+//       manifest, version) live in ssText3d.scr and the localisable ones
+//       (dialogs, strings) in en-US\ssText3d.scr.mui; this script simply
+//       builds all of them into the .scr.
+//
+//       The binary assets are NOT part of this source tree.  Run
+//       tools\extract_assets.py against your own copy of ssText3d.scr to
+//       create the res\ directory, or build with SCRNSAVE_NO_ASSETS defined
+//       (only the "Solid Color" surface style works then).
+//
+//       Original object:
+//           shell\osshell\control\scrnsave\text3d\objfre\amd64\text3d.res
+//-----------------------------------------------------------------------------
+#include <windows.h>
+#include <commctrl.h>
+#include <dlgs.h>
+#include "resource.h"
+
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+
+//-----------------------------------------------------------------------------
+// Binary assets (extracted from the original, see above)
+//-----------------------------------------------------------------------------
+#ifndef SCRNSAVE_NO_ASSETS
+IDI_MAIN_ICON           ICON    "res/text3d.ico"
+IDR_TEXTURE             JPG     "res/texture.jpg"
+IDR_ENVIRONMENT         JPG     "res/environment.jpg"
+#endif
+
+1                       RT_MANIFEST "text3d.manifest"
+
+//-----------------------------------------------------------------------------
+// Settings dialog
+//-----------------------------------------------------------------------------
+IDD_SETTINGS DIALOGEX 0, 0, 419, 261
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "3D Text Settings"
+FONT 9, "Segoe UI", 0, 0, 0x0
+BEGIN
+    CONTROL         "OK", IDOK, "Button", BS_DEFPUSHBUTTON | WS_TABSTOP, 341, 11, 69, 14
+    CONTROL         "Cancel", IDCANCEL, "Button", BS_PUSHBUTTON | WS_TABSTOP, 341, 32, 69, 14
+    CONTROL         "&Display Settings", IDC_SCREENSETTINGS, "Button", BS_PUSHBUTTON | WS_TABSTOP, 341, 53, 69, 14
+    CONTROL         "Text", 65535, "Button", BS_GROUPBOX, 7, 7, 321, 101
+    CONTROL         "Time", IDC_RADIO_TIME, "Button", BS_AUTORADIOBUTTON | WS_GROUP, 16, 22, 30, 10
+    CONTROL         "Custom Text:", IDC_RADIO_TEXT, "Button", BS_AUTORADIOBUTTON, 16, 39, 55, 8
+    CONTROL         "", IDC_DISPLAYSTRING, "Edit", ES_LEFT | ES_AUTOHSCROLL | WS_BORDER | WS_TABSTOP, 75, 37, 109, 13
+    CONTROL         "Choose Font", IDC_CHOOSEFONT, "Button", BS_PUSHBUTTON | WS_TABSTOP, 56, 71, 82, 14
+    CONTROL         "Low", 65535, "Static", SS_CENTER | WS_GROUP, 206, 23, 30, 8
+    CONTROL         "High", 65535, "Static", SS_CENTER | WS_GROUP, 288, 23, 30, 8
+    CONTROL         "Resolution", 65535, "Button", BS_GROUPBOX, 203, 14, 117, 43
+    CONTROL         "Slider1", IDC_RESOLUTION, "msctls_trackbar32", TBS_AUTOTICKS | TBS_TOP | WS_TABSTOP, 210, 33, 100, 23
+    CONTROL         "Small", 65535, "Static", SS_CENTER | WS_GROUP, 206, 70, 30, 8
+    CONTROL         "Large", 65535, "Static", SS_CENTER | WS_GROUP, 288, 66, 30, 8
+    CONTROL         "Size", 65535, "Button", BS_GROUPBOX, 203, 61, 117, 43
+    CONTROL         "Slider1", IDC_VIEWPORTSIZE, "msctls_trackbar32", TBS_AUTOTICKS | TBS_TOP | WS_TABSTOP, 210, 77, 100, 23
+    CONTROL         "Motion", 65535, "Button", BS_GROUPBOX, 7, 108, 321, 60
+    CONTROL         "Rotation Type:", 65535, "Static", SS_LEFT | WS_GROUP, 26, 136, 56, 8
+    CONTROL         "", IDC_ROTATION_STYLE, "ComboBox", CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP, 86, 133, 98, 76
+    CONTROL         "Slow", 65535, "Static", SS_CENTER | WS_GROUP, 206, 126, 30, 8
+    CONTROL         "Fast", 65535, "Static", SS_CENTER | WS_GROUP, 288, 124, 30, 8
+    CONTROL         "Rotation Speed", 65535, "Button", BS_GROUPBOX, 203, 117, 117, 43
+    CONTROL         "Slider1", IDC_ROTATION_SPEED, "msctls_trackbar32", TBS_AUTOTICKS | TBS_TOP | WS_TABSTOP, 210, 133, 100, 23
+    CONTROL         "Surface Style", 65535, "Button", BS_GROUPBOX, 7, 171, 321, 82
+    CONTROL         "Solid Color", IDC_RADIO_COLOR, "Button", BS_AUTORADIOBUTTON, 22, 185, 49, 10
+    CONTROL         "Custom Color:", IDC_USE_CUSTOM_COLOR, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 117, 185, 75, 10
+    CONTROL         "Choose Color", IDC_SURFACE_COLOR, "Button", BS_PUSHBUTTON | WS_TABSTOP, 220, 182, 82, 15
+    CONTROL         "Texture", IDC_RADIO_TEXTURE, "Button", BS_AUTORADIOBUTTON, 22, 202, 40, 10
+    CONTROL         "Custom Texture:", IDC_USE_CUSTOM_TEXTURE, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 117, 202, 75, 10
+    CONTROL         "Choose Texture", IDC_BROWSE_TEXTURE, "Button", BS_PUSHBUTTON | WS_TABSTOP, 220, 199, 82, 15
+    CONTROL         "Reflection", IDC_RADIO_REFLECTION, "Button", BS_AUTORADIOBUTTON, 22, 219, 48, 10
+    CONTROL         "Custom Reflection:", IDC_USE_CUSTOM_ENVIRONMENT, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 117, 219, 75, 10
+    CONTROL         "Choose Reflection", IDC_BROWSE_ENVIRONMENT, "Button", BS_PUSHBUTTON | WS_TABSTOP, 220, 216, 82, 15
+    CONTROL         "Show Specular Highlights", IDC_SPECULAR, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 22, 236, 132, 10
+END
+
+//-----------------------------------------------------------------------------
+// Template for ChooseFont(): the standard font dialog with the size, effects
+// and script controls hidden.  The identifiers are those of <dlgs.h>.
+//-----------------------------------------------------------------------------
+FORMATDLGORD31 DIALOGEX 13, 54, 232, 183
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Font"
+FONT 9, "Segoe UI", 0, 0, 0x0
+BEGIN
+    CONTROL         "&Font:", stc1, "Static", SS_LEFT | WS_GROUP, 6, 3, 40, 9
+    CONTROL         "", cmb1, "ComboBox", CBS_SIMPLE | CBS_OWNERDRAWFIXED | CBS_AUTOHSCROLL | CBS_SORT | CBS_HASSTRINGS | CBS_DISABLENOSCROLL | WS_VSCROLL | WS_TABSTOP, 6, 13, 94, 64
+    CONTROL         "Font St&yle:", stc2, "Static", SS_LEFT | WS_GROUP, 108, 3, 44, 9
+    CONTROL         "", cmb2, "ComboBox", CBS_SIMPLE | CBS_DISABLENOSCROLL | WS_VSCROLL | WS_TABSTOP, 108, 13, 64, 64
+    CONTROL         "", cmb3, "ComboBox", CBS_SIMPLE | CBS_OWNERDRAWFIXED | CBS_SORT | CBS_HASSTRINGS | CBS_DISABLENOSCROLL | NOT WS_VISIBLE | WS_DISABLED | WS_VSCROLL | WS_TABSTOP, 49, 161, 16, 12
+    CONTROL         "OK", IDOK, "Button", BS_DEFPUSHBUTTON | WS_GROUP | WS_TABSTOP, 183, 25, 40, 14
+    CONTROL         "Cancel", IDCANCEL, "Button", BS_PUSHBUTTON | WS_GROUP | WS_TABSTOP, 183, 44, 40, 14
+    CONTROL         "&Apply", psh3, "Button", BS_PUSHBUTTON | WS_GROUP | WS_TABSTOP, 97, 158, 8, 14
+    CONTROL         "&Help", pshHelp, "Button", BS_PUSHBUTTON | WS_GROUP | WS_TABSTOP, 110, 158, 6, 14
+    CONTROL         "Stri&keout", chx1, "Button", BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_DISABLED | WS_TABSTOP, 31, 161, 8, 10
+    CONTROL         "&Underline", chx2, "Button", BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_DISABLED, 17, 161, 8, 10
+    CONTROL         "", cmb4, "ComboBox", CBS_DROPDOWNLIST | CBS_OWNERDRAWFIXED | CBS_AUTOHSCROLL | CBS_HASSTRINGS | NOT WS_VISIBLE | WS_DISABLED | WS_BORDER | WS_VSCROLL | WS_TABSTOP, 75, 161, 16, 15
+    CONTROL         "Sample", grp2, "Button", BS_GROUPBOX | WS_GROUP, 5, 88, 223, 85
+    CONTROL         "AaBbYyZz", stc5, "Static", SS_CENTER | SS_NOPREFIX | NOT WS_VISIBLE | WS_GROUP, 18, 99, 199, 69
+END
+
+//-----------------------------------------------------------------------------
+// Strings
+//-----------------------------------------------------------------------------
+STRINGTABLE
+BEGIN
+    IDS_DESCRIPTION                 "3D Text"
+    IDS_DEFAULT_TEXT                L"Windows Vista\x2122"
+    IDS_ROTATION_NONE               "None"
+    IDS_ROTATION_SPIN               "Spin"
+    IDS_ROTATION_SEESAW             "See-saw"
+    IDS_ROTATION_WOBBLE             "Wobble"
+    IDS_ROTATION_TUMBLE             "Tumble"
+    IDS_TEXTURE_FILTER              "Bitmaps (*.bmp)#*.bmp##"
+    IDS_CHOOSE_TEXTURE              "Choose Custom Texture"
+    IDS_CHOOSE_ENVIRONMENT          "Choose Custom Environment Map"
+    IDS_DEFAULT_FONT                "Tahoma"
+    IDS_INIFILE                     "control.ini"
+    IDS_SAVERNAME                   "Screen Saver.3DText"
+    IDS_OPTIONS                     "Options"
+    IDS_TYPE                        "Type"
+    IDS_TEXTURE                     "Texture"
+    IDS_TEXTURE_FILE_OFFSET         "TextureFileOffset"
+    IDS_SIZE                        "Size"
+    IDS_TESSELATION                 "Tesselation"
+    IDS_SCREENSAVERTITLE            "ScreenSaver"
+    IDS_DEFFONT                     "Segoe"
+    IDS_DEFCHARSET                  "1"
+    IDS_DEMOTYPE                    "DemoType"
+    IDS_SURFSTYLE                   "SurfStyle"
+    IDS_FONT                        "Font"
+    IDS_FONT_ATTRIBUTES             "FontAttributes"
+    IDS_CHARSET                     "CharSet"
+    IDS_TEXT                        "Text"
+    IDS_SPEED                       "Speed"
+    IDS_ROTSTYLE                    "RotStyle"
+END
+
+//-----------------------------------------------------------------------------
+// Display settings dialogs and error strings of the D3DSaver9 framework
+// (Windows Vista SP1 revision)
+//-----------------------------------------------------------------------------
+#define D3DSAVER9_SP1
+#include "../d3dsaver9/d3dsaver9.rc"
+
+//-----------------------------------------------------------------------------
+// Version
+//-----------------------------------------------------------------------------
+VS_VERSION_INFO VERSIONINFO
+FILEVERSION     6,0,6001,18000
+PRODUCTVERSION  6,0,6001,18000
+FILEFLAGSMASK   VS_FFI_FILEFLAGSMASK
+FILEFLAGS       0x0L
+FILEOS          VOS_NT_WINDOWS32
+FILETYPE        VFT_APP
+FILESUBTYPE     VFT2_UNKNOWN
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904B0"
+        BEGIN
+            VALUE "CompanyName",      "Microsoft Corporation"
+            VALUE "FileDescription",  "3D Text Screen Saver"
+            VALUE "FileVersion",      "6.0.6001.18000 (longhorn_rtm.080118-1840)"
+            VALUE "InternalName",     "Text3D"
+            VALUE "LegalCopyright",   L"\x00a9 Microsoft Corporation. All rights reserved."
+            VALUE "OriginalFilename", "Text3D"
+            VALUE "ProductName",      L"Microsoft\x00ae Windows\x00ae Operating System"
+            VALUE "ProductVersion",   "6.0.6001.18000"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x0409, 0x04B0
+    END
+END
