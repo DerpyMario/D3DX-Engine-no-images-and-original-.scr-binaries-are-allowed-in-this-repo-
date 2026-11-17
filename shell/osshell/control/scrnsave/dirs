@@ -1,0 +1,15 @@
+#
+# Reconstructed NT build file: shell\osshell\control\scrnsave
+#
+# The libraries first, then the screen savers that link them.
+#
+DIRS= \
+    common    \
+    d3dsaver9 \
+    helper    \
+    shape3d   \
+    aurora    \
+    bubbles   \
+    text3d    \
+    branded   \
+    logon

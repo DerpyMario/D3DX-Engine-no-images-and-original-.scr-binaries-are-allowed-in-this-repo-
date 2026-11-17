@@ -1,0 +1,35 @@
+#
+# Reconstructed NT build file (build.exe / makefile.def).  It records how the
+# original was built, as far as the symbol files show it: target name,
+# objects, libraries and output directory (objfre\amd64).  It is not used by
+# the CMake build of this repository.
+#
+# Output: shell\osshell\control\scrnsave\logon\objfre\amd64\logon.scr
+#
+TARGETNAME=logon
+TARGETTYPE=PROGRAM
+TARGETEXT=scr
+UMTYPE=windows
+UMENTRY=winmain
+
+USE_MSVCRT=1
+
+C_DEFINES=$(C_DEFINES) -DUNICODE -D_UNICODE
+
+INCLUDES=$(BASE_INC_PATH)
+
+SOURCES=\
+    generic.rc \
+    logon.cpp
+
+TARGETLIBS=\
+    $(SDK_LIB_PATH)\scrnsavw.lib                    \
+    $(BASE_LIB_PATH)\winbrand.lib                   \
+    $(SDK_LIB_PATH)\comctl32.lib                    \
+    $(SDK_LIB_PATH)\gdi32.lib                       \
+    $(SDK_LIB_PATH)\user32.lib                      \
+    $(SDK_LIB_PATH)\advapi32.lib                    \
+    $(SDK_LIB_PATH)\kernel32.lib
+
+DELAYLOAD=winbrand.dll
+DLOAD_ERROR_HANDLER=kernel32

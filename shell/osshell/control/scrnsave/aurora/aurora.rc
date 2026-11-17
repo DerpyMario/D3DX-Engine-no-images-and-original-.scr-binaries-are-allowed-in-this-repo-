@@ -39,26 +39,26 @@ STYLE DS_SHELLFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Aurora Settings"
 FONT 8, "MS Shell Dlg", 0, 0, 0x0
 BEGIN
-    CONTROL         "OK", IDOK, "Button", BS_DEFPUSHBUTTON | WS_TABSTOP, 282, 108, 78, 18
-    CONTROL         "Cancel", IDCANCEL, "Button", BS_PUSHBUTTON | WS_TABSTOP, 282, 132, 78, 18
-    CONTROL         "&Display Settings...", IDC_SCREENSETTINGS, "Button", BS_PUSHBUTTON | WS_TABSTOP, 282, 156, 78, 18
-    CONTROL         "Number of Layers", IDC_NUMLAYERS_BOX, "Button", BS_GROUPBOX, 6, 6, 174, 36
+    CONTROL         "OK", IDOK, CTL_BUTTON, BS_DEFPUSHBUTTON | WS_TABSTOP, 282, 108, 78, 18
+    CONTROL         "Cancel", IDCANCEL, CTL_BUTTON, BS_PUSHBUTTON | WS_TABSTOP, 282, 132, 78, 18
+    CONTROL         "&Display Settings...", IDC_SCREENSETTINGS, CTL_BUTTON, BS_PUSHBUTTON | WS_TABSTOP, 282, 156, 78, 18
+    CONTROL         "Number of Layers", IDC_NUMLAYERS_BOX, CTL_BUTTON, BS_GROUPBOX, 6, 6, 174, 36
     CONTROL         "", IDC_NUMLAYERS, "msctls_trackbar32", TBS_BOTH | TBS_NOTICKS | WS_TABSTOP, 12, 18, 165, 18
-    CONTROL         "Speed", IDC_SPEED_BOX, "Button", BS_GROUPBOX, 186, 6, 174, 36
+    CONTROL         "Speed", IDC_SPEED_BOX, CTL_BUTTON, BS_GROUPBOX, 186, 6, 174, 36
     CONTROL         "", IDC_SPEED, "msctls_trackbar32", TBS_BOTH | TBS_NOTICKS | WS_TABSTOP, 192, 18, 162, 18
-    CONTROL         "Screensaver by Stephen Coy", -1, "Static", SS_RIGHT | WS_GROUP, 246, 180, 114, 12
-    CONTROL         "Preset 1", IDC_PRESET1, "Button", BS_PUSHBUTTON | WS_TABSTOP, 6, 96, 78, 18
-    CONTROL         "Preset 2", IDC_PRESET2, "Button", BS_PUSHBUTTON | WS_TABSTOP, 6, 120, 78, 18
-    CONTROL         "Preset 3", IDC_PRESET3, "Button", BS_PUSHBUTTON | WS_TABSTOP, 6, 144, 78, 18
-    CONTROL         "bold streaks of twisting light", -1, "Static", SS_CENTER | SS_CENTERIMAGE | SS_SUNKEN | 0x20 | WS_GROUP, 84, 96, 96, 18
-    CONTROL         "sparse, delicate curves", -1, "Static", SS_CENTER | SS_CENTERIMAGE | SS_SUNKEN | 0x20 | WS_GROUP, 84, 120, 96, 18
-    CONTROL         "tangled threads woven into cloth-like textures", -1, "Static", SS_CENTER | SS_SUNKEN | 0x20 | WS_GROUP, 84, 144, 96, 18
-    CONTROL         "Span Multiple Monitors", IDC_SPANMULTIMON, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 189, 97, 102, 12
-    CONTROL         "Brightness", IDC_BRIGHTNESS_BOX, "Button", BS_GROUPBOX, 6, 48, 174, 36
+    CONTROL         "Screensaver by Stephen Coy", -1, CTL_STATIC, SS_RIGHT | WS_GROUP, 246, 180, 114, 12
+    CONTROL         "Preset 1", IDC_PRESET1, CTL_BUTTON, BS_PUSHBUTTON | WS_TABSTOP, 6, 96, 78, 18
+    CONTROL         "Preset 2", IDC_PRESET2, CTL_BUTTON, BS_PUSHBUTTON | WS_TABSTOP, 6, 120, 78, 18
+    CONTROL         "Preset 3", IDC_PRESET3, CTL_BUTTON, BS_PUSHBUTTON | WS_TABSTOP, 6, 144, 78, 18
+    CONTROL         "bold streaks of twisting light", -1, CTL_STATIC, SS_CENTER | SS_CENTERIMAGE | SS_SUNKEN | 0x20 | WS_GROUP, 84, 96, 96, 18
+    CONTROL         "sparse, delicate curves", -1, CTL_STATIC, SS_CENTER | SS_CENTERIMAGE | SS_SUNKEN | 0x20 | WS_GROUP, 84, 120, 96, 18
+    CONTROL         "tangled threads woven into cloth-like textures", -1, CTL_STATIC, SS_CENTER | SS_SUNKEN | 0x20 | WS_GROUP, 84, 144, 96, 18
+    CONTROL         "Span Multiple Monitors", IDC_SPANMULTIMON, CTL_BUTTON, BS_AUTOCHECKBOX | WS_TABSTOP, 189, 97, 102, 12
+    CONTROL         "Brightness", IDC_BRIGHTNESS_BOX, CTL_BUTTON, BS_GROUPBOX, 6, 48, 174, 36
     CONTROL         "", IDC_BRIGHTNESS, "msctls_trackbar32", TBS_BOTH | TBS_NOTICKS | WS_TABSTOP, 12, 60, 165, 18
-    CONTROL         "Preset 4", IDC_PRESET4, "Button", BS_PUSHBUTTON | WS_TABSTOP, 6, 168, 78, 18
-    CONTROL         "soft washes of color overlayed with stars", -1, "Static", SS_CENTER | SS_SUNKEN | WS_GROUP, 84, 168, 96, 18
-    CONTROL         "Amplitude", IDC_AMPLITUDE_BOX, "Button", BS_GROUPBOX, 186, 48, 174, 36
+    CONTROL         "Preset 4", IDC_PRESET4, CTL_BUTTON, BS_PUSHBUTTON | WS_TABSTOP, 6, 168, 78, 18
+    CONTROL         "soft washes of color overlayed with stars", -1, CTL_STATIC, SS_CENTER | SS_SUNKEN | WS_GROUP, 84, 168, 96, 18
+    CONTROL         "Amplitude", IDC_AMPLITUDE_BOX, CTL_BUTTON, BS_GROUPBOX, 186, 48, 174, 36
     CONTROL         "", IDC_AMPLITUDE, "msctls_trackbar32", TBS_BOTH | TBS_NOTICKS | WS_TABSTOP, 192, 60, 162, 18
 END
 

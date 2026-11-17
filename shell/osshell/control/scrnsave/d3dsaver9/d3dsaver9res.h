@@ -66,4 +66,24 @@
 #define IDS_RENDERING_SW                2211
 #define IDS_RENDERING_NONE              2212
 
+//-----------------------------------------------------------------------------
+// Window classes for the CONTROL statements of the dialog templates.  The
+// templates of the originals name the predefined control classes by ordinal
+// (0x0080 = Button, ...).  rc.exe turns the class names into these ordinals
+// by itself; windres stores an ordinal only when given one.  (llvm-rc takes
+// names only, and keeps them as names.  windres also stores the names of the
+// other classes, such as "msctls_trackbar32", in upper case.)
+//-----------------------------------------------------------------------------
+#if defined(__GNUC__) && !defined(__clang__)
+#define CTL_BUTTON                      0x0080
+#define CTL_EDIT                        0x0081
+#define CTL_STATIC                      0x0082
+#define CTL_COMBOBOX                    0x0085
+#else
+#define CTL_BUTTON                      "Button"
+#define CTL_EDIT                        "Edit"
+#define CTL_STATIC                      "Static"
+#define CTL_COMBOBOX                    "ComboBox"
+#endif
+
 #endif // _D3DSAVER9RES_H

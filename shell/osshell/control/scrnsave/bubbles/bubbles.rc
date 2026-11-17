@@ -44,32 +44,32 @@ STYLE DS_SHELLFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Bubbles Settings"
 FONT 8, "MS Shell Dlg", 0, 0, 0x0
 BEGIN
-    CONTROL         "OK", IDOK, "Button", BS_DEFPUSHBUTTON | WS_TABSTOP, 282, 156, 78, 18
-    CONTROL         "Cancel", IDCANCEL, "Button", BS_PUSHBUTTON | WS_TABSTOP, 282, 180, 78, 18
-    CONTROL         "&Display Settings...", IDC_SCREENSETTINGS, "Button", BS_PUSHBUTTON | WS_TABSTOP, 282, 204, 78, 18
-    CONTROL         "Number of Spheres", IDC_NUMSPHERES_BOX, "Button", BS_GROUPBOX, 6, 6, 174, 36
+    CONTROL         "OK", IDOK, CTL_BUTTON, BS_DEFPUSHBUTTON | WS_TABSTOP, 282, 156, 78, 18
+    CONTROL         "Cancel", IDCANCEL, CTL_BUTTON, BS_PUSHBUTTON | WS_TABSTOP, 282, 180, 78, 18
+    CONTROL         "&Display Settings...", IDC_SCREENSETTINGS, CTL_BUTTON, BS_PUSHBUTTON | WS_TABSTOP, 282, 204, 78, 18
+    CONTROL         "Number of Spheres", IDC_NUMSPHERES_BOX, CTL_BUTTON, BS_GROUPBOX, 6, 6, 174, 36
     CONTROL         "", IDC_NUMSPHERES, "msctls_trackbar32", TBS_BOTH | TBS_NOTICKS | WS_TABSTOP, 12, 18, 165, 18
-    CONTROL         "Turbulence Octaves", IDC_TURBULENCEOCTAVES_BOX, "Button", BS_GROUPBOX, 186, 6, 174, 36
+    CONTROL         "Turbulence Octaves", IDC_TURBULENCEOCTAVES_BOX, CTL_BUTTON, BS_GROUPBOX, 186, 6, 174, 36
     CONTROL         "", IDC_TURBULENCEOCTAVES, "msctls_trackbar32", TBS_BOTH | TBS_NOTICKS | WS_TABSTOP, 192, 18, 162, 18
-    CONTROL         "Turbulence Speed", IDC_TURBULENCESPEED_BOX, "Button", BS_GROUPBOX, 186, 48, 174, 36
+    CONTROL         "Turbulence Speed", IDC_TURBULENCESPEED_BOX, CTL_BUTTON, BS_GROUPBOX, 186, 48, 174, 36
     CONTROL         "", IDC_TURBULENCESPEED, "msctls_trackbar32", TBS_BOTH | TBS_NOTICKS | WS_TABSTOP, 192, 60, 162, 18
-    CONTROL         "Screensaver by Stephen Coy", -1, "Static", SS_RIGHT | WS_GROUP, 246, 231, 114, 12
-    CONTROL         "Preset 1", IDC_PRESET1, "Button", BS_PUSHBUTTON | WS_TABSTOP, 6, 156, 78, 18
-    CONTROL         "Preset 2", IDC_PRESET2, "Button", BS_PUSHBUTTON | WS_TABSTOP, 6, 180, 78, 18
-    CONTROL         "Preset 3", IDC_PRESET3, "Button", BS_PUSHBUTTON | WS_TABSTOP, 6, 204, 78, 18
-    CONTROL         "a handful of glass spheres floating over the desktop", -1, "Static", SS_CENTER | SS_SUNKEN | 0x20 | WS_GROUP, 84, 156, 96, 20
-    CONTROL         "small, glass spheres over the desktop", -1, "Static", SS_CENTER | SS_SUNKEN | 0x20 | WS_GROUP, 84, 180, 96, 18
-    CONTROL         "lots of small spheres", -1, "Static", SS_CENTER | SS_CENTERIMAGE | SS_SUNKEN | 0x20 | WS_GROUP, 84, 204, 96, 18
-    CONTROL         "Sphere Radius", IDC_RADIUS_BOX, "Button", BS_GROUPBOX, 6, 48, 174, 36
+    CONTROL         "Screensaver by Stephen Coy", -1, CTL_STATIC, SS_RIGHT | WS_GROUP, 246, 231, 114, 12
+    CONTROL         "Preset 1", IDC_PRESET1, CTL_BUTTON, BS_PUSHBUTTON | WS_TABSTOP, 6, 156, 78, 18
+    CONTROL         "Preset 2", IDC_PRESET2, CTL_BUTTON, BS_PUSHBUTTON | WS_TABSTOP, 6, 180, 78, 18
+    CONTROL         "Preset 3", IDC_PRESET3, CTL_BUTTON, BS_PUSHBUTTON | WS_TABSTOP, 6, 204, 78, 18
+    CONTROL         "a handful of glass spheres floating over the desktop", -1, CTL_STATIC, SS_CENTER | SS_SUNKEN | 0x20 | WS_GROUP, 84, 156, 96, 20
+    CONTROL         "small, glass spheres over the desktop", -1, CTL_STATIC, SS_CENTER | SS_SUNKEN | 0x20 | WS_GROUP, 84, 180, 96, 18
+    CONTROL         "lots of small spheres", -1, CTL_STATIC, SS_CENTER | SS_CENTERIMAGE | SS_SUNKEN | 0x20 | WS_GROUP, 84, 204, 96, 18
+    CONTROL         "Sphere Radius", IDC_RADIUS_BOX, CTL_BUTTON, BS_GROUPBOX, 6, 48, 174, 36
     CONTROL         "", IDC_RADIUS, "msctls_trackbar32", TBS_BOTH | TBS_NOTICKS | WS_TABSTOP, 12, 60, 165, 18
-    CONTROL         "Turbulence Force", IDC_TURBULENCEFORCE_BOX, "Button", BS_GROUPBOX, 186, 90, 174, 36
+    CONTROL         "Turbulence Force", IDC_TURBULENCEFORCE_BOX, CTL_BUTTON, BS_GROUPBOX, 186, 90, 174, 36
     CONTROL         "", IDC_TURBULENCEFORCE, "msctls_trackbar32", TBS_BOTH | TBS_NOTICKS | WS_TABSTOP, 192, 102, 162, 18
-    CONTROL         "Show Bubbles", IDC_SHOWBUBBLES, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 90, 90, 61, 10
-    CONTROL         "Show Shadows", IDC_SHOWSHADOWS, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 90, 108, 64, 10
-    CONTROL         "Solid", IDC_MATERIAL_SOLID, "Button", BS_AUTORADIOBUTTON, 18, 102, 31, 10
-    CONTROL         "Glass", IDC_MATERIAL_GLASS, "Button", BS_AUTORADIOBUTTON, 18, 120, 33, 10
-    CONTROL         "Span Multiple Monitors", IDC_SPANMULTIMON, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 90, 126, 87, 10
-    CONTROL         "Sphere Material", -1, "Button", BS_GROUPBOX, 6, 90, 72, 48
+    CONTROL         "Show Bubbles", IDC_SHOWBUBBLES, CTL_BUTTON, BS_AUTOCHECKBOX | WS_TABSTOP, 90, 90, 61, 10
+    CONTROL         "Show Shadows", IDC_SHOWSHADOWS, CTL_BUTTON, BS_AUTOCHECKBOX | WS_TABSTOP, 90, 108, 64, 10
+    CONTROL         "Solid", IDC_MATERIAL_SOLID, CTL_BUTTON, BS_AUTORADIOBUTTON, 18, 102, 31, 10
+    CONTROL         "Glass", IDC_MATERIAL_GLASS, CTL_BUTTON, BS_AUTORADIOBUTTON, 18, 120, 33, 10
+    CONTROL         "Span Multiple Monitors", IDC_SPANMULTIMON, CTL_BUTTON, BS_AUTOCHECKBOX | WS_TABSTOP, 90, 126, 87, 10
+    CONTROL         "Sphere Material", -1, CTL_BUTTON, BS_GROUPBOX, 6, 90, 72, 48
 END
 
 STRINGTABLE

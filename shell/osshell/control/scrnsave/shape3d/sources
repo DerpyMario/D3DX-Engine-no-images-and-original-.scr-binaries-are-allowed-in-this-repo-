@@ -1,0 +1,18 @@
+#
+# Reconstructed NT build file (build.exe / makefile.def).  It records how the
+# original was built, as far as the symbol files show it: target name,
+# objects, libraries and output directory (objfre\amd64).  It is not used by
+# the CMake build of this repository.
+#
+# Output: shell\osshell\control\scrnsave\Shape3D\objfre\amd64\Shape3D.lib
+#
+TARGETNAME=Shape3D
+TARGETTYPE=LIBRARY
+
+USE_MSVCRT=1
+
+C_DEFINES=$(C_DEFINES) -DUNICODE -D_UNICODE
+
+SOURCES= \
+    fontoutl.cpp \
+    fontextr.cpp
