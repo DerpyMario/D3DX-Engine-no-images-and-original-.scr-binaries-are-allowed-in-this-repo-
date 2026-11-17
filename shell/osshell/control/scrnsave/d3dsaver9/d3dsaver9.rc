@@ -38,21 +38,21 @@ STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Display Settings"
 FONT D3DSAVER9_DLGFONT
 BEGIN
-    CONTROL         "Video adapter", 65535, "Button", BS_GROUPBOX, 7, 7, 241, 69
-    CONTROL         "Name:", 65535, "Static", SS_LEFT | WS_GROUP, 13, 18, 33, 8
-    CONTROL         "", IDC_ADAPTERNAME, "Static", SS_LEFT | WS_GROUP, 57, 18, 159, 8
-    CONTROL         "Rendering:", 65535, "Static", SS_LEFT | WS_GROUP, 13, 31, 36, 8
-    CONTROL         "", IDC_RENDERING, "Static", SS_LEFT | WS_GROUP, 57, 31, 130, 17
-    CONTROL         "&Help", IDC_MOREINFO, "Button", BS_PUSHBUTTON | WS_TABSTOP, 194, 33, 50, 14
-    CONTROL         "&Disable hardware 3D rendering", IDC_DISABLEHW, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 14, 54, 215, 10
-    CONTROL         "Display mode", IDC_DISPLAYMODEBOX, "Button", BS_GROUPBOX, 7, 84, 241, 55
-    CONTROL         "Display &mode for this video adapter:", IDC_MODESSTATIC, "Static", SS_LEFT | WS_GROUP, 13, 95, 126, 8
-    CONTROL         "", IDC_MODESCOMBO, "ComboBox", CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP, 144, 93, 100, 133
-    CONTROL         "Note: The Automatic display mode finds a mode that works well with your current screen saver settings and video adapter.", IDC_DISPLAYMODENOTE, "Static", SS_LEFT | WS_GROUP, 13, 109, 227, 27
-    CONTROL         "Automatic", IDC_AUTOMATIC, "Static", SS_LEFT | NOT WS_VISIBLE | WS_GROUP, 184, 126, 32, 8
-    CONTROL         "%d by %d, %d bit color", IDC_MODEFMT, "Static", SS_LEFT | NOT WS_VISIBLE | WS_GROUP, 13, 152, 71, 8
-    CONTROL         "OK", IDOK, "Button", BS_DEFPUSHBUTTON | WS_TABSTOP, 143, 148, 50, 14
-    CONTROL         "Cancel", IDCANCEL, "Button", BS_PUSHBUTTON | WS_TABSTOP, 197, 148, 50, 14
+    CONTROL         "Video adapter", 65535, CTL_BUTTON, BS_GROUPBOX, 7, 7, 241, 69
+    CONTROL         "Name:", 65535, CTL_STATIC, SS_LEFT | WS_GROUP, 13, 18, 33, 8
+    CONTROL         "", IDC_ADAPTERNAME, CTL_STATIC, SS_LEFT | WS_GROUP, 57, 18, 159, 8
+    CONTROL         "Rendering:", 65535, CTL_STATIC, SS_LEFT | WS_GROUP, 13, 31, 36, 8
+    CONTROL         "", IDC_RENDERING, CTL_STATIC, SS_LEFT | WS_GROUP, 57, 31, 130, 17
+    CONTROL         "&Help", IDC_MOREINFO, CTL_BUTTON, BS_PUSHBUTTON | WS_TABSTOP, 194, 33, 50, 14
+    CONTROL         "&Disable hardware 3D rendering", IDC_DISABLEHW, CTL_BUTTON, BS_AUTOCHECKBOX | WS_TABSTOP, 14, 54, 215, 10
+    CONTROL         "Display mode", IDC_DISPLAYMODEBOX, CTL_BUTTON, BS_GROUPBOX, 7, 84, 241, 55
+    CONTROL         "Display &mode for this video adapter:", IDC_MODESSTATIC, CTL_STATIC, SS_LEFT | WS_GROUP, 13, 95, 126, 8
+    CONTROL         "", IDC_MODESCOMBO, CTL_COMBOBOX, CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP, 144, 93, 100, 133
+    CONTROL         "Note: The Automatic display mode finds a mode that works well with your current screen saver settings and video adapter.", IDC_DISPLAYMODENOTE, CTL_STATIC, SS_LEFT | WS_GROUP, 13, 109, 227, 27
+    CONTROL         "Automatic", IDC_AUTOMATIC, CTL_STATIC, SS_LEFT | NOT WS_VISIBLE | WS_GROUP, 184, 126, 32, 8
+    CONTROL         "%d by %d, %d bit color", IDC_MODEFMT, CTL_STATIC, SS_LEFT | NOT WS_VISIBLE | WS_GROUP, 13, 152, 71, 8
+    CONTROL         "OK", IDOK, CTL_BUTTON, BS_DEFPUSHBUTTON | WS_TABSTOP, 143, 148, 50, 14
+    CONTROL         "Cancel", IDCANCEL, CTL_BUTTON, BS_PUSHBUTTON | WS_TABSTOP, 197, 148, 50, 14
 END
 
 IDD_MULTIMONITORSETTINGS DIALOGEX 0, 0, 270, 236
@@ -60,25 +60,25 @@ STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Display Settings"
 FONT D3DSAVER9_DLGFONT
 BEGIN
-    CONTROL         "Monitor %d", IDC_TABNAMEFMT, "Static", SS_LEFT | NOT WS_VISIBLE | WS_GROUP, 214, 8, 32, 8
-    CONTROL         "Video adapter", 65535, "Button", BS_GROUPBOX, 13, 23, 244, 65
-    CONTROL         "Name:", 65535, "Static", SS_LEFT | WS_GROUP, 19, 35, 40, 8
-    CONTROL         "", IDC_ADAPTERNAME, "Static", SS_LEFT | WS_GROUP, 65, 35, 168, 8
-    CONTROL         "Rendering:", 65535, "Static", SS_LEFT | WS_GROUP, 19, 48, 40, 8
-    CONTROL         "", IDC_RENDERING, "Static", SS_LEFT | WS_GROUP, 65, 48, 132, 17
-    CONTROL         "&Help", IDC_MOREINFO, "Button", BS_PUSHBUTTON | WS_TABSTOP, 202, 49, 50, 14
-    CONTROL         "&Disable hardware 3D rendering on this monitor", IDC_DISABLEHW, "Button", BS_AUTOCHECKBOX | WS_TABSTOP, 19, 71, 215, 10
-    CONTROL         "Monitor usage", IDC_SCREENUSAGEBOX, "Button", BS_GROUPBOX, 13, 94, 244, 44
-    CONTROL         "Display &screen saver on this monitor", IDC_RENDER, "Button", BS_AUTORADIOBUTTON, 19, 107, 200, 10
-    CONTROL         "Display &nothing on this monitor", IDC_LEAVEBLACK, "Button", BS_AUTORADIOBUTTON, 19, 120, 200, 10
-    CONTROL         "Display mode", IDC_DISPLAYMODEBOX, "Button", BS_GROUPBOX, 13, 146, 244, 55
-    CONTROL         "Display &mode for this video adapter:", IDC_MODESSTATIC, "Static", SS_LEFT | WS_GROUP, 19, 158, 126, 8
-    CONTROL         "", IDC_MODESCOMBO, "ComboBox", CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP, 152, 156, 100, 133
-    CONTROL         "Note: The Automatic display mode finds a mode that works well with your current screen saver settings and video adapter.", IDC_DISPLAYMODENOTE, "Static", SS_LEFT | WS_GROUP, 19, 173, 232, 22
-    CONTROL         "Automatic", IDC_AUTOMATIC, "Static", SS_LEFT | NOT WS_VISIBLE | WS_GROUP, 193, 182, 32, 8
-    CONTROL         "%d by %d, %d bit color", IDC_MODEFMT, "Static", SS_LEFT | NOT WS_VISIBLE | WS_GROUP, 22, 221, 71, 8
-    CONTROL         "OK", IDOK, "Button", BS_DEFPUSHBUTTON | WS_TABSTOP, 159, 216, 50, 14
-    CONTROL         "Cancel", IDCANCEL, "Button", BS_PUSHBUTTON | WS_TABSTOP, 213, 216, 50, 14
+    CONTROL         "Monitor %d", IDC_TABNAMEFMT, CTL_STATIC, SS_LEFT | NOT WS_VISIBLE | WS_GROUP, 214, 8, 32, 8
+    CONTROL         "Video adapter", 65535, CTL_BUTTON, BS_GROUPBOX, 13, 23, 244, 65
+    CONTROL         "Name:", 65535, CTL_STATIC, SS_LEFT | WS_GROUP, 19, 35, 40, 8
+    CONTROL         "", IDC_ADAPTERNAME, CTL_STATIC, SS_LEFT | WS_GROUP, 65, 35, 168, 8
+    CONTROL         "Rendering:", 65535, CTL_STATIC, SS_LEFT | WS_GROUP, 19, 48, 40, 8
+    CONTROL         "", IDC_RENDERING, CTL_STATIC, SS_LEFT | WS_GROUP, 65, 48, 132, 17
+    CONTROL         "&Help", IDC_MOREINFO, CTL_BUTTON, BS_PUSHBUTTON | WS_TABSTOP, 202, 49, 50, 14
+    CONTROL         "&Disable hardware 3D rendering on this monitor", IDC_DISABLEHW, CTL_BUTTON, BS_AUTOCHECKBOX | WS_TABSTOP, 19, 71, 215, 10
+    CONTROL         "Monitor usage", IDC_SCREENUSAGEBOX, CTL_BUTTON, BS_GROUPBOX, 13, 94, 244, 44
+    CONTROL         "Display &screen saver on this monitor", IDC_RENDER, CTL_BUTTON, BS_AUTORADIOBUTTON, 19, 107, 200, 10
+    CONTROL         "Display &nothing on this monitor", IDC_LEAVEBLACK, CTL_BUTTON, BS_AUTORADIOBUTTON, 19, 120, 200, 10
+    CONTROL         "Display mode", IDC_DISPLAYMODEBOX, CTL_BUTTON, BS_GROUPBOX, 13, 146, 244, 55
+    CONTROL         "Display &mode for this video adapter:", IDC_MODESSTATIC, CTL_STATIC, SS_LEFT | WS_GROUP, 19, 158, 126, 8
+    CONTROL         "", IDC_MODESCOMBO, CTL_COMBOBOX, CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP, 152, 156, 100, 133
+    CONTROL         "Note: The Automatic display mode finds a mode that works well with your current screen saver settings and video adapter.", IDC_DISPLAYMODENOTE, CTL_STATIC, SS_LEFT | WS_GROUP, 19, 173, 232, 22
+    CONTROL         "Automatic", IDC_AUTOMATIC, CTL_STATIC, SS_LEFT | NOT WS_VISIBLE | WS_GROUP, 193, 182, 32, 8
+    CONTROL         "%d by %d, %d bit color", IDC_MODEFMT, CTL_STATIC, SS_LEFT | NOT WS_VISIBLE | WS_GROUP, 22, 221, 71, 8
+    CONTROL         "OK", IDOK, CTL_BUTTON, BS_DEFPUSHBUTTON | WS_TABSTOP, 159, 216, 50, 14
+    CONTROL         "Cancel", IDCANCEL, CTL_BUTTON, BS_PUSHBUTTON | WS_TABSTOP, 213, 216, 50, 14
     CONTROL         "Tab1", IDC_MONITORSTAB, "SysTabControl32", WS_TABSTOP, 7, 7, 256, 201
 END
 
