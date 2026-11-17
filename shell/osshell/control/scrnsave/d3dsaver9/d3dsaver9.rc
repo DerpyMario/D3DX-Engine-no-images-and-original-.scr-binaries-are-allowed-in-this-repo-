@@ -12,6 +12,8 @@
 //       .mui satellites.  They are the same in Aurora, Bubbles (Windows Vista
 //       RTM) and 3D Text (Service Pack 1), except for the dialog font: define
 //       D3DSAVER9_SP1 before including this file to get the newer one.
+//       Windows Energy (ssBranded) ships the strings only: define
+//       D3DSAVER9_NO_DIALOGS to leave the dialogs out.
 //
 //       Only CONTROL statements are used so that the compiled templates match
 //       the originals bit for bit (control order, styles and the 0xFFFF id of
@@ -28,6 +30,8 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 #else
 #define D3DSAVER9_DLGFONT   8, "MS Shell Dlg", 0, 0, 0x0
 #endif
+
+#ifndef D3DSAVER9_NO_DIALOGS
 
 IDD_SINGLEMONITORSETTINGS DIALOGEX 0, 0, 255, 170
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
@@ -77,6 +81,8 @@ BEGIN
     CONTROL         "Cancel", IDCANCEL, "Button", BS_PUSHBUTTON | WS_TABSTOP, 213, 216, 50, 14
     CONTROL         "Tab1", IDC_MONITORSTAB, "SysTabControl32", WS_TABSTOP, 7, 7, 256, 201
 END
+
+#endif // D3DSAVER9_NO_DIALOGS
 
 STRINGTABLE
 BEGIN

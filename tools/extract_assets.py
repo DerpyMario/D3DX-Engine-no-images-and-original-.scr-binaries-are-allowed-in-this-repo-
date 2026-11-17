@@ -161,6 +161,17 @@ ASSETS = {
         ("JPG", 102, "raw", "text3d/res/texture.jpg"),
         ("JPG", 103, "raw", "text3d/res/environment.jpg"),
     ],
+    "ssbranded.scr":
+        [(14, "IDI_MAIN_ICON", "ico", "branded/res/ssbranded.ico"),
+         (10, 10001, "raw", "branded/res/crosswipe.tga")] +
+        [(10, 10003 + n, "raw", "branded/res/logo%02d.tga" % n) for n in range(50)] +
+        [(10, 10055, "raw", "branded/res/msflarebgnd.tga")] +
+        [(10, 10056 + n, "raw", "branded/res/msflare%02d.tga" % n) for n in range(62)] +
+        [(10, 10119 + n, "raw", "branded/res/wipe%d.tga" % n) for n in range(5)] +
+        [(10, 10125 + n, "raw", "branded/res/aurora%d.tga" % n) for n in range(3)] +
+        [(10, 10130, "raw", "branded/res/flare.tga"),
+         (10, 10133, "raw", "branded/res/pill.tga"),
+         (10, 10153, "raw", "branded/res/unused.tga")],
     "logon.scr":
         [(2, "IDB_FLARE%02d" % n, "bmp", "logon/res/flare%02d.bmp" % n) for n in range(1, 46)] +
         [(2, "IDB_SMALLFLARE%02d" % n, "bmp", "logon/res/smallflare%02d.bmp" % n) for n in range(1, 46)],

@@ -1,0 +1,261 @@
+//-----------------------------------------------------------------------------
+// File: ssbranded.rc
+//
+// Desc: Resources of the Windows Energy screen saver (ssBranded.scr).
+//
+//       In the shipped product the language-neutral resources (media, icon,
+//       manifest, version) live in ssBranded.scr and the strings in
+//       en-US\ssBranded.scr.mui; this script builds all of them into the .scr.
+//
+//       The effects (fx\), meshes and key frame animations (media\) are text
+//       files and part of this source tree.  The pictures (Targa files) and
+//       the icon are NOT: run tools\extract_assets.py against your own copy
+//       of ssBranded.scr to create the res\ directory, or build with
+//       SCRNSAVE_NO_ASSETS defined (the screen saver then reports that it
+//       cannot find its textures).
+//
+//       Original object:
+//           shell\osshell\control\scrnsave\branded\src\objfre\amd64\ssbranded.res
+//-----------------------------------------------------------------------------
+#include <windows.h>
+#include "resource.h"
+
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+
+//-----------------------------------------------------------------------------
+// Effects
+//-----------------------------------------------------------------------------
+IDR_FX_FSBANNER                 RCDATA  "fx/FSBanner.fx"
+IDR_FX_LOGOGLOW                 RCDATA  "fx/LogoGlow.fx"
+IDR_FX_WIPE                     RCDATA  "fx/Wipe.fx"
+IDR_FX_AURORA                   RCDATA  "fx/Aurora.fx"
+IDR_FX_FLARE                    RCDATA  "fx/Flare.fx"
+IDR_FX_PILL                     RCDATA  "fx/Pill.fx"
+IDR_FX_POSTPROC                 RCDATA  "fx/PostProc.fx"
+IDR_FX_PP_COLORBLOOMH           RCDATA  "fx/PP_ColorBloomH.fx"
+IDR_FX_PP_COLORGBLURV           RCDATA  "fx/PP_ColorGBlurV.fx"
+IDR_FX_PP_COLORBRIGHTPASS       RCDATA  "fx/PP_ColorBrightPass.fx"
+IDR_FX_PP_COLORDOWNFILTER4      RCDATA  "fx/PP_ColorDownFilter4.fx"
+IDR_FX_PP_COLORUPFILTER         RCDATA  "fx/PP_ColorUpFilter.fx"
+IDR_FX_PP_COLORCOMBINE4         RCDATA  "fx/PP_ColorCombine4.fx"
+
+//-----------------------------------------------------------------------------
+// Meshes (DirectX .x, text format)
+//-----------------------------------------------------------------------------
+IDR_X_QUAD                      RCDATA  "media/quad.x"
+IDR_X_FLARE                     RCDATA  "media/flare.x"
+IDR_X_PILL                      RCDATA  "media/pill.x"
+
+//-----------------------------------------------------------------------------
+// Key frame animations (see CAnimation::Load)
+//-----------------------------------------------------------------------------
+IDR_ANIM_LOGO                   RCDATA  "media/logo.anim"
+IDR_ANIM_MSFLARE                RCDATA  "media/msflare.anim"
+IDR_ANIM_PILL1                  RCDATA  "media/pill1.anim"
+IDR_ANIM_PILL2_00               RCDATA  "media/pill2_00.anim"
+IDR_ANIM_PILL2_01               RCDATA  "media/pill2_01.anim"
+IDR_ANIM_PILL2_02               RCDATA  "media/pill2_02.anim"
+IDR_ANIM_PILL2_03               RCDATA  "media/pill2_03.anim"
+IDR_ANIM_PILL2_04               RCDATA  "media/pill2_04.anim"
+IDR_ANIM_PILL2_05               RCDATA  "media/pill2_05.anim"
+IDR_ANIM_PILL2_06               RCDATA  "media/pill2_06.anim"
+IDR_ANIM_PILL2_07               RCDATA  "media/pill2_07.anim"
+IDR_ANIM_PILL2_08               RCDATA  "media/pill2_08.anim"
+IDR_ANIM_PILL2_09               RCDATA  "media/pill2_09.anim"
+IDR_ANIM_XFORM                  RCDATA  "media/xform.anim"
+
+//-----------------------------------------------------------------------------
+// Pictures and icon (extracted from the original, see above)
+//-----------------------------------------------------------------------------
+#ifndef SCRNSAVE_NO_ASSETS
+
+// The original names its icon group "IDI_MAIN_ICON" (a string: its script
+// did not see the numeric IDI_MAIN_ICON of d3dsaver9res.h), so the window
+// class of D3DSaver9, which asks for icon 101, gets no icon.
+#undef IDI_MAIN_ICON
+IDI_MAIN_ICON                   ICON    "res/ssbranded.ico"
+
+IDR_TGA_CROSSWIPE               RCDATA  "res/crosswipe.tga"
+
+// the frames of the logo
+10003                           RCDATA  "res/logo00.tga"
+10004                           RCDATA  "res/logo01.tga"
+10005                           RCDATA  "res/logo02.tga"
+10006                           RCDATA  "res/logo03.tga"
+10007                           RCDATA  "res/logo04.tga"
+10008                           RCDATA  "res/logo05.tga"
+10009                           RCDATA  "res/logo06.tga"
+10010                           RCDATA  "res/logo07.tga"
+10011                           RCDATA  "res/logo08.tga"
+10012                           RCDATA  "res/logo09.tga"
+10013                           RCDATA  "res/logo10.tga"
+10014                           RCDATA  "res/logo11.tga"
+10015                           RCDATA  "res/logo12.tga"
+10016                           RCDATA  "res/logo13.tga"
+10017                           RCDATA  "res/logo14.tga"
+10018                           RCDATA  "res/logo15.tga"
+10019                           RCDATA  "res/logo16.tga"
+10020                           RCDATA  "res/logo17.tga"
+10021                           RCDATA  "res/logo18.tga"
+10022                           RCDATA  "res/logo19.tga"
+10023                           RCDATA  "res/logo20.tga"
+10024                           RCDATA  "res/logo21.tga"
+10025                           RCDATA  "res/logo22.tga"
+10026                           RCDATA  "res/logo23.tga"
+10027                           RCDATA  "res/logo24.tga"
+10028                           RCDATA  "res/logo25.tga"
+10029                           RCDATA  "res/logo26.tga"
+10030                           RCDATA  "res/logo27.tga"
+10031                           RCDATA  "res/logo28.tga"
+10032                           RCDATA  "res/logo29.tga"
+10033                           RCDATA  "res/logo30.tga"
+10034                           RCDATA  "res/logo31.tga"
+10035                           RCDATA  "res/logo32.tga"
+10036                           RCDATA  "res/logo33.tga"
+10037                           RCDATA  "res/logo34.tga"
+10038                           RCDATA  "res/logo35.tga"
+10039                           RCDATA  "res/logo36.tga"
+10040                           RCDATA  "res/logo37.tga"
+10041                           RCDATA  "res/logo38.tga"
+10042                           RCDATA  "res/logo39.tga"
+10043                           RCDATA  "res/logo40.tga"
+10044                           RCDATA  "res/logo41.tga"
+10045                           RCDATA  "res/logo42.tga"
+10046                           RCDATA  "res/logo43.tga"
+10047                           RCDATA  "res/logo44.tga"
+10048                           RCDATA  "res/logo45.tga"
+10049                           RCDATA  "res/logo46.tga"
+10050                           RCDATA  "res/logo47.tga"
+10051                           RCDATA  "res/logo48.tga"
+10052                           RCDATA  "res/logo49.tga"
+
+IDR_TGA_MSFLAREBGND             RCDATA  "res/msflarebgnd.tga"
+
+// the frames of the Microsoft flare
+10056                           RCDATA  "res/msflare00.tga"
+10057                           RCDATA  "res/msflare01.tga"
+10058                           RCDATA  "res/msflare02.tga"
+10059                           RCDATA  "res/msflare03.tga"
+10060                           RCDATA  "res/msflare04.tga"
+10061                           RCDATA  "res/msflare05.tga"
+10062                           RCDATA  "res/msflare06.tga"
+10063                           RCDATA  "res/msflare07.tga"
+10064                           RCDATA  "res/msflare08.tga"
+10065                           RCDATA  "res/msflare09.tga"
+10066                           RCDATA  "res/msflare10.tga"
+10067                           RCDATA  "res/msflare11.tga"
+10068                           RCDATA  "res/msflare12.tga"
+10069                           RCDATA  "res/msflare13.tga"
+10070                           RCDATA  "res/msflare14.tga"
+10071                           RCDATA  "res/msflare15.tga"
+10072                           RCDATA  "res/msflare16.tga"
+10073                           RCDATA  "res/msflare17.tga"
+10074                           RCDATA  "res/msflare18.tga"
+10075                           RCDATA  "res/msflare19.tga"
+10076                           RCDATA  "res/msflare20.tga"
+10077                           RCDATA  "res/msflare21.tga"
+10078                           RCDATA  "res/msflare22.tga"
+10079                           RCDATA  "res/msflare23.tga"
+10080                           RCDATA  "res/msflare24.tga"
+10081                           RCDATA  "res/msflare25.tga"
+10082                           RCDATA  "res/msflare26.tga"
+10083                           RCDATA  "res/msflare27.tga"
+10084                           RCDATA  "res/msflare28.tga"
+10085                           RCDATA  "res/msflare29.tga"
+10086                           RCDATA  "res/msflare30.tga"
+10087                           RCDATA  "res/msflare31.tga"
+10088                           RCDATA  "res/msflare32.tga"
+10089                           RCDATA  "res/msflare33.tga"
+10090                           RCDATA  "res/msflare34.tga"
+10091                           RCDATA  "res/msflare35.tga"
+10092                           RCDATA  "res/msflare36.tga"
+10093                           RCDATA  "res/msflare37.tga"
+10094                           RCDATA  "res/msflare38.tga"
+10095                           RCDATA  "res/msflare39.tga"
+10096                           RCDATA  "res/msflare40.tga"
+10097                           RCDATA  "res/msflare41.tga"
+10098                           RCDATA  "res/msflare42.tga"
+10099                           RCDATA  "res/msflare43.tga"
+10100                           RCDATA  "res/msflare44.tga"
+10101                           RCDATA  "res/msflare45.tga"
+10102                           RCDATA  "res/msflare46.tga"
+10103                           RCDATA  "res/msflare47.tga"
+10104                           RCDATA  "res/msflare48.tga"
+10105                           RCDATA  "res/msflare49.tga"
+10106                           RCDATA  "res/msflare50.tga"
+10107                           RCDATA  "res/msflare51.tga"
+10108                           RCDATA  "res/msflare52.tga"
+10109                           RCDATA  "res/msflare53.tga"
+10110                           RCDATA  "res/msflare54.tga"
+10111                           RCDATA  "res/msflare55.tga"
+10112                           RCDATA  "res/msflare56.tga"
+10113                           RCDATA  "res/msflare57.tga"
+10114                           RCDATA  "res/msflare58.tga"
+10115                           RCDATA  "res/msflare59.tga"
+10116                           RCDATA  "res/msflare60.tga"
+10117                           RCDATA  "res/msflare61.tga"
+
+IDR_TGA_WIPE0                   RCDATA  "res/wipe0.tga"
+IDR_TGA_WIPE1                   RCDATA  "res/wipe1.tga"
+IDR_TGA_WIPE2                   RCDATA  "res/wipe2.tga"
+IDR_TGA_WIPE3                   RCDATA  "res/wipe3.tga"
+IDR_TGA_WIPE4                   RCDATA  "res/wipe4.tga"
+IDR_TGA_AURORA0                 RCDATA  "res/aurora0.tga"
+IDR_TGA_AURORA1                 RCDATA  "res/aurora1.tga"
+IDR_TGA_AURORA2                 RCDATA  "res/aurora2.tga"
+IDR_TGA_FLARE                   RCDATA  "res/flare.tga"
+IDR_TGA_PILL                    RCDATA  "res/pill.tga"
+IDR_TGA_UNUSED                  RCDATA  "res/unused.tga"
+
+#endif // SCRNSAVE_NO_ASSETS
+
+1                               RT_MANIFEST "ssbranded.manifest"
+
+//-----------------------------------------------------------------------------
+// Strings
+//-----------------------------------------------------------------------------
+STRINGTABLE
+BEGIN
+    IDS_DESCRIPTION                 "Windows Energy"
+    IDS_CONFIG_TITLE                "Windows Energy Screen Saver"
+    IDS_CONFIG_NOOPTIONS            "No options"
+    IDS_CONFIG_NOOPTIONS_TEXT       "This screen saver has no options that you can set."
+END
+
+//-----------------------------------------------------------------------------
+// Error strings of the D3DSaver9 framework (no display settings dialogs)
+//-----------------------------------------------------------------------------
+#define D3DSAVER9_NO_DIALOGS
+#include "../../d3dsaver9/d3dsaver9.rc"
+
+//-----------------------------------------------------------------------------
+// Version
+//-----------------------------------------------------------------------------
+VS_VERSION_INFO VERSIONINFO
+FILEVERSION     6,0,6001,18000
+PRODUCTVERSION  6,0,6001,18000
+FILEFLAGSMASK   VS_FFI_FILEFLAGSMASK
+FILEFLAGS       0x0L
+FILEOS          VOS_NT_WINDOWS32
+FILETYPE        VFT_APP
+FILESUBTYPE     VFT2_UNKNOWN
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904B0"
+        BEGIN
+            VALUE "CompanyName",      "Microsoft Corporation"
+            VALUE "FileDescription",  "Windows Energy Screen Saver"
+            VALUE "FileVersion",      "6.0.6001.18000 (longhorn_rtm.080118-1840)"
+            VALUE "InternalName",     "ssBranded"
+            VALUE "LegalCopyright",   L"\x00a9 Microsoft Corporation. All rights reserved."
+            VALUE "OriginalFilename", "ssBranded"
+            VALUE "ProductName",      L"Microsoft\x00ae Windows\x00ae Operating System"
+            VALUE "ProductVersion",   "6.0.6001.18000"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x0409, 0x04B0
+    END
+END

@@ -1,0 +1,4 @@
+# The effect, mesh and animation files of Windows Energy are resources of the
+# screen saver: keep them byte for byte (CRLF line ends) as they were shipped.
+shell/osshell/control/scrnsave/branded/src/fx/*         -text
+shell/osshell/control/scrnsave/branded/src/media/*      -text
