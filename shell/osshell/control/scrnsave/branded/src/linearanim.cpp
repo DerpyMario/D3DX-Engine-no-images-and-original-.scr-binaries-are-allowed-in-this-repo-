@@ -17,7 +17,7 @@
 //-----------------------------------------------------------------------------
 HRESULT CLinearAnim::LoadKey( ANIM_KEY* pKey, int /*cchLine*/, char* pszLine, size_t* /*pcchLine*/ )
 {
-    UINT nFrame = 0;
+    int nFrame = 0;
 
     if( m_eType == KEY_ROTPOS )
     {
