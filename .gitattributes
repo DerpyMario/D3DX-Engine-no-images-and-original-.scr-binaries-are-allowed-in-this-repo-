@@ -2,3 +2,7 @@
 # screen saver: keep them byte for byte (CRLF line ends) as they were shipped.
 shell/osshell/control/scrnsave/branded/src/fx/*         -text
 shell/osshell/control/scrnsave/branded/src/media/*      -text
+
+# The side-by-side manifests of the Windows XP / Server 2003 screen savers
+# are resources too: keep them byte for byte (CRLF line ends).
+winxp/**/*.manifest                                     -text

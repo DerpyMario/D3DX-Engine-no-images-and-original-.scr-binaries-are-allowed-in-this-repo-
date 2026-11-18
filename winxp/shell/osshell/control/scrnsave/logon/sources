@@ -1,0 +1,34 @@
+#
+# Reconstructed NT build file (build.exe / makefile.def).  It records how the
+# original was built, as far as the symbol file shows it: target name,
+# objects, libraries and output directory (obj\amd64).  It is not used by the
+# CMake build of this repository.
+#
+# Output: d:\nt\shell\osshell\control\scrnsave\logon\obj\amd64\logon.scr
+#
+TARGETNAME=logon
+TARGETTYPE=PROGRAM
+TARGETEXT=scr
+UMTYPE=windows
+UMENTRY=main
+
+USE_MSVCRT=1
+
+C_DEFINES=$(C_DEFINES) -DUNICODE -D_UNICODE
+
+# the side-by-side manifest (resource 123, see generic.rc)
+SXS_MANIFEST_RESOURCE_ID=123
+
+SOURCES=\
+    generic.rc \
+    logon.c
+
+TARGETLIBS=\
+    $(SDK_LIB_PATH)\scrnsavw.lib                    \
+    $(SHELL_LIB_PATH)\shlwapip.lib                  \
+    $(SDK_LIB_PATH)\ntdll.lib                       \
+    $(SDK_LIB_PATH)\comctl32.lib                    \
+    $(SDK_LIB_PATH)\gdi32.lib                       \
+    $(SDK_LIB_PATH)\user32.lib                      \
+    $(SDK_LIB_PATH)\advapi32.lib                    \
+    $(SDK_LIB_PATH)\kernel32.lib

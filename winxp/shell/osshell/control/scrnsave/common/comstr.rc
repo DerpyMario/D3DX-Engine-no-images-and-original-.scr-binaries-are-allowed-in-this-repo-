@@ -1,0 +1,20 @@
+/*-----------------------------------------------------------------------------
+ * File: comstr.rc
+ *
+ * Desc: The strings every classic GDI screen saver has (see comstr.h).
+ *       Included by the resource script of each saver, which defines
+ *       SAVER_APPNAME (the control.ini section) first.
+ *---------------------------------------------------------------------------*/
+STRINGTABLE
+BEGIN
+    idsIniFile          "control.ini"
+    idsScreenSaver      "ScreenSaver"
+    idsAppName          SAVER_APPNAME
+END
+
+STRINGTABLE
+BEGIN
+    idsNoHelpMemory     "Your computer does not have enough available memory to display Help. To increase available memory, quit one or more programs."
+    idsHelpFile         "display.hlp"
+    idsScreenSaverTitle "Screen Saver"
+END

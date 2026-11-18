@@ -1,0 +1,84 @@
+/*-----------------------------------------------------------------------------
+ * File: stars.rc
+ *
+ * Desc: Resources of the Starfield screen saver (ssstars.scr) of Windows
+ *       Server 2003 / Windows XP x64.
+ *
+ *       The icon is NOT part of this source tree: run tools/extract_assets.py
+ *       against your own copy of ssstars.scr, or build with
+ *       SCRNSAVE_NO_ASSETS defined.
+ *---------------------------------------------------------------------------*/
+#include <windows.h>
+#include <commctrl.h>
+#include <scrnsave.h>
+#include "../common/comstr.h"
+#include "stars.h"
+
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+
+#ifndef SCRNSAVE_NO_ASSETS
+ID_APP                  ICON    "res/stars.ico"
+#endif
+
+CREATEPROCESS_MANIFEST_RESOURCE_ID RT_MANIFEST "../common/windowsscreensaver.manifest"
+
+DLG_SCRNSAVECONFIGURE DIALOG 8, 16, 202, 80
+STYLE WS_POPUP | WS_CAPTION | WS_SYSMENU | DS_MODALFRAME | DS_CONTEXTHELP
+CAPTION "Starfield Simulation Setup"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    DEFPUSHBUTTON   "OK", IDOK, 158, 8, 40, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 158, 26, 40, 14
+    GROUPBOX        "&Warp Speed", -1, 4, 4, 150, 36
+    LTEXT           "Slow", ID_SLOW, 8, 16, 32, 14
+    RTEXT           "Fast", ID_FAST, 114, 16, 32, 14
+    SCROLLBAR       ID_SPEED, 8, 24, 138, 12, WS_GROUP | WS_TABSTOP
+    GROUPBOX        "Starfield &Density", -1, 4, 43, 150, 30
+    LTEXT           "Number of stars (10-200)", ID_DENSITY_LABEL, 8, 57, 92, 14
+    EDITTEXT        ID_DENSITY, 106, 54, 31, 12
+    CONTROL         "", ID_DENSITYARROW, UPDOWN_CLASS,
+                    UDS_WRAP | UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_ARROWKEYS | WS_TABSTOP,
+                    129, 54, 8, 12
+END
+
+STRINGTABLE
+BEGIN
+    IDS_DESCRIPTION     "Starfield"
+END
+
+STRINGTABLE
+BEGIN
+    idsName             "Stars"
+END
+
+#define SAVER_APPNAME   "Screen Saver.Stars"
+#include "../common/comstr.rc"
+
+VS_VERSION_INFO VERSIONINFO
+FILEVERSION     5,2,3790,1830
+PRODUCTVERSION  5,2,3790,1830
+FILEFLAGSMASK   VS_FFI_FILEFLAGSMASK
+FILEFLAGS       0x0L
+FILEOS          VOS_NT_WINDOWS32
+FILETYPE        VFT_APP
+FILESUBTYPE     VFT2_UNKNOWN
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904B0"
+        BEGIN
+            VALUE "CompanyName",      "Microsoft Corporation"
+            VALUE "FileDescription",  "Starfield Screen Saver"
+            VALUE "FileVersion",      "5.2.3790.1830 (srv03_sp1_rtm.050324-1447)"
+            VALUE "InternalName",     "ssstars"
+            VALUE "LegalCopyright",   L"\x00a9 Microsoft Corporation. All rights reserved."
+            VALUE "OriginalFilename", "ssstars"
+            VALUE "ProductName",      L"Microsoft\x00ae Windows\x00ae Operating System"
+            VALUE "ProductVersion",   "5.2.3790.1830"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x0409, 0x04B0
+    END
+END

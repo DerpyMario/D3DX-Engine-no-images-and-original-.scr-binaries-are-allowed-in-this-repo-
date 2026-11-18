@@ -1,0 +1,93 @@
+/*-----------------------------------------------------------------------------
+ * File: generic.rc
+ *
+ * Desc: Resources of the logo screen saver (logon.scr) of Windows Server
+ *       2003 / Windows XP x64.
+ *
+ *       The bitmaps and icons are NOT part of this source tree.  Run
+ *       tools/extract_assets.py against your own copy of logon.scr to create
+ *       the res/ directory, or build with SCRNSAVE_NO_ASSETS defined (the
+ *       saver then shows a black 50 x 32 window instead of the logo).
+ *
+ *       Original object:
+ *           d:\nt\shell\osshell\control\scrnsave\logon\obj\amd64\generic.res
+ *---------------------------------------------------------------------------*/
+#include <windows.h>
+#include <scrnsave.h>
+#include "resource.h"
+
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+
+#ifndef SCRNSAVE_NO_ASSETS
+IDB_LOGO_STANDARD       BITMAP  "res/standard.bmp"
+IDB_LOGO_PROFESSIONAL   BITMAP  "res/professional.bmp"
+IDB_LOGO_ENTERPRISE     BITMAP  "res/enterprise.bmp"
+IDB_LOGO_DATACENTER     BITMAP  "res/datacenter.bmp"
+IDB_LOGO_HOME           BITMAP  "res/home.bmp"
+IDB_LOGO_EMBEDDED       BITMAP  "res/embedded.bmp"
+IDB_LOGO_SMALLBUSINESS  BITMAP  "res/smallbusiness.bmp"
+IDB_LOGO_WEB            BITMAP  "res/web.bmp"
+IDB_LOGO_TABLETPC       BITMAP  "res/tabletpc.bmp"
+IDB_LOGO_APPLIANCE      BITMAP  "res/appliance.bmp"
+
+IDI_LOGON_16COLOR       ICON    "res/logon16.ico"
+IDI_LOGON               ICON    "res/logon.ico"
+#endif
+
+IDR_SXS_MANIFEST        RT_MANIFEST "../common/screensavers.manifest"
+
+/*-----------------------------------------------------------------------------
+ * Configuration "dialog": an empty template, see ScreenSaverConfigureDialog()
+ *---------------------------------------------------------------------------*/
+DLG_SCRNSAVECONFIGURE DIALOG 0, 0, 0, 0
+STYLE WS_POPUP | WS_CAPTION | WS_SYSMENU | DS_MODALFRAME
+CAPTION "Logon Screen Saver"
+FONT 8, "MS Shell Dlg"
+BEGIN
+END
+
+/*-----------------------------------------------------------------------------
+ * Strings.  IDS_DESCRIPTION holds two names separated by a NUL character:
+ * servers show the first, workstations the second.
+ *---------------------------------------------------------------------------*/
+STRINGTABLE
+BEGIN
+    IDS_DESCRIPTION     "Windows Server 2003\0Windows XP"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_NOOPTIONS       "This screen saver has no options that you can set."
+END
+
+/*-----------------------------------------------------------------------------
+ * Version
+ *---------------------------------------------------------------------------*/
+VS_VERSION_INFO VERSIONINFO
+FILEVERSION     5,2,3790,3959
+PRODUCTVERSION  5,2,3790,3959
+FILEFLAGSMASK   VS_FFI_FILEFLAGSMASK
+FILEFLAGS       0x0L
+FILEOS          VOS_NT_WINDOWS32
+FILETYPE        VFT_APP
+FILESUBTYPE     VFT2_UNKNOWN
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904B0"
+        BEGIN
+            VALUE "CompanyName",      "Microsoft Corporation"
+            VALUE "FileDescription",  "Logon Screen Saver"
+            VALUE "FileVersion",      "5.2.3790.3959 (srv03_sp2_rtm.070216-1710)"
+            VALUE "InternalName",     "logon"
+            VALUE "LegalCopyright",   L"\x00a9 Microsoft Corporation. All rights reserved."
+            VALUE "OriginalFilename", "logon"
+            VALUE "ProductName",      L"Microsoft\x00ae Windows\x00ae Operating System"
+            VALUE "ProductVersion",   "5.2.3790.3959"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x0409, 0x04B0
+    END
+END
