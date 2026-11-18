@@ -1,0 +1,26 @@
+#
+# Reconstructed NT build file (build.exe / makefile.def).  It is not used by
+# the CMake build of this repository.  The symbol file of this screen saver
+# is not published: the target name and the libraries are those of the
+# binary, the directory and source names are chosen by the reconstruction.
+# The Blank screen saver does not use the screen saver library and is an
+# ANSI program.
+#
+# Output: scrnsave.scr  ("Default Screen Saver")
+#
+TARGETNAME=scrnsave
+TARGETTYPE=PROGRAM
+TARGETEXT=scr
+UMTYPE=windows
+UMENTRY=winmain
+
+USE_MSVCRT=1
+
+SOURCES=\
+    blank.rc            \
+    blank.c
+
+TARGETLIBS=\
+    $(SDK_LIB_PATH)\gdi32.lib                       \
+    $(SDK_LIB_PATH)\user32.lib                      \
+    $(SDK_LIB_PATH)\kernel32.lib

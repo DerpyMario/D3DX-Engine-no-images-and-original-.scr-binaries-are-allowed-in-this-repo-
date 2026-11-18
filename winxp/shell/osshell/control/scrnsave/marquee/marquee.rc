@@ -1,0 +1,91 @@
+/*-----------------------------------------------------------------------------
+ * File: marquee.rc
+ *
+ * Desc: Resources of the Marquee screen saver (ssmarque.scr) of Windows
+ *       Server 2003 / Windows XP x64.
+ *
+ *       The icon is NOT part of this source tree: run tools/extract_assets.py
+ *       against your own copy of ssmarque.scr, or build with
+ *       SCRNSAVE_NO_ASSETS defined.
+ *---------------------------------------------------------------------------*/
+#include <windows.h>
+#include <scrnsave.h>
+#include "../common/comstr.h"
+#include "marquee.h"
+
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+
+#ifndef SCRNSAVE_NO_ASSETS
+ID_APP                  ICON    "res/marquee.ico"
+#endif
+
+CREATEPROCESS_MANIFEST_RESOURCE_ID RT_MANIFEST "../common/screensavers.manifest"
+
+DLG_SCRNSAVECONFIGURE DIALOG 8, 16, 286, 116
+STYLE WS_POPUP | WS_CAPTION | WS_SYSMENU | DS_MODALFRAME | DS_CONTEXTHELP
+CAPTION "Marquee Setup"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    DEFPUSHBUTTON   "OK", IDOK, 214, 8, 64, 14, WS_GROUP
+    PUSHBUTTON      "Cancel", IDCANCEL, 214, 26, 64, 14, WS_GROUP
+    PUSHBUTTON      "&Format Text...", ID_FORMATTEXT, 214, 44, 64, 14, WS_GROUP
+    GROUPBOX        "Position", -1, 4, 4, 112, 28, WS_GROUP
+    RADIOBUTTON     "&Centered", ID_CENTERED, 8, 15, 50, 12, WS_GROUP | WS_TABSTOP
+    RADIOBUTTON     "&Random", ID_RANDOM, 62, 15, 50, 12, NOT WS_TABSTOP
+    LTEXT           "&Background Color:", ID_BGCOLOR_LABEL, 4, 38, 68, 10
+    COMBOBOX        ID_BGCOLOR, 74, 36, 42, 50,
+                    CBS_DROPDOWNLIST | CBS_OWNERDRAWFIXED | WS_VSCROLL | WS_GROUP | WS_TABSTOP
+    GROUPBOX        "Spee&d", -1, 118, 4, 91, 44, WS_GROUP
+    LTEXT           "Slow", ID_SLOW, 123, 18, 16, 8
+    LTEXT           "Fast", ID_FAST, 190, 18, 15, 8
+    SCROLLBAR       ID_SPEED, 123, 33, 82, 12, WS_GROUP | WS_TABSTOP
+    LTEXT           "Te&xt:", ID_TEXT_LABEL, 4, 53, 18, 9
+    EDITTEXT        ID_TEXT, 32, 51, 177, 12, ES_AUTOHSCROLL | WS_GROUP
+    GROUPBOX        "Text Example", -1, 4, 64, 205, 50, WS_GROUP
+    CONTROL         "", ID_SHOWTEXT, "showtext", WS_BORDER | WS_GROUP, 8, 78, 197, 30
+END
+
+STRINGTABLE
+BEGIN
+    IDS_DESCRIPTION     "Marquee"
+END
+
+STRINGTABLE
+BEGIN
+    idsName             "Marquee"
+    idsDefaultText      "Windows NT %d.%d"
+    idsFormatText       "Format Text"
+    idsDefaultFont      "Tahoma"
+END
+
+#define SAVER_APPNAME   "Screen Saver.Marquee"
+#include "../common/comstr.rc"
+
+VS_VERSION_INFO VERSIONINFO
+FILEVERSION     5,2,3790,1830
+PRODUCTVERSION  5,2,3790,1830
+FILEFLAGSMASK   VS_FFI_FILEFLAGSMASK
+FILEFLAGS       0x0L
+FILEOS          VOS_NT_WINDOWS32
+FILETYPE        VFT_APP
+FILESUBTYPE     VFT2_UNKNOWN
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904B0"
+        BEGIN
+            VALUE "CompanyName",      "Microsoft Corporation"
+            VALUE "FileDescription",  "Marquee Screen Saver"
+            VALUE "FileVersion",      "5.2.3790.1830 (srv03_sp1_rtm.050324-1447)"
+            VALUE "InternalName",     "ssmarque"
+            VALUE "LegalCopyright",   L"\x00a9 Microsoft Corporation. All rights reserved."
+            VALUE "OriginalFilename", "ssmarque"
+            VALUE "ProductName",      L"Microsoft\x00ae Windows\x00ae Operating System"
+            VALUE "ProductVersion",   "5.2.3790.1830"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x0409, 0x04B0
+    END
+END

@@ -1,0 +1,15 @@
+#
+# Reconstructed NT build file: shell\osshell\control\scrnsave (Windows Server
+# 2003 / Windows XP x64).  The library first, then the screen savers.
+#
+# logon, flowerbox, pipes, text3d and d3dsaver are the directory names the
+# symbol files record; the others are chosen by the reconstruction.
+#
+DIRS= \
+    common\scrnsavw \
+    blank           \
+    stars           \
+    mystify         \
+    bezier          \
+    marquee         \
+    logon

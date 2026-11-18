@@ -1,0 +1,15 @@
+#
+# Reconstructed NT build file (build.exe / makefile.def).  It is not used by
+# the CMake build of this repository.
+#
+# Output: scrnsavw.lib, the UNICODE screen saver library, published to
+#         $(SDK_LIB_PATH) (D:\nt\public\sdk\lib\amd64\scrnsavw.lib)
+#
+TARGETNAME=scrnsavw
+TARGETTYPE=LIBRARY
+TARGETPATH=$(SDK_LIB_DEST)
+
+C_DEFINES=$(C_DEFINES) -DUNICODE -D_UNICODE
+
+SOURCES=\
+    scrnsave.c
