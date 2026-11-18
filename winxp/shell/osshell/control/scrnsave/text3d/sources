@@ -1,0 +1,37 @@
+#
+# Reconstructed NT build file (build.exe / makefile.def).  It records how the
+# original was built, as far as the symbol file shows it: target name,
+# objects, libraries and output directory (obj\i386).  It is not used by the
+# CMake build of this repository.
+#
+# Output: shell\osshell\control\scrnsave\text3d\obj\i386\sstext3d.scr
+#         (3D Text, x86 only; installed as wsstext3d.scr on x64)
+#
+TARGETNAME=sstext3d
+TARGETTYPE=PROGRAM
+TARGETEXT=scr
+UMTYPE=windows
+UMENTRY=winmain
+
+C_DEFINES=$(C_DEFINES) -DUNICODE -D_UNICODE
+
+INCLUDES=..\d3dsaver
+
+SOURCES=\
+    text3d.rc           \
+    text3d.cpp
+
+# d3dx8.lib and d3d8rgb.lib are static libraries (D3DX utility library and
+# the software rasterizer of the DirectX 8 DDK)
+TARGETLIBS=\
+    ..\d3dsaver\$(O)\d3dsaver.lib                           \
+    $(SDK_LIB_PATH)\d3d8.lib                                \
+    $(SDK_LIB_PATH)\d3dx8.lib                               \
+    $(PROJECT_ROOT)\..\public\internal\multimedia\lib\$(O)\d3d8rgb.lib \
+    $(SDK_LIB_PATH)\comctl32.lib                            \
+    $(SDK_LIB_PATH)\comdlg32.lib                            \
+    $(SDK_LIB_PATH)\winmm.lib                               \
+    $(SDK_LIB_PATH)\gdi32.lib                               \
+    $(SDK_LIB_PATH)\user32.lib                              \
+    $(SDK_LIB_PATH)\advapi32.lib                            \
+    $(SDK_LIB_PATH)\kernel32.lib
