@@ -1,0 +1,44 @@
+#
+# Reconstructed NT build file (build.exe / makefile.def).  The binary has no
+# symbol file: the object names below are the ones of this reconstruction,
+# the rest follows the other Direct3D screen savers of the same build.
+#
+# Output: shell\osshell\control\scrnsave\3dfo\obj\i386\ss3dfo.scr
+#         (3D Flying Objects, x86 only; installed as wss3dfo.scr on x64)
+#
+TARGETNAME=ss3dfo
+TARGETTYPE=PROGRAM
+TARGETEXT=scr
+UMTYPE=windows
+UMENTRY=winmain
+
+C_DEFINES=$(C_DEFINES) -DUNICODE -D_UNICODE
+
+INCLUDES=..\d3dsaver
+
+SOURCES=\
+    ss3dfo.rc           \
+    ss3dfo.cpp          \
+    splash.cpp          \
+    explode.cpp         \
+    twist.cpp           \
+    ribbon.cpp          \
+    flag.cpp            \
+    winlogo.cpp         \
+    mesh.cpp            \
+    texture.cpp
+
+# d3dx8.lib and d3d8rgb.lib are static libraries (D3DX utility library and
+# the software rasterizer of the DirectX 8 DDK)
+TARGETLIBS=\
+    ..\d3dsaver\$(O)\d3dsaver.lib                           \
+    $(SDK_LIB_PATH)\d3d8.lib                                \
+    $(SDK_LIB_PATH)\d3dx8.lib                               \
+    $(PROJECT_ROOT)\..\public\internal\multimedia\lib\$(O)\d3d8rgb.lib \
+    $(SDK_LIB_PATH)\comctl32.lib                            \
+    $(SDK_LIB_PATH)\comdlg32.lib                            \
+    $(SDK_LIB_PATH)\winmm.lib                               \
+    $(SDK_LIB_PATH)\gdi32.lib                               \
+    $(SDK_LIB_PATH)\user32.lib                              \
+    $(SDK_LIB_PATH)\advapi32.lib                            \
+    $(SDK_LIB_PATH)\kernel32.lib

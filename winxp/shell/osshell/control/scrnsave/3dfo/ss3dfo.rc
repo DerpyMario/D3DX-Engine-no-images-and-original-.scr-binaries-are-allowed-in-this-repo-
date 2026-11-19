@@ -1,0 +1,135 @@
+//-----------------------------------------------------------------------------
+// File: ss3dfo.rc
+//
+// Desc: Resources of the 3D Flying Objects screen saver (ss3dfo.scr) of
+//       Windows XP / Windows Server 2003 (x86).
+//
+//       The icon and the three pictures are NOT part of this source tree.
+//       Run tools/extract_assets.py against your own copy of the screen
+//       saver to create the res/ directory, or build with SCRNSAVE_NO_ASSETS
+//       defined (the Windows Logo style then draws untextured, and the
+//       Textured Flag style needs a picture file).
+//-----------------------------------------------------------------------------
+#include <windows.h>
+#include <commctrl.h>
+#include "resource.h"
+
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+
+#ifndef SCRNSAVE_NO_ASSETS
+IDI_MAIN_ICON           ICON    "res/ss3dfo.ico"
+IDR_FLAG_JPG            JPG     "res/flag.jpg"
+IDR_LOGO_DDS            DDS     "res/logo.dds"
+IDR_LOGO_PNG            PNG     "res/logo.png"
+#endif
+
+CREATEPROCESS_MANIFEST_RESOURCE_ID RT_MANIFEST "ss3dfo.manifest"
+
+#include "../d3dsaver/d3dsaver.rc"
+
+//-----------------------------------------------------------------------------
+// Settings dialog
+//-----------------------------------------------------------------------------
+DLG_SCRNSAVECONFIGURE DIALOG 28, 25, 251, 130
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "3D Flying Objects Settings"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "OK", IDOK, CTL_BUTTON, BS_DEFPUSHBUTTON | WS_GROUP | WS_TABSTOP, 175, 4, 70, 14
+    CONTROL         "Cancel", IDCANCEL, CTL_BUTTON, BS_PUSHBUTTON | WS_GROUP | WS_TABSTOP, 175, 24, 70, 14
+    CONTROL         "Te&xture...", DLG_SETUP_TEXTURE, CTL_BUTTON, BS_PUSHBUTTON | WS_TABSTOP, 175, 44, 70, 15
+    CONTROL         "&Display Settings...", IDC_SCREENSETTINGS, CTL_BUTTON, BS_PUSHBUTTON | WS_TABSTOP, 175, 64, 70, 15
+    CONTROL         "Object", -1, CTL_BUTTON, BS_GROUPBOX, 5, 0, 165, 39
+    CONTROL         "S&tyle:", -1, CTL_STATIC, SS_LEFT | WS_GROUP, 20, 17, 27, 12
+    CONTROL         "", DLG_SETUP_TYPES, CTL_COMBOBOX, CBS_DROPDOWNLIST | WS_VSCROLL | WS_GROUP | WS_TABSTOP, 50, 15, 95, 86
+    CONTROL         "Color Usage", -1, CTL_BUTTON, BS_GROUPBOX, 5, 40, 165, 39
+    CONTROL         "&Color-cycling", DLG_SETUP_CYCLE, CTL_BUTTON, BS_AUTOCHECKBOX | BS_VCENTER | WS_GROUP | WS_TABSTOP, 20, 58, 60, 10
+    CONTROL         "&Smooth shading", DLG_SETUP_SMOOTH, CTL_BUTTON, BS_AUTOCHECKBOX | BS_VCENTER | WS_GROUP | WS_TABSTOP, 90, 58, 70, 10
+    CONTROL         "&Resolution", IDC_STATIC_TESS, CTL_BUTTON, BS_GROUPBOX, 5, 85, 117, 40
+    CONTROL         "Min", IDC_STATIC_TESS_MIN, CTL_STATIC, SS_LEFT | WS_GROUP, 21, 95, 15, 7
+    CONTROL         "Max", IDC_STATIC_TESS_MAX, CTL_STATIC, SS_LEFT | WS_GROUP, 91, 95, 15, 7
+    CONTROL         "Slider1", DLG_SETUP_TESSEL, "msctls_trackbar32", TBS_NOTICKS | WS_GROUP | WS_TABSTOP, 16, 105, 95, 15
+    CONTROL         "Si&ze", IDC_STATIC_SIZE, CTL_BUTTON, BS_GROUPBOX, 128, 85, 117, 40
+    CONTROL         "Min", IDC_STATIC_SIZE_MIN, CTL_STATIC, SS_LEFT | WS_GROUP, 136, 95, 15, 7
+    CONTROL         "Max", IDC_STATIC_SIZE_MAX, CTL_STATIC, SS_LEFT | WS_GROUP, 216, 95, 15, 7
+    CONTROL         "Slider1", DLG_SETUP_SIZE, "msctls_trackbar32", TBS_NOTICKS | WS_GROUP | WS_TABSTOP, 136, 105, 100, 15
+END
+
+STRINGTABLE
+BEGIN
+    IDS_DESCRIPTION             "3D Flying Objects"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_LOGO                    "Windows Logo"
+    IDS_EXPLODE                 "Explode"
+    IDS_RIBBON                  "Ribbon"
+    IDS_2RIBBONS                "Two Ribbons"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_SPLASH                  "Splash"
+    IDS_TWIST                   "Twist"
+    IDS_FLAG                    "Textured Flag"
+    IDS_SAVERNAME               "Screen Saver.3DFlyingObj"
+    IDS_OPTIONS                 "Options"
+    IDS_OBJTYPE                 "Type"
+    IDS_TEXTURE                 "Texture"
+    IDS_TEXTURE_FILE_OFFSET     "TextureFileOffset"
+    IDS_SIZE                    "Size"
+    IDS_TESSELATION             "Tesselation"
+    IDS_INIFILE                 "control.ini"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_WARNING                 "Warning"
+    IDS_ERROR                   "Error"
+    IDS_TEXTURE_SIZE            "The texture must not be larger than %ld by %ld pixels."
+    IDS_TEXTURE_INVALID         "The texture you selected is not valid."
+    IDS_BITMAP_INVALID          "Please select another texture for the screen saver.  %s is not valid."
+    IDS_START_FAILED            "Screen saver failed to start."
+    IDS_TEXTUREFILTER           "Texture files (*.bmp)"
+    IDS_TEXTUREDIALOGTITLE      "Choose Texture File"
+    IDS_BMP                     "BMP"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_DOTBMP                  ".BMP"
+    IDS_STARDOTBMP              "*.BMP"
+    IDS_RGB                     "RGB"
+    IDS_DOTRGB                  ".RGB"
+    IDS_STARDOTRGB              "*.RGB"
+END
+
+VS_VERSION_INFO VERSIONINFO
+FILEVERSION     5,2,3790,1830
+PRODUCTVERSION  5,2,3790,1830
+FILEFLAGSMASK   VS_FFI_FILEFLAGSMASK
+FILEFLAGS       0x0L
+FILEOS          VOS_NT_WINDOWS32
+FILETYPE        VFT_APP
+FILESUBTYPE     VFT2_UNKNOWN
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904B0"
+        BEGIN
+            VALUE "CompanyName",      "Microsoft Corporation"
+            VALUE "FileDescription",  "Direct3D Flying Objects Screen Saver"
+            VALUE "FileVersion",      "5.2.3790.1830 (srv03_sp1_rtm.050324-1447)"
+            VALUE "InternalName",     "Flying Objects"
+            VALUE "LegalCopyright",   L"\x00a9 Microsoft Corporation. All rights reserved."
+            VALUE "OriginalFilename", "Flying Objects"
+            VALUE "ProductName",      L"Microsoft\x00ae Windows\x00ae Operating System"
+            VALUE "ProductVersion",   "5.2.3790.1830"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x0409, 0x04B0
+    END
+END

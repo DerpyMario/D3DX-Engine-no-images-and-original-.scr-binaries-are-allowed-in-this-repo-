@@ -355,6 +355,18 @@ D3DXMATRIX* WINAPI D3DXMatrixOrthoLH( D3DXMATRIX *pOut, FLOAT w, FLOAT h, FLOAT 
     return pOut;
 }
 
+D3DXMATRIX* WINAPI D3DXMatrixOrthoOffCenterLH( D3DXMATRIX *pOut, FLOAT l, FLOAT r, FLOAT b, FLOAT t, FLOAT zn, FLOAT zf )
+{
+    D3DXMatrixIdentity( pOut );
+    pOut->_11 = 2.0f / (r - l);
+    pOut->_22 = 2.0f / (t - b);
+    pOut->_33 = 1.0f / (zf - zn);
+    pOut->_41 = (l + r) / (l - r);
+    pOut->_42 = (t + b) / (b - t);
+    pOut->_43 = zn / (zn - zf);
+    return pOut;
+}
+
 
 //===========================================================================
 // Matrix stack
