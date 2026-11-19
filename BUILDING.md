@@ -116,3 +116,53 @@ and the localisable resources were split off into `en-US\*.scr.mui`.  The
 `dirs` / `sources` / `makefile` files in the tree reconstruct that layout
 from the symbol files for reference; the CMake build builds all resources,
 the localisable ones included, into the `.scr` files.
+
+## Windows XP / Windows Server 2003
+
+The XP savers are a separate CMake project, `winxp/`.  They need no DirectX
+SDK: `d3d8.h` comes with MinGW-w64, and D3DX 8 with this repository
+(`external/d3dx8`).
+
+1. Extract the artwork of your own copies (it goes to `./assets/winxp`).
+   The x64 editions name the Direct3D savers `wss*.scr`; both names work, and
+   `logon.scr` / `sstext3d.scr` are told apart from the Vista files of the
+   same name by their version.
+
+   ```bash
+   python3 tools/extract_assets.py /path/to/xp/System32
+   ```
+
+2. Build.  The Direct3D 8 savers are 32-bit programs, so use the i686
+   toolchain to build everything:
+
+   ```bash
+   cmake -S winxp -B build-xp -G Ninja -DCMAKE_TOOLCHAIN_FILE=cmake/mingw-w64-i686.cmake -DCMAKE_BUILD_TYPE=Release
+   ```
+
+   ```bash
+   cmake --build build-xp
+   ```
+
+   The x86_64 toolchain builds the GDI savers as the x64 originals are
+   (`SCRNSAVE_D3D8` is then `OFF` by default):
+
+   ```bash
+   cmake -S winxp -B build-xp64 -G Ninja -DCMAKE_TOOLCHAIN_FILE=cmake/mingw-w64-x86_64.cmake -DCMAKE_BUILD_TYPE=Release
+   ```
+
+| Option               | Default            | Meaning                                                    |
+|----------------------|--------------------|------------------------------------------------------------|
+| `SCRNSAVE_ASSET_DIR` | `./assets/winxp`   | where `extract_assets.py` put the artwork                  |
+| `SCRNSAVE_NO_ASSETS` | `OFF`              | build without the artwork                                  |
+| `SCRNSAVE_D3D8`      | `ON` for 32-bit    | build the Direct3D 8 savers                                |
+| `DX8SDK_DIR`         | `$DX8SDK_DIR`      | Visual Studio only: an SDK with `d3d8.h` / `d3d8.lib`      |
+
+The output keeps the names of the original build (`ssflwbox.scr`,
+`sstext3d.scr`, `sspipes.scr`, `ss3dfo.scr`); rename them `wss*.scr` to
+install them next to the x64 GDI savers.  Without the artwork the savers
+have no icons, Windows logo shows nothing, 3D Text has no textures, Pipes
+cannot draw textured pipes with its default texture, and 3D Flying Objects
+has neither its flag texture nor its logo.
+
+The `dirs` / `sources` / `makefile` files below `winxp/` reconstruct the
+original `build.exe` layout (`obj\amd64` and `obj\i386` output).

@@ -1,0 +1,7 @@
+; Import library for the shlwapi.dll function the Windows XP logon screen
+; saver calls that is not exported by name before Windows Vista: IsOS (the
+; "shlwapip.lib" of the original build imports it by ordinal 437, as the
+; original logon.scr does).
+LIBRARY SHLWAPI.dll
+EXPORTS
+    IsOS @437 NONAME
