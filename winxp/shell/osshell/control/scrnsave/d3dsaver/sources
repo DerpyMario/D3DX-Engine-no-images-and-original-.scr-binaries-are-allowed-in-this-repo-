@@ -1,0 +1,20 @@
+#
+# Reconstructed NT build file (build.exe / makefile.def).  It records how the
+# original was built, as far as the symbol files show it: target name,
+# objects and output directory (obj\i386).  It is not used by the CMake build
+# of this repository.
+#
+# Output: shell\osshell\control\scrnsave\d3dsaver\obj\i386\d3dsaver.lib
+#
+# The library is linked into the four x86 Direct3D 8 screen savers (3D
+# FlowerBox, 3D Pipes, 3D Text and 3D Flying Objects).  No USE_* CRT switch:
+# the screen savers link the static single-threaded CRT (libc.lib).
+#
+TARGETNAME=d3dsaver
+TARGETTYPE=LIBRARY
+
+C_DEFINES=$(C_DEFINES) -DUNICODE -D_UNICODE
+
+SOURCES= \
+    d3dsaver.cpp \
+    dxutil.cpp

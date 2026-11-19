@@ -189,7 +189,7 @@ static BOOL CreateBlankWindow(void)
     wc.cbWndExtra    = 0;
     wc.hInstance     = hMainInstance;
     wc.hIcon         = NULL;
-    wc.hCursor       = (hwndPreview == NULL) ? NULL : LoadCursorA(NULL, IDC_ARROW);
+    wc.hCursor       = (hwndPreview == NULL) ? NULL : LoadCursorA(NULL, (LPCSTR)IDC_ARROW);
     wc.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
     wc.lpszClassName = szAppName;
     wc.lpszMenuName  = NULL;

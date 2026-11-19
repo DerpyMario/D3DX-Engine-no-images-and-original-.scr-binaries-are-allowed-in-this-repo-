@@ -1,8 +1,10 @@
-# Windows Vista screen savers – reconstructed source
+# Windows Vista and Windows XP screen savers – reconstructed source
 
 Readable, rebuildable C/C++ source, HLSL effects and resource scripts for the
-five Direct3D / GDI screen savers of Windows Vista (x64), reconstructed from
-the shipped binaries and their public symbol files.
+five Direct3D / GDI screen savers of Windows Vista (x64), and for the screen
+savers of Windows XP / Windows Server 2003 x64 ([below](#windows-xp--windows-server-2003)),
+reconstructed from the shipped binaries and, where they exist, their public
+symbol files.
 
 | Screen saver    | File            | Version          | Source directory (original build path)              |
 |-----------------|-----------------|------------------|-----------------------------------------------------|
@@ -79,13 +81,62 @@ fixed-function pipeline and have no shaders.
 * Under Wine, the rebuilt savers run like the originals (Windows Energy with
   the effect loader of the original, see [BUILDING.md](BUILDING.md)).
 
+## Windows XP / Windows Server 2003
+
+The screen savers of the x64 editions of Windows XP and Windows Server 2003
+(SP2), in `winxp/` with the same layout.  The GDI savers are x64 programs;
+the four Direct3D 8 savers are 32-bit programs that x64 Windows installs
+as `wss*.scr`.
+
+| Screen saver      | File (x64 edition)          | Version         | Source directory (below `winxp\shell\osshell\control\scrnsave`) |
+|-------------------|-----------------------------|-----------------|--------------------------------------------|
+| (Blank)           | `scrnsave.scr`              | 5.2.3790.1830   | `blank`                                    |
+| Starfield         | `ssstars.scr`               | 5.2.3790.1830   | `stars`                                    |
+| Mystify           | `ssmyst.scr`                | 5.2.3790.1830   | `mystify`                                  |
+| Beziers           | `ssbezier.scr`              | 5.2.3790.1830   | `bezier`                                   |
+| Marquee           | `ssmarque.scr`              | 5.2.3790.1830   | `marquee`                                  |
+| Windows logo      | `logon.scr`                 | 5.2.3790.3959   | `logon`                                    |
+| 3D FlowerBox      | `wssflwbox.scr` (x86)       | 5.2.3790.3959   | `flowerbox`                                |
+| 3D Text           | `wsstext3d.scr` (x86)       | 5.2.3790.3959   | `text3d`                                   |
+| 3D Pipes          | `wsspipes.scr` (x86)        | 5.2.3790.3959   | `pipes`                                    |
+| 3D Flying Objects | `wss3dfo.scr` (x86)         | 5.2.3790.1830   | `3dfo`                                     |
+
+| Library         | Source directory          | Used by                                        |
+|-----------------|---------------------------|------------------------------------------------|
+| `scrnsavw.lib`  | `common\scrnsavw`         | Starfield, Mystify, Beziers, Marquee, logo     |
+| `d3dsaver.lib`  | `d3dsaver`                | the four Direct3D 8 savers                     |
+| (`comstr.c`)    | `common`                  | Starfield, Mystify, Beziers, Marquee           |
+
+* Symbol files exist for `logon.scr` and three of the Direct3D savers
+  (FlowerBox, 3D Text, Pipes); their names are used as for Vista.  The
+  other savers have none: library code was identified by matching it
+  against the symbol-carrying binaries, and the remaining names follow the
+  OpenGL / Windows NT versions of the same savers where those are known,
+  or are chosen by the reconstruction.  Each file says which applies.
+* The Direct3D 8 savers link Microsoft's static D3DX 8 library, which is no
+  longer distributed: `external/d3dx8` is a clean-room implementation of
+  the part of its interface they call (see its README).  The software
+  rasterizer the originals register (`d3d8rgb.lib`, internal to the
+  Windows source tree) is left out (`NO_D3D8RGB`).
+* With windres, the resources are byte-identical to those of the originals
+  except for the letter case of control class names in some dialogs (as
+  for Vista).  The XP savers have not been run: no Wine was available to
+  test them.
+* My Pictures Slideshow (`ssmypics.scr`) is not reconstructed yet.
+
+See [BUILDING.md](BUILDING.md#windows-xp--windows-server-2003) for the build.
+
 ## Layout
 
 ```
-CMakeLists.txt                  build (MinGW-w64 or Visual Studio)
-cmake/                          MinGW-w64 toolchain file
-external/winbrand/              import library definition of winbrand.dll
-shell/osshell/control/scrnsave/ the sources, in their original places
+CMakeLists.txt                  build of the Vista savers (MinGW-w64 or Visual Studio)
+cmake/                          MinGW-w64 toolchain files (x86_64, i686)
+external/winbrand/              import library definition of winbrand.dll (Vista)
+external/d3dx8/                 clean-room D3DX 8 subset (XP Direct3D savers)
+external/shlwapip/              import library definition: IsOS by ordinal (XP logo)
+shell/osshell/control/scrnsave/ the Vista sources, in their original places
+winxp/CMakeLists.txt            build of the Windows XP / 2003 savers
+winxp/shell/osshell/control/scrnsave/  the Windows XP / 2003 sources
 tools/extract_assets.py         copies the artwork out of your originals
-tools/verify/                   differential tests against the originals
+tools/verify/                   differential tests against the originals (Vista)
 ```

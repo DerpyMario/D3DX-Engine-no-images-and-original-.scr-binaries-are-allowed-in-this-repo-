@@ -1,0 +1,54 @@
+#
+# Reconstructed NT build file (build.exe / makefile.def).  It records how the
+# original was built, as far as the symbol file shows it: target name,
+# objects, libraries and output directory (obj\i386).  It is not used by the
+# CMake build of this repository.
+#
+# Output: shell\osshell\control\scrnsave\pipes\obj\i386\sspipes.scr
+#         (3D Pipes, x86 only; installed as wsspipes.scr on x64)
+#
+TARGETNAME=sspipes
+TARGETTYPE=PROGRAM
+TARGETEXT=scr
+UMTYPE=windows
+UMENTRY=winmain
+
+C_DEFINES=$(C_DEFINES) -DUNICODE -D_UNICODE
+
+INCLUDES=..\d3dsaver
+
+PRECOMPILED_INCLUDE=stdafx.h
+PRECOMPILED_PCH=stdafx.pch
+PRECOMPILED_OBJ=stdafx.obj
+PRECOMPILED_CXX=1
+
+SOURCES=\
+    pipes.rc            \
+    eval.cpp            \
+    fpipe.cpp           \
+    fstate.cpp          \
+    material.cpp        \
+    node.cpp            \
+    npipe.cpp           \
+    nstate.cpp          \
+    objects.cpp         \
+    pipe.cpp            \
+    pipes.cpp           \
+    state.cpp           \
+    view.cpp            \
+    xc.cpp
+
+# d3dx8.lib and d3d8rgb.lib are static libraries (D3DX utility library and
+# the software rasterizer of the DirectX 8 DDK)
+TARGETLIBS=\
+    ..\d3dsaver\$(O)\d3dsaver.lib                           \
+    $(SDK_LIB_PATH)\d3d8.lib                                \
+    $(SDK_LIB_PATH)\d3dx8.lib                               \
+    $(PROJECT_ROOT)\..\public\internal\multimedia\lib\$(O)\d3d8rgb.lib \
+    $(SDK_LIB_PATH)\comctl32.lib                            \
+    $(SDK_LIB_PATH)\comdlg32.lib                            \
+    $(SDK_LIB_PATH)\winmm.lib                               \
+    $(SDK_LIB_PATH)\gdi32.lib                               \
+    $(SDK_LIB_PATH)\user32.lib                              \
+    $(SDK_LIB_PATH)\advapi32.lib                            \
+    $(SDK_LIB_PATH)\kernel32.lib

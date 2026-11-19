@@ -1,0 +1,173 @@
+//-----------------------------------------------------------------------------
+// File: text3d.rc
+//
+// Desc: Resources of the 3D Text screen saver (sstext3d.scr) of Windows XP /
+//       Windows Server 2003 (x86).
+//
+//       The icon and the two pictures are NOT part of this source tree.  Run
+//       tools/extract_assets.py against your own copy of the screen saver to
+//       create the res/ directory, or build with SCRNSAVE_NO_ASSETS defined
+//       (only the "Solid Color" surface style works then).
+//-----------------------------------------------------------------------------
+#include <windows.h>
+#include <commctrl.h>
+#include <dlgs.h>
+#include "resource.h"
+
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+
+#ifndef SCRNSAVE_NO_ASSETS
+IDI_MAIN_ICON           ICON    "res/text3d.ico"
+IDR_TEXTURE             JPG     "res/texture.jpg"
+IDR_ENVIRONMENT         JPG     "res/environment.jpg"
+#endif
+
+CREATEPROCESS_MANIFEST_RESOURCE_ID RT_MANIFEST "text3d.manifest"
+
+#include "../d3dsaver/d3dsaver.rc"
+
+//-----------------------------------------------------------------------------
+// Settings dialog
+//-----------------------------------------------------------------------------
+IDD_SETTINGS DIALOG 0, 0, 419, 261
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "3D Text Settings"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "OK", IDOK, CTL_BUTTON, BS_DEFPUSHBUTTON | WS_TABSTOP, 341, 11, 69, 14
+    CONTROL         "Cancel", IDCANCEL, CTL_BUTTON, BS_PUSHBUTTON | WS_TABSTOP, 341, 32, 69, 14
+    CONTROL         "&Display Settings...", IDC_SCREENSETTINGS, CTL_BUTTON, BS_PUSHBUTTON | WS_TABSTOP, 341, 53, 69, 14
+    CONTROL         "Text", 65535, CTL_BUTTON, BS_GROUPBOX, 7, 7, 321, 101
+    CONTROL         "Time", IDC_RADIO_TIME, CTL_BUTTON, BS_AUTORADIOBUTTON | WS_GROUP, 16, 22, 30, 10
+    CONTROL         "Custom Text:", IDC_RADIO_TEXT, CTL_BUTTON, BS_AUTORADIOBUTTON, 16, 39, 55, 8
+    CONTROL         "", IDC_DISPLAYSTRING, CTL_EDIT, ES_LEFT | ES_AUTOHSCROLL | WS_BORDER | WS_TABSTOP, 75, 37, 109, 13
+    CONTROL         "Choose Font...", IDC_CHOOSEFONT, CTL_BUTTON, BS_PUSHBUTTON | WS_TABSTOP, 56, 71, 82, 14
+    CONTROL         "Resolution", 65535, CTL_BUTTON, BS_GROUPBOX, 203, 14, 117, 43
+    CONTROL         "Low", 65535, CTL_STATIC, SS_CENTER | WS_GROUP, 206, 23, 30, 8
+    CONTROL         "High", 65535, CTL_STATIC, SS_CENTER | WS_GROUP, 288, 23, 30, 8
+    CONTROL         "Slider1", IDC_RESOLUTION, "msctls_trackbar32", TBS_AUTOTICKS | TBS_TOP | WS_TABSTOP, 210, 33, 100, 23
+    CONTROL         "Size", 65535, CTL_BUTTON, BS_GROUPBOX, 203, 61, 117, 43
+    CONTROL         "Small", 65535, CTL_STATIC, SS_CENTER | WS_GROUP, 206, 70, 30, 8
+    CONTROL         "Large", 65535, CTL_STATIC, SS_CENTER | WS_GROUP, 288, 66, 30, 8
+    CONTROL         "Slider1", IDC_VIEWPORTSIZE, "msctls_trackbar32", TBS_AUTOTICKS | TBS_TOP | WS_TABSTOP, 210, 77, 100, 23
+    CONTROL         "Motion", 65535, CTL_BUTTON, BS_GROUPBOX, 7, 108, 321, 60
+    CONTROL         "Rotation Type:", 65535, CTL_STATIC, SS_LEFT | WS_GROUP, 26, 136, 56, 8
+    CONTROL         "", IDC_ROTATION_STYLE, CTL_COMBOBOX, CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP, 86, 133, 98, 76
+    CONTROL         "Rotation Speed", 65535, CTL_BUTTON, BS_GROUPBOX, 203, 117, 117, 43
+    CONTROL         "Slow", 65535, CTL_STATIC, SS_CENTER | WS_GROUP, 206, 126, 30, 8
+    CONTROL         "Slider1", IDC_ROTATION_SPEED, "msctls_trackbar32", TBS_AUTOTICKS | TBS_TOP | WS_TABSTOP, 210, 133, 100, 23
+    CONTROL         "Fast", 65535, CTL_STATIC, SS_CENTER | WS_GROUP, 288, 124, 30, 8
+    CONTROL         "Surface Style", 65535, CTL_BUTTON, BS_GROUPBOX, 7, 171, 321, 82
+    CONTROL         "Solid Color", IDC_RADIO_COLOR, CTL_BUTTON, BS_AUTORADIOBUTTON, 22, 185, 49, 10
+    CONTROL         "Custom Color:", IDC_USE_CUSTOM_COLOR, CTL_BUTTON, BS_AUTOCHECKBOX | WS_TABSTOP, 117, 185, 75, 10
+    CONTROL         "Choose Color...", IDC_SURFACE_COLOR, CTL_BUTTON, BS_PUSHBUTTON | WS_TABSTOP, 220, 182, 82, 15
+    CONTROL         "Texture", IDC_RADIO_TEXTURE, CTL_BUTTON, BS_AUTORADIOBUTTON, 22, 202, 40, 10
+    CONTROL         "Custom Texture:", IDC_USE_CUSTOM_TEXTURE, CTL_BUTTON, BS_AUTOCHECKBOX | WS_TABSTOP, 117, 202, 75, 10
+    CONTROL         "Choose Texture...", IDC_BROWSE_TEXTURE, CTL_BUTTON, BS_PUSHBUTTON | WS_TABSTOP, 220, 199, 82, 15
+    CONTROL         "Reflection", IDC_RADIO_REFLECTION, CTL_BUTTON, BS_AUTORADIOBUTTON, 22, 219, 48, 10
+    CONTROL         "Custom Reflection:", IDC_USE_CUSTOM_ENVIRONMENT, CTL_BUTTON, BS_AUTOCHECKBOX | WS_TABSTOP, 117, 219, 75, 10
+    CONTROL         "Choose Reflection...", IDC_BROWSE_ENVIRONMENT, CTL_BUTTON, BS_PUSHBUTTON | WS_TABSTOP, 220, 216, 82, 15
+    CONTROL         "Show Specular Highlights", IDC_SPECULAR, CTL_BUTTON, BS_AUTOCHECKBOX | WS_TABSTOP, 22, 236, 132, 10
+END
+
+//-----------------------------------------------------------------------------
+// "Font" dialog: the template of ChooseFont() without the size list
+//-----------------------------------------------------------------------------
+FORMATDLGORD31 DIALOG 13, 54, 232, 183
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Font"
+FONT 8, "MS Shell Dlg"
+BEGIN
+    CONTROL         "&Font:", stc1, CTL_STATIC, SS_LEFT | WS_GROUP, 6, 3, 40, 9
+    CONTROL         "", cmb1, CTL_COMBOBOX, CBS_SIMPLE | CBS_OWNERDRAWFIXED | CBS_AUTOHSCROLL | CBS_SORT | CBS_HASSTRINGS | CBS_DISABLENOSCROLL | WS_VSCROLL | WS_TABSTOP, 6, 13, 94, 54
+    CONTROL         "Font St&yle:", stc2, CTL_STATIC, SS_LEFT | WS_GROUP, 108, 3, 44, 9
+    CONTROL         "", cmb2, CTL_COMBOBOX, CBS_SIMPLE | CBS_DISABLENOSCROLL | WS_VSCROLL | WS_TABSTOP, 108, 13, 64, 54
+    CONTROL         "", cmb3, CTL_COMBOBOX, CBS_SIMPLE | CBS_OWNERDRAWFIXED | CBS_SORT | CBS_HASSTRINGS | CBS_DISABLENOSCROLL | NOT WS_VISIBLE | WS_DISABLED | WS_VSCROLL | WS_TABSTOP, 49, 161, 16, 12
+    CONTROL         "OK", IDOK, CTL_BUTTON, BS_DEFPUSHBUTTON | WS_GROUP | WS_TABSTOP, 183, 25, 40, 14
+    CONTROL         "Cancel", IDCANCEL, CTL_BUTTON, BS_PUSHBUTTON | WS_GROUP | WS_TABSTOP, 183, 44, 40, 14
+    CONTROL         "&Apply", psh3, CTL_BUTTON, BS_PUSHBUTTON | WS_GROUP | WS_TABSTOP, 97, 158, 8, 14
+    CONTROL         "&Help", pshHelp, CTL_BUTTON, BS_PUSHBUTTON | WS_GROUP | WS_TABSTOP, 110, 158, 6, 14
+    CONTROL         "Stri&keout", chx1, CTL_BUTTON, BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_DISABLED | WS_TABSTOP, 31, 161, 8, 10
+    CONTROL         "&Underline", chx2, CTL_BUTTON, BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_DISABLED, 17, 161, 8, 10
+    CONTROL         "", cmb4, CTL_COMBOBOX, CBS_DROPDOWNLIST | CBS_OWNERDRAWFIXED | CBS_AUTOHSCROLL | CBS_HASSTRINGS | NOT WS_VISIBLE | WS_DISABLED | WS_BORDER | WS_VSCROLL | WS_TABSTOP, 75, 161, 16, 15
+    CONTROL         "Sample", grp2, CTL_BUTTON, BS_GROUPBOX | WS_GROUP, 5, 72, 223, 85
+    CONTROL         "AaBbYyZz", stc5, CTL_STATIC, SS_CENTER | SS_NOPREFIX | NOT WS_VISIBLE | WS_GROUP, 18, 83, 199, 69
+END
+
+//-----------------------------------------------------------------------------
+// Strings
+//-----------------------------------------------------------------------------
+STRINGTABLE
+BEGIN
+    IDS_DESCRIPTION             "3D Text"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_DEFAULT_TEXT            "Microsoft Windows"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_ROTATION_NONE           "None"
+    IDS_ROTATION_SPIN           "Spin"
+    IDS_ROTATION_SEESAW         "See-saw"
+    IDS_ROTATION_WOBBLE         "Wobble"
+    IDS_ROTATION_TUMBLE         "Tumble"
+    IDS_TEXTURE_FILTER          "Bitmaps (*.bmp)#*.bmp##"
+    IDS_CHOOSE_TEXTURE          "Choose Custom Texture"
+    IDS_CHOOSE_ENVIRONMENT      "Choose Custom Environment Map"
+    IDS_DEFAULT_FONT            "Tahoma"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_INIFILE                 "control.ini"
+    IDS_SAVERNAME               "Screen Saver.3DText"
+    IDS_OPTIONS                 "Options"
+    IDS_TYPE                    "Type"
+    IDS_TEXTURE                 "Texture"
+    IDS_TEXTURE_FILE_OFFSET     "TextureFileOffset"
+    IDS_SIZE                    "Size"
+    IDS_TESSELATION             "Tesselation"
+    IDS_SCREENSAVERTITLE        "ScreenSaver"
+    IDS_DEFFONT                 "Tahoma"
+    IDS_DEFCHARSET              "1"
+    IDS_DEMOTYPE                "DemoType"
+    IDS_SURFSTYLE               "SurfStyle"
+    IDS_FONT                    "Font"
+    IDS_FONT_ATTRIBUTES         "FontAttributes"
+    IDS_CHARSET                 "CharSet"
+    IDS_TEXT                    "Text"
+    IDS_SPEED                   "Speed"
+    IDS_ROTSTYLE                "RotStyle"
+END
+
+VS_VERSION_INFO VERSIONINFO
+FILEVERSION     5,2,3790,3959
+PRODUCTVERSION  5,2,3790,3959
+FILEFLAGSMASK   VS_FFI_FILEFLAGSMASK
+FILEFLAGS       0x0L
+FILEOS          VOS_NT_WINDOWS32
+FILETYPE        VFT_APP
+FILESUBTYPE     VFT2_UNKNOWN
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904B0"
+        BEGIN
+            VALUE "CompanyName",      "Microsoft Corporation"
+            VALUE "FileDescription",  "Direct3D 3D Text Screen Saver"
+            VALUE "FileVersion",      "5.2.3790.3959 (srv03_sp2_rtm.070216-1710)"
+            VALUE "InternalName",     "Text3D"
+            VALUE "LegalCopyright",   L"\x00a9 Microsoft Corporation. All rights reserved."
+            VALUE "OriginalFilename", "Text3D"
+            VALUE "ProductName",      L"Microsoft\x00ae Windows\x00ae Operating System"
+            VALUE "ProductVersion",   "5.2.3790.3959"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x0409, 0x04B0
+    END
+END

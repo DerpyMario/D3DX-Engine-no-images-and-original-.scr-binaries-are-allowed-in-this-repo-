@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
 extract_assets.py - pull the binary assets out of YOUR OWN copies of the
-Windows Vista screen savers so that the reconstructed sources can be built
-with their original artwork.
+Windows Vista screen savers, and of the Windows XP / Windows Server 2003 ones,
+so that the reconstructed sources can be built with their original artwork.
 
 This repository deliberately contains no images and none of the original
 binaries.  Everything this script writes goes into an output directory that is
@@ -11,6 +11,11 @@ ignored by git (default: <repository>/assets).
     python tools/extract_assets.py C:\\Windows\\System32            (all savers found there)
     python tools/extract_assets.py path\\to\\Aurora.scr -o assets
     python tools/extract_assets.py --list path\\to\\ssBranded.scr   (just show the resources)
+
+The Windows XP / Server 2003 files go into <output>/winxp (the x64 editions
+name the 32-bit Direct3D savers wss*.scr, the 32-bit ones ss*.scr).  Where
+both releases use the same file name (logon.scr, sstext3d.scr), the file
+version tells them apart.
 
 The build then picks the files up through SCRNSAVE_ASSET_DIR (see BUILDING.md).
 
@@ -90,6 +95,18 @@ class PEResources:
 
     def all_of_type(self, rtype):
         return [(n, blob) for t, n, lang, blob in self.entries if t == rtype]
+
+
+    def file_version_major(self):
+        """Major number of the file version (5: Windows XP / 2003, 6: Vista)."""
+        blob = self.find(16, 1)
+        if blob is None:
+            return None
+        i = blob.find(struct.pack("<I", 0xFEEF04BD))
+        if i < 0:
+            return None
+        ms, = struct.unpack_from("<I", blob, i + 8)
+        return ms >> 16
 
 
 # ---------------------------------------------------------------------------
@@ -178,6 +195,68 @@ ASSETS = {
 }
 
 
+def xp(entries):
+    """The output paths of the Windows XP / Server 2003 savers."""
+    return [(t, n, c, "winxp/" + rel) for t, n, c, rel in entries]
+
+
+XP_LOGON = xp(
+    [(2, 200 + n, "bmp", "logon/res/%s.bmp" % name) for n, name in
+     enumerate(["standard", "professional", "enterprise", "datacenter", "home", "embedded",
+                "smallbusiness", "web", "tabletpc"])] +
+    [(2, 212, "bmp", "logon/res/appliance.bmp"),
+     (14, 209, "ico", "logon/res/logon.ico"),
+     (14, 210, "ico", "logon/res/logon16.ico")])
+
+XP_TEXT3D = xp([
+    (14, 101, "ico", "text3d/res/text3d.ico"),
+    ("JPG", 102, "raw", "text3d/res/texture.jpg"),
+    ("JPG", 103, "raw", "text3d/res/environment.jpg"),
+])
+
+XP_ASSETS = {
+    "scrnsave.scr": xp([(14, "IW", "ico", "blank/res/blank.ico")]),
+    "ssstars.scr": xp([(14, 100, "ico", "stars/res/stars.ico")]),
+    "ssmyst.scr": xp([(14, 100, "ico", "mystify/res/mystify.ico")]),
+    "ssbezier.scr": xp([(14, 100, "ico", "bezier/res/bezier.ico")]),
+    "ssmarque.scr": xp([(14, 100, "ico", "marquee/res/marquee.ico")]),
+    "ssflwbox.scr": xp([(14, 101, "ico", "flowerbox/res/flowerbox.ico")]),
+    "sspipes.scr": xp([
+        (14, 101, "ico", "pipes/res/pipes.ico"),
+        (2, 107, "bmp", "pipes/res/deftex.bmp"),
+    ]),
+    "ss3dfo.scr": xp([
+        (14, 101, "ico", "3dfo/res/ss3dfo.ico"),
+        ("JPG", 3000, "raw", "3dfo/res/flag.jpg"),
+        ("DDS", 3001, "raw", "3dfo/res/logo.dds"),
+        ("PNG", 3002, "raw", "3dfo/res/logo.png"),
+    ]),
+    "ssmypics.scr": xp([
+        (14, 2005, "ico", "mypics/res/ssmypics.ico"),
+        (2, 2009, "bmp", "mypics/res/pixel.bmp"),
+    ]),
+}
+for _n in ("ssflwbox.scr", "sspipes.scr", "ss3dfo.scr"):
+    XP_ASSETS["w" + _n] = XP_ASSETS[_n]          # x64 editions (WOW64)
+XP_ASSETS["wsstext3d.scr"] = XP_TEXT3D
+
+# File names both releases use: told apart by the file version
+SHARED = {
+    "logon.scr": XP_LOGON,
+    "sstext3d.scr": XP_TEXT3D,
+}
+
+
+def table_for(key, res):
+    if key in SHARED:
+        major = res.file_version_major()
+        if major is not None and major < 6:
+            return SHARED[key]
+    if key in ASSETS:
+        return ASSETS[key]
+    return XP_ASSETS.get(key)
+
+
 def classify(blob):
     if blob[:2] == b"BM":
         return "bmp"
@@ -187,6 +266,8 @@ def classify(blob):
         return "png"
     if blob[:4] == b"xof ":
         return "x"
+    if blob[:4] == b"DDS ":
+        return "dds"
     if len(blob) > 18 and blob[0] == 0 and blob[1] == 0 and blob[2] in (2, 10) and blob[16] in (24, 32):
         return "tga"
     head = blob[:256]
@@ -208,11 +289,11 @@ def list_resources(path):
 
 def extract(path, outdir, verbose=True):
     key = os.path.basename(path).lower()
-    table = ASSETS.get(key)
+    res = PEResources(path)
+    table = table_for(key, res)
     if table is None:
         print("%s: no asset table for this file (use --list to inspect it)" % path)
         return 0
-    res = PEResources(path)
     count = 0
     for rtype, name, conv, rel in table:
         if conv == "ico":
@@ -249,7 +330,7 @@ def main():
     for inp in args.inputs:
         if os.path.isdir(inp):
             for fn in sorted(os.listdir(inp)):
-                if fn.lower() in ASSETS:
+                if fn.lower() in ASSETS or fn.lower() in XP_ASSETS:
                     files.append(os.path.join(inp, fn))
         else:
             files.append(inp)
