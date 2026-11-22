@@ -7,6 +7,7 @@
 #   ssbezier.scr    Beziers                 GDI, scrnsavw.lib
 #   ssmarque.scr    Marquee                 GDI, scrnsavw.lib
 #   logon.scr       Windows XP / 2003 logo  GDI, scrnsavw.lib
+#   ssmypics.scr    My Pictures Slideshow   GDI+, scrnsavw.lib
 #   ssflwbox.scr    3D FlowerBox            Direct3D 8, d3dsaver.lib
 #   sstext3d.scr    3D Text                 Direct3D 8, d3dsaver.lib
 #   sspipes.scr     3D Pipes                Direct3D 8, d3dsaver.lib
@@ -189,6 +190,25 @@ add_screensaver(logon OUTPUT_NAME logon ASSETS logon
     SOURCES ${SCRNSAVE}/logon/logon.c ${SCRNSAVE}/logon/generic.rc
     LIBRARIES scrnsavw ${SHLWAPIP_LIB} shlwapi ntdll)
 add_dependencies(logon shlwapip_implib)
+
+add_screensaver(ssmypics OUTPUT_NAME ssmypics ASSETS mypics
+    SOURCES
+        ${SCRNSAVE}/mypics/ssmypics.cpp
+        ${SCRNSAVE}/mypics/mypics.cpp
+        ${SCRNSAVE}/mypics/slideshow.cpp
+        ${SCRNSAVE}/mypics/settings.cpp
+        ${SCRNSAVE}/mypics/transitions.cpp
+        ${SCRNSAVE}/mypics/slideimage.cpp
+        ${SCRNSAVE}/mypics/findimages.cpp
+        ${SCRNSAVE}/mypics/gdiphelp.cpp
+        ${SCRNSAVE}/mypics/util.cpp
+        ${SCRNSAVE}/mypics/ssmypics.rc
+    LIBRARIES scrnsavw gdiplus msimg32 shlwapi shell32 ole32 uuid comctl32)
+if(NOT MSVC)
+    # operator new returns NULL when there is no memory, as in the original,
+    # and the code checks for it: GCC must not assume otherwise
+    target_compile_options(ssmypics PRIVATE $<$<COMPILE_LANGUAGE:CXX>:-fcheck-new>)
+endif()
 
 # The Direct3D 8 savers
 

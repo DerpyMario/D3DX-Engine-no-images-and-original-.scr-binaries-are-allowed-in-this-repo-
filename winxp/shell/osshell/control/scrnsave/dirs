@@ -3,7 +3,8 @@
 # 2003 / Windows XP x64).  The library first, then the screen savers.
 #
 # logon, flowerbox, pipes, text3d and d3dsaver are the directory names the
-# symbol files record; the others are chosen by the reconstruction.  The
+# symbol files record; the others are chosen by the reconstruction (mypics:
+# the manifest of ssmypics.scr places it with the imaging components).  The
 # Direct3D 8 savers (d3dsaver and below) are built for i386 only.
 #
 DIRS= \
@@ -14,6 +15,7 @@ DIRS= \
     bezier          \
     marquee         \
     logon           \
+    mypics          \
     d3dsaver        \
     flowerbox       \
     text3d          \

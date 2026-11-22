@@ -100,6 +100,7 @@ as `wss*.scr`.
 | 3D Text           | `wsstext3d.scr` (x86)       | 5.2.3790.3959   | `text3d`                                   |
 | 3D Pipes          | `wsspipes.scr` (x86)        | 5.2.3790.3959   | `pipes`                                    |
 | 3D Flying Objects | `wss3dfo.scr` (x86)         | 5.2.3790.1830   | `3dfo`                                     |
+| My Pictures Slideshow | `ssmypics.scr`          | 5.2.3790.1830   | `mypics` (GDI+)                            |
 
 | Library         | Source directory          | Used by                                        |
 |-----------------|---------------------------|------------------------------------------------|
@@ -122,7 +123,10 @@ as `wss*.scr`.
   except for the letter case of control class names in some dialogs (as
   for Vista).  The XP savers have not been run: no Wine was available to
   test them.
-* My Pictures Slideshow (`ssmypics.scr`) is not reconstructed yet.
+* My Pictures Slideshow (`ssmypics.scr`, no symbol file) is reconstructed
+  from its code alone; its class and function names are descriptive ones.
+  windres writes its dialog's icon control with a size of 0 (the original
+  has 20 x 20), and its manifest leaves out the original's comment line.
 
 See [BUILDING.md](BUILDING.md#windows-xp--windows-server-2003) for the build.
 
