@@ -1,0 +1,112 @@
+//-----------------------------------------------------------------------------
+// File: ssmypics.rc
+//
+// Desc: Resources of the My Pictures Slideshow screen saver (ssmypics.scr)
+//       of Windows XP / Windows Server 2003 (x64).
+//
+//       The icon and the 1x1 bitmap are NOT part of this source tree.  Run
+//       tools/extract_assets.py against your own copy of the screen saver
+//       to create the res/ directory, or build with SCRNSAVE_NO_ASSETS
+//       defined.
+//-----------------------------------------------------------------------------
+#include <windows.h>
+#include <commctrl.h>
+#include "resource.h"
+
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+
+#ifndef SCRNSAVE_NO_ASSETS
+IDI_MYPICS              ICON    "res/ssmypics.ico"
+IDB_PLACEHOLDER         BITMAP  "res/pixel.bmp"
+#endif
+
+CREATEPROCESS_MANIFEST_RESOURCE_ID RT_MANIFEST "ssmypics.manifest"
+
+//-----------------------------------------------------------------------------
+// Settings dialog
+//-----------------------------------------------------------------------------
+IDD_SETTINGS DIALOGEX 0, 0, 252, 244
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_CONTEXTHELP
+CAPTION "My Pictures Screen Saver Options"
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    ICON            IDI_MYPICS, IDC_MYPICS_ICON, 7, 7, 20, 20, SS_ICON
+    LTEXT           "My Pictures screen saver", IDC_TITLE, 41, 13, 204, 8
+    LTEXT           "", IDC_SEPARATOR, 7, 34, 238, 1, SS_ETCHEDHORZ | NOT WS_GROUP
+    LTEXT           "More", IDC_MORE_OFTEN, 7, 54, 17, 8
+    CTEXT           "XXXXXXXXXXXXXXXXXXXXXXXX", IDC_CHANGE_INTERVAL_TEXT, 35, 66, 182, 8
+    LTEXT           "Less", IDC_LESS_OFTEN, 229, 54, 16, 8, SS_LEFT | WS_GROUP, WS_EX_RIGHT
+    LTEXT           "How often should pictures &change?", IDC_CHANGE_INTERVAL_LABEL, 7, 40, 238, 8
+    CONTROL         "", IDC_CHANGE_INTERVAL, TRACKBAR_CLASS, TBS_AUTOTICKS | TBS_NOTICKS | WS_TABSTOP, 35, 51, 182, 15
+    LTEXT           "Smaller", IDC_SMALLER, 7, 94, 24, 8
+    CTEXT           "XXXXXXXXXXXXXXXXXXXXXXXX", IDC_SCREEN_PERCENT_TEXT, 35, 107, 182, 8
+    LTEXT           "Larger", IDC_LARGER, 224, 94, 21, 8, SS_LEFT | WS_GROUP, WS_EX_RIGHT
+    LTEXT           "&How big should pictures be?", IDC_SCREEN_PERCENT_LABEL, 7, 81, 238, 8
+    CONTROL         "", IDC_SCREEN_PERCENT, TRACKBAR_CLASS, TBS_AUTOTICKS | TBS_NOTICKS | WS_TABSTOP, 35, 91, 182, 15
+    LTEXT           "Use &pictures in this folder:", -1, 7, 122, 238, 8
+    EDITTEXT        IDC_DIRECTORY, 7, 134, 184, 14, ES_AUTOHSCROLL | ES_READONLY
+    PUSHBUTTON      "&Browse", IDC_BROWSE, 195, 134, 50, 14
+    AUTOCHECKBOX    "Stretch s&mall pictures", IDC_STRETCH_SMALL, 7, 157, 238, 10, WS_GROUP | WS_TABSTOP
+    AUTOCHECKBOX    "&Show file names", IDC_SHOW_FILE_NAMES, 7, 171, 238, 10
+    AUTOCHECKBOX    "&Use transition effects between pictures", IDC_USE_TRANSITIONS, 7, 185, 238, 10
+    AUTOCHECKBOX    "Allow scrolling through pictures with the &keyboard", IDC_ALLOW_KEYBOARD, 7, 199, 238, 10
+    LTEXT           "", -1, 7, 215, 238, 1, SS_ETCHEDHORZ | NOT WS_GROUP
+    DEFPUSHBUTTON   "OK", IDOK, 141, 223, 50, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 195, 223, 50, 14
+END
+
+//-----------------------------------------------------------------------------
+// Strings
+//-----------------------------------------------------------------------------
+STRINGTABLE
+BEGIN
+    IDS_DESCRIPTION         "My Pictures Slideshow"
+    IDS_NO_PICTURES         "There were no pictures found in ""%s"""
+END
+
+STRINGTABLE
+BEGIN
+    IDS_MINUTES_SECONDS     "%d minutes and %d seconds"
+    IDS_MINUTE_SECONDS      "%d minute and %d seconds"
+    IDS_MINUTES_SECOND      "%d minutes and %d second"
+    IDS_MINUTE_SECOND       "%d minute and %d second"
+    IDS_SECONDS             "%d seconds"
+    IDS_SECOND              "%d second"
+    IDS_MINUTES             "%d minutes"
+    IDS_MINUTE              "%d minute"
+    IDS_BROWSE_TITLE        "Choose a directory from which to display images:"
+    IDS_SCREEN_PERCENT      "%d%% of the screen"
+END
+
+//-----------------------------------------------------------------------------
+// Version
+//-----------------------------------------------------------------------------
+VS_VERSION_INFO VERSIONINFO
+FILEVERSION     5,2,3790,1830
+PRODUCTVERSION  5,2,3790,1830
+FILEFLAGSMASK   VS_FFI_FILEFLAGSMASK
+FILEFLAGS       0x0L
+FILEOS          VOS_NT_WINDOWS32
+FILETYPE        VFT_APP
+FILESUBTYPE     VFT2_UNKNOWN
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904B0"
+        BEGIN
+            VALUE "CompanyName",      "Microsoft Corporation"
+            VALUE "FileDescription",  "My Pictures Slideshow Screensaver"
+            VALUE "FileVersion",      "5.2.3790.1830 (srv03_sp1_rtm.050324-1447)"
+            VALUE "InternalName",     "SSMYPICS"
+            VALUE "LegalCopyright",   L"\x00a9 Microsoft Corporation. All rights reserved."
+            VALUE "OriginalFilename", "SSMYPICS.SCR"
+            VALUE "ProductName",      L"Microsoft\x00ae Windows\x00ae Operating System"
+            VALUE "ProductVersion",   "5.2.3790.1830"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x0409, 0x04B0
+    END
+END

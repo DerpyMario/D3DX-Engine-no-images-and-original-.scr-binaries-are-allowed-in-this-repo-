@@ -1,0 +1,37 @@
+#
+# Reconstructed NT build file: My Pictures Slideshow screen saver
+# (ssmypics.scr).  The binary has no symbol file: the object names are the
+# reconstruction's.
+#
+TARGETNAME=ssmypics
+TARGETTYPE=PROGRAM
+TARGETEXT=scr
+UMTYPE=windows
+UMENTRY=main
+USE_MSVCRT=1
+C_DEFINES=$(C_DEFINES) -DUNICODE -D_UNICODE
+
+SOURCES=\
+    ssmypics.rc         \
+    ssmypics.cpp        \
+    mypics.cpp          \
+    slideshow.cpp       \
+    settings.cpp        \
+    transitions.cpp     \
+    slideimage.cpp      \
+    findimages.cpp      \
+    gdiphelp.cpp        \
+    util.cpp
+
+TARGETLIBS=\
+    $(SDK_LIB_PATH)\scrnsavw.lib                    \
+    $(SDK_LIB_PATH)\gdiplus.lib                     \
+    $(SDK_LIB_PATH)\msimg32.lib                     \
+    $(SDK_LIB_PATH)\shlwapi.lib                     \
+    $(SDK_LIB_PATH)\shell32.lib                     \
+    $(SDK_LIB_PATH)\ole32.lib                       \
+    $(SDK_LIB_PATH)\comctl32.lib                    \
+    $(SDK_LIB_PATH)\gdi32.lib                       \
+    $(SDK_LIB_PATH)\user32.lib                      \
+    $(SDK_LIB_PATH)\advapi32.lib                    \
+    $(SDK_LIB_PATH)\kernel32.lib
