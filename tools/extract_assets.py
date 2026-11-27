@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 extract_assets.py - pull the binary assets out of YOUR OWN copies of the
-Windows Vista screen savers, and of the Windows XP / Windows Server 2003 ones,
+Windows Vista / Windows 7 / Windows 8 / 8.1 / 10 screen savers, and of the Windows XP / Windows Server 2003 ones,
 so that the reconstructed sources can be built with their original artwork.
 
 This repository deliberately contains no images and none of the original
