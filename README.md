@@ -82,6 +82,16 @@ fixed-function pipeline and have no shaders.
   which windres stores in upper case.
 * Under Wine, the rebuilt savers run like the originals (Windows Energy with
   the effect loader of the original, see [BUILDING.md](BUILDING.md)).
+* **Mystify and Ribbons** (Windows 10): both build warning-clean with
+  mingw-w64 g++ 13 on Linux (`-std=c++17`, four output files each: `.scr`
+  and `.scr.mui`).  PE analysis of the rebuilt binaries confirms correct
+  structure: `d3d9.dll:Direct3DCreate9` import, expected Win32 API imports
+  (`comctl32`, `user32`, `gdi32`, `advapi32`, `kernel32`, `ole32`), and all
+  resource types present (`"BMP"` 102 sprite, `RT_MUI` record, icons,
+  version, manifest in the `.scr`; dialog, string table, version, `RT_MUI`
+  in the `.mui`).  The savers link `d3d9` only (no D3DX dependency), so
+  they avoid the Wine `d3dx9` limitation that affects `ssBranded.scr`.
+  See [Win10_BUILD.md](Win10_BUILD.md) for the Win10 saver build.
 
 ## Windows XP / Windows Server 2003
 
