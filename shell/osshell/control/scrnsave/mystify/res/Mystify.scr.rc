@@ -1,0 +1,67 @@
+////////////////////////////////////////////////////////////////////////////////
+// Mystify.scr - resource script (compiles into Mystify.scr)
+//
+// Resource tree of the original Mystify.scr (PE32+ x64, ImageBase 0x140000000):
+//
+//   Type "BMP"        ID 102  lang 0x409   36311 bytes  128x128 RLE sprite texture
+//   Type RT_ICON      ID 1,2  lang 0x409   16x16 4bpp + 32x32 8bpp frames
+//   Type RT_GROUP_ICON ID 101 lang 0x409   icon group "Mystify"
+//   Type RT_VERSION   ID 1    lang 0x409   VS_VERSIONINFO
+//   Type RT_MANIFEST  ID 1    lang 0x409   Per-Monitor DPI aware manifest
+//   Type "MUI"        ID 1    lang 0x409   MUI configuration record (224 bytes)
+//
+// Strings/dialogs are NOT in the .scr: LoadStringW/FindResource resolve through
+// the MUI system into Mystify.scr.mui (see resources/mui_files/).
+////////////////////////////////////////////////////////////////////////////////
+
+#include "src/resources.h"
+
+// The multi-frame .ico below expands to RT_ICON 1 (32x32 1bpp) and
+// RT_ICON 2 (32x32 4bpp) plus RT_GROUP_ICON 101 - matching the original
+// resource directory. The raw RT_ICON frames are kept in resources/ICON/.
+101 ICON "resources/ICON/group_101.ico"
+
+// ------------------------------------------------------------------
+// Star sprite: custom RLE format, decoded at runtime by the engine
+// (analysis/texture_rle_format.md). The type name "BMP" is a *named*
+// type, not RT_BITMAP: FindResourceW(NULL, MAKEINTRESOURCEW(102), L"BMP").
+// ------------------------------------------------------------------
+102 BMP "resources/BMP/102_lang1033.texture.bin"
+
+1 VERSIONINFO
+ FILEVERSION 10,0,19041,4355
+ PRODUCTVERSION 10,0,19041,4355
+ FILEFLAGSMASK 0x3fL
+ FILEFLAGS 0x0L
+ FILEOS 0x40004L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904B0"
+        BEGIN
+            VALUE "CompanyName", "Microsoft Corporation"
+            VALUE "FileDescription", "Mystify Screen Saver"
+            VALUE "FileVersion", "10.0.19041.4355 (WinBuild.160101.0800)"
+            VALUE "InternalName", "Mystify"
+            VALUE "LegalCopyright", "\xa9 Microsoft Corporation. All rights reserved."
+            VALUE "OriginalFilename", "Mystify"
+            VALUE "ProductName", "Microsoft\xae Windows\xae Operating System"
+            VALUE "ProductVersion", "10.0.19041.4355"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+1 24 "resources/MANIFEST/1_lang1033.manifest.xml"
+
+////////////////////////////////////////////////////////////////////////////////
+// MUI configuration record (RT_MUI, 224 bytes, signature 0xFECDFECD).
+// Kept verbatim; lists main-file types (BMP/ICON/GROUP_ICON/VERSION/MANIFEST)
+// and the satellite redirects (DIALOG/STRING/VERSION) with the en-US checksum.
+////////////////////////////////////////////////////////////////////////////////
+1 MUI "resources/MUI/1_lang1033.bin"

@@ -1,0 +1,77 @@
+# Makefile.mingw - build Mystify.scr and Mystify.scr.mui with mingw-w64
+#
+# Usage:
+#   make -f Makefile.mingw            # Release build into out/Release/
+#   make -f Makefile.mingw mui        # also build the .mui satellite
+#   make -f Makefile.mingw debug      # Debug build
+#   make -f Makefile.mingw clean
+#
+# The .scr needs the Direct3D 9 headers (d3d9.h, d3d9types.h, d3d9caps.h), which ship
+# with mingw-w64 (packages mingw-w64-x86-64-dev / mingw-w64-common).
+#
+# Note: the original .mui satellite is an x86 (PE32) resource-only DLL. MUI satellites
+# are architecture-neutral resource containers, so the rebuilt one is emitted as a
+# x86_64 resource-only DLL by default (works identically next to the x64 .scr). To
+# produce an x86 satellite, install the i686 toolchain and pass MUI_CROSS=i686-w64-mingw32-.
+
+CROSS    ?= x86_64-w64-mingw32-
+MUI_CROSS?= $(CROSS)
+CXX       = $(CROSS)g++
+WINDRES   = $(CROSS)windres
+MUI_CXX   = $(MUI_CROSS)g++
+MUI_WINDRES = $(MUI_CROSS)windres
+
+# MINGW_LIB: set to the x86_64-w64-mingw32/lib directory of a *relocated* mingw-w64
+# toolchain (one not installed at its original build prefix), e.g.
+#   make -f Makefile.mingw MINGW_LIB=/opt/mingw64/usr/x86_64-w64-mingw32/lib
+# Regular installations leave it empty.
+MINGW_LIB ?=
+
+CXXFLAGS  = -std=c++17 -Wall -Wextra -Wno-unused-parameter -Wno-missing-field-initializers \
+            -DUNICODE -D_UNICODE -DWIN32_LEAN_AND_MEAN -DNDEBUG -I../src
+LDFLAGS   = -mwindows -static -static-libgcc -static-libstdc++ $(if $(MINGW_LIB),-B$(MINGW_LIB))
+LDLIBS    = -ld3d9 -lcomctl32 -luser32 -lgdi32 -ladvapi32 -lkernel32 -luuid -lole32
+
+OUTDIR    = out/Release
+OBJDIR    = obj/Release
+
+SCR       = $(OUTDIR)/Mystify.scr
+MUI_DLL   = $(OUTDIR)/Mystify.scr.mui
+
+OBJS      = $(OBJDIR)/settings.o $(OBJDIR)/noise.o $(OBJDIR)/engine.o $(OBJDIR)/screensaver.o
+RES       = $(OBJDIR)/Mystify.scr.res
+MUI_RES   = $(OBJDIR)/Mystify.scr.mui.res
+
+.PHONY: all mui debug clean
+
+all: $(SCR)
+
+mui: $(SCR) $(MUI_DLL)
+
+debug: CXXFLAGS += -g -O0 -DDEBUG
+debug: OUTDIR   = out/Debug
+debug: OBJDIR   = obj/Debug
+debug: $(SCR)
+
+$(SCR): $(OBJS) $(RES) | $(OUTDIR)
+	$(CXX) $(LDFLAGS) -o $@ $(OBJS) $(RES) $(LDLIBS)
+
+$(MUI_DLL): $(MUI_RES) | $(OUTDIR)
+	$(MUI_CXX) -shared -nostdlib -o $@ $(MUI_RES) \
+	  -Wl,--image-base=0x10000000 -Wl,--entry,0 -Wl,--subsystem,windows
+
+# Compile rules
+$(OBJDIR)/%.o: ../src/%.cpp | $(OBJDIR)
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
+
+$(OBJDIR)/Mystify.scr.res: ../Mystify.scr.rc ../src/resources.h | $(OBJDIR)
+	$(WINDRES) -I../src -I.. -O coff -o $@ $<
+
+$(OBJDIR)/Mystify.scr.mui.res: ../Mystify.scr.mui.rc ../src/resources.h | $(OBJDIR)
+	$(MUI_WINDRES) -I../src -I.. -O coff -o $@ $<
+
+$(OUTDIR) $(OBJDIR):
+	mkdir -p $@
+
+clean:
+	rm -rf out obj
