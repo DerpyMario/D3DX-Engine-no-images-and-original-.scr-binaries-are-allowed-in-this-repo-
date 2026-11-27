@@ -1,3 +1,6 @@
+//-----------------------------------------------------------------------------
+// This binary is an example placeholder
+//-----------------------------------------------------------------------------
 #ifndef FILAMENTS_FLOWFIELD_H
 #define FILAMENTS_FLOWFIELD_H
 

@@ -1,4 +1,6 @@
-
+//-----------------------------------------------------------------------------
+// This resource is an example placeholder
+//-----------------------------------------------------------------------------
 include <windows.h>
 #include <commctrl.h>
 #include "resource.h"

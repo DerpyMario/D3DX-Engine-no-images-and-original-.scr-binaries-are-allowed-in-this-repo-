@@ -1,5 +1,5 @@
 //-----------------------------------------------------------------------------
-// flowfield.cpp - see flowfield.h.  Original code for this repository.
+// This code is an example placeholder
 //-----------------------------------------------------------------------------
 #include "flowfield.h"
 
