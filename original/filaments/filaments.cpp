@@ -2,9 +2,10 @@
 // filaments.cpp - "Filaments", an original Direct3D 9 screen saver.
 //
 // Original work for this repository (not a reconstruction of any shipping
-// screen saver).  Glowing filaments are advected through a slowly evolving
-// curl-noise flow field and leave fading trails.  The look is built from the
-// three ingredients described in docs/mystify-ribbons-notes.md -- additive
+// screen saver).  Strands of light are advected through a slowly evolving
+// curl-noise flow field and leave fading trails, drawn either as thin lines
+// or as wide camera-facing ribbons.  The look is built from the three
+// ingredients described in docs/mystify-ribbons-notes.md -- additive
 // blending, soft per-vertex falloff, and a feedback buffer for the trails --
 // but the design, maths and code here are my own.
 //
@@ -33,18 +34,23 @@
 //-----------------------------------------------------------------------------
 #define REG_PATH    L"Software\\D3DXEngine\\Filaments"
 
-static const int   TRAIL_LEN  = 48;     // points kept per filament
-static const int   MAX_FIL    = 400;
+static const int   TRAIL_LEN = 48;      // points kept per strand
+static const int   MAX_FIL   = 400;
+
+enum { MODE_LINES = 0, MODE_RIBBONS = 1 };
 
 struct Settings
 {
-    int   nCount;       // number of filaments
-    float fWidth;       // ribbon half-width scale (0.01 .. 1.0)
-    float fSpeed;       // flow speed scale (0.05 .. 5.0)
-    bool  bRainbow;     // cycle hue over the whole set
+    int   mode;         // MODE_LINES or MODE_RIBBONS
+    int   nCount;       // number of strands (1 .. MAX_FIL)
+    float fWidth;       // strand width, 0.01 .. 1.0
+    float fFov;         // camera field of view, 0.5 .. 3.0 radians
+    float fFade;        // trail length, 0 (short) .. 1 (long)
+    bool  bSpan;        // span the whole virtual desktop
+    bool  bRainbow;     // cycle hue across the strands
 };
 
-static Settings g_settings = { 120, 0.35f, 1.0f, true };
+static Settings g_settings = { MODE_RIBBONS, 120, 0.35f, 0.9f, 0.85f, false, true };
 
 //-----------------------------------------------------------------------------
 // Vertex formats
@@ -56,14 +62,14 @@ struct ScreenVertex { float x, y, z, rhw; D3DCOLOR color; float u, v; };
 #define FVF_SCREEN (D3DFVF_XYZRHW | D3DFVF_DIFFUSE | D3DFVF_TEX1)
 
 //-----------------------------------------------------------------------------
-// One filament: a ring of recent points plus a moving head
+// One strand: a ring of recent points plus a moving head
 //-----------------------------------------------------------------------------
 struct Filament
 {
     Vec3  pt[TRAIL_LEN];
     float hue;
 
-    void Seed( FlowField& field, int index, int total )
+    void Seed( int index, int total )
     {
         float a = (float)rand() / RAND_MAX * 6.2831853f;
         float r = 1.0f + (float)rand() / RAND_MAX * 3.0f;
@@ -72,7 +78,6 @@ struct Filament
         for( int i = 0; i < TRAIL_LEN; i++ )
             pt[i] = p;
         hue = (float)index / ( total > 0 ? total : 1 );
-        (void)field;
     }
 
     void Advance( FlowField& field, float t, float dt, float speed )
@@ -81,7 +86,6 @@ struct Filament
         Vec3 v = field.Flow( head, t ) * speed;
         Vec3 next = head + v * dt;
 
-        // keep the head in a loose sphere
         float len = Length( next );
         if( len > 6.0f )
             next = next * ( 6.0f / len );
@@ -112,34 +116,38 @@ static bool                  g_preview = false;
 static POINT                 g_lastMouse = { -1, -1 };
 
 //-----------------------------------------------------------------------------
-// Settings persistence
+// Settings persistence (my own value names, under my own key)
 //-----------------------------------------------------------------------------
+static void Clamp()
+{
+    if( g_settings.mode != MODE_LINES && g_settings.mode != MODE_RIBBONS )
+        g_settings.mode = MODE_RIBBONS;
+    if( g_settings.nCount < 1 )       g_settings.nCount = 1;
+    if( g_settings.nCount > MAX_FIL ) g_settings.nCount = MAX_FIL;
+    if( g_settings.fWidth < 0.01f )   g_settings.fWidth = 0.01f;
+    if( g_settings.fWidth > 1.0f )    g_settings.fWidth = 1.0f;
+    if( g_settings.fFov < 0.5f )      g_settings.fFov = 0.5f;
+    if( g_settings.fFov > 3.0f )      g_settings.fFov = 3.0f;
+    if( g_settings.fFade < 0.0f )     g_settings.fFade = 0.0f;
+    if( g_settings.fFade > 1.0f )     g_settings.fFade = 1.0f;
+}
+
 static void LoadSettings()
 {
     HKEY hKey;
     if( RegOpenKeyExW( HKEY_CURRENT_USER, REG_PATH, 0, KEY_READ, &hKey ) != ERROR_SUCCESS )
         return;
 
-    DWORD v, cb = sizeof(DWORD);
-    if( RegQueryValueExW( hKey, L"Count", NULL, NULL, (LPBYTE)&v, &cb ) == ERROR_SUCCESS )
-        g_settings.nCount = (int)v;
-    cb = sizeof(DWORD);
-    if( RegQueryValueExW( hKey, L"Width", NULL, NULL, (LPBYTE)&v, &cb ) == ERROR_SUCCESS )
-        g_settings.fWidth = (int)v / 100.0f;
-    cb = sizeof(DWORD);
-    if( RegQueryValueExW( hKey, L"Speed", NULL, NULL, (LPBYTE)&v, &cb ) == ERROR_SUCCESS )
-        g_settings.fSpeed = (int)v / 20.0f;
-    cb = sizeof(DWORD);
-    if( RegQueryValueExW( hKey, L"Rainbow", NULL, NULL, (LPBYTE)&v, &cb ) == ERROR_SUCCESS )
-        g_settings.bRainbow = ( v != 0 );
+    DWORD v, cb;
+    cb = sizeof(v); if( RegQueryValueExW( hKey, L"Mode",        NULL, NULL, (LPBYTE)&v, &cb ) == ERROR_SUCCESS ) g_settings.mode    = (int)v;
+    cb = sizeof(v); if( RegQueryValueExW( hKey, L"Count",       NULL, NULL, (LPBYTE)&v, &cb ) == ERROR_SUCCESS ) g_settings.nCount  = (int)v;
+    cb = sizeof(v); if( RegQueryValueExW( hKey, L"Width",       NULL, NULL, (LPBYTE)&v, &cb ) == ERROR_SUCCESS ) g_settings.fWidth  = (int)v / 100.0f;
+    cb = sizeof(v); if( RegQueryValueExW( hKey, L"FieldOfView", NULL, NULL, (LPBYTE)&v, &cb ) == ERROR_SUCCESS ) g_settings.fFov    = (int)v / 100.0f;
+    cb = sizeof(v); if( RegQueryValueExW( hKey, L"TrailLength", NULL, NULL, (LPBYTE)&v, &cb ) == ERROR_SUCCESS ) g_settings.fFade   = (int)v / 100.0f;
+    cb = sizeof(v); if( RegQueryValueExW( hKey, L"SpanMonitors",NULL, NULL, (LPBYTE)&v, &cb ) == ERROR_SUCCESS ) g_settings.bSpan   = ( v != 0 );
+    cb = sizeof(v); if( RegQueryValueExW( hKey, L"CycleColours",NULL, NULL, (LPBYTE)&v, &cb ) == ERROR_SUCCESS ) g_settings.bRainbow = ( v != 0 );
     RegCloseKey( hKey );
-
-    if( g_settings.nCount < 1 )       g_settings.nCount = 1;
-    if( g_settings.nCount > MAX_FIL ) g_settings.nCount = MAX_FIL;
-    if( g_settings.fWidth < 0.01f )   g_settings.fWidth = 0.01f;
-    if( g_settings.fWidth > 1.0f )    g_settings.fWidth = 1.0f;
-    if( g_settings.fSpeed < 0.05f )   g_settings.fSpeed = 0.05f;
-    if( g_settings.fSpeed > 5.0f )    g_settings.fSpeed = 5.0f;
+    Clamp();
 }
 
 static void SaveSettings()
@@ -150,10 +158,13 @@ static void SaveSettings()
         return;
 
     DWORD v;
-    v = (DWORD)g_settings.nCount;                   RegSetValueExW( hKey, L"Count",   0, REG_DWORD, (LPBYTE)&v, sizeof(v) );
-    v = (DWORD)( g_settings.fWidth * 100.0f + 0.5f ); RegSetValueExW( hKey, L"Width",   0, REG_DWORD, (LPBYTE)&v, sizeof(v) );
-    v = (DWORD)( g_settings.fSpeed * 20.0f + 0.5f );  RegSetValueExW( hKey, L"Speed",   0, REG_DWORD, (LPBYTE)&v, sizeof(v) );
-    v = g_settings.bRainbow ? 1 : 0;                RegSetValueExW( hKey, L"Rainbow", 0, REG_DWORD, (LPBYTE)&v, sizeof(v) );
+    v = (DWORD)g_settings.mode;                        RegSetValueExW( hKey, L"Mode",         0, REG_DWORD, (LPBYTE)&v, sizeof(v) );
+    v = (DWORD)g_settings.nCount;                      RegSetValueExW( hKey, L"Count",        0, REG_DWORD, (LPBYTE)&v, sizeof(v) );
+    v = (DWORD)( g_settings.fWidth * 100.0f + 0.5f );  RegSetValueExW( hKey, L"Width",        0, REG_DWORD, (LPBYTE)&v, sizeof(v) );
+    v = (DWORD)( g_settings.fFov   * 100.0f + 0.5f );  RegSetValueExW( hKey, L"FieldOfView",  0, REG_DWORD, (LPBYTE)&v, sizeof(v) );
+    v = (DWORD)( g_settings.fFade  * 100.0f + 0.5f );  RegSetValueExW( hKey, L"TrailLength",  0, REG_DWORD, (LPBYTE)&v, sizeof(v) );
+    v = g_settings.bSpan ? 1 : 0;                      RegSetValueExW( hKey, L"SpanMonitors", 0, REG_DWORD, (LPBYTE)&v, sizeof(v) );
+    v = g_settings.bRainbow ? 1 : 0;                   RegSetValueExW( hKey, L"CycleColours", 0, REG_DWORD, (LPBYTE)&v, sizeof(v) );
     RegCloseKey( hKey );
 }
 
@@ -169,7 +180,7 @@ static void InitScene()
     delete[] g_pFil;
     g_pFil = new Filament[g_settings.nCount];
     for( int i = 0; i < g_settings.nCount; i++ )
-        g_pFil[i].Seed( *g_pField, i, g_settings.nCount );
+        g_pFil[i].Seed( i, g_settings.nCount );
 
     g_time = 0.0f;
 }
@@ -177,7 +188,7 @@ static void InitScene()
 static void UpdateScene( float dt )
 {
     g_time += dt;
-    float speed = g_settings.fSpeed * 1.2f;
+    const float speed = 1.2f;
     for( int i = 0; i < g_settings.nCount; i++ )
         g_pFil[i].Advance( *g_pField, g_time, dt, speed );
 }
@@ -195,7 +206,6 @@ static bool CreateTargets()
             return false;
         g_pTrailTex[i]->GetSurfaceLevel( 0, &g_pTrailSurf[i] );
 
-        // start black so the first frames have nothing to feed back
         g_pDevice->SetRenderTarget( 0, g_pTrailSurf[i] );
         g_pDevice->SetDepthStencilSurface( NULL );
         g_pDevice->Clear( 0, NULL, D3DCLEAR_TARGET, D3DCOLOR_ARGB( 255, 0, 0, 0 ), 1.0f, 0 );
@@ -283,7 +293,9 @@ static void DrawFullScreenQuad( IDirect3DTexture9* tex, D3DCOLOR color )
 }
 
 //-----------------------------------------------------------------------------
-// Draw one filament as a camera-facing triangle strip
+// Draw one strand as a camera-facing triangle strip.  The strand width scale
+// is what distinguishes the two modes: narrow threads for Lines, broad bands
+// for Ribbons.
 //-----------------------------------------------------------------------------
 static void DrawFilament( const Filament& f, const Vec3& eye, float halfWidth )
 {
@@ -294,7 +306,7 @@ static void DrawFilament( const Filament& f, const Vec3& eye, float halfWidth )
         const Vec3& p = f.pt[i];
 
         Vec3 tangent;
-        if( i == 0 )                 tangent = f.pt[0] - f.pt[1];
+        if( i == 0 )                  tangent = f.pt[0] - f.pt[1];
         else if( i == TRAIL_LEN - 1 ) tangent = f.pt[i - 1] - f.pt[i];
         else                          tangent = f.pt[i - 1] - f.pt[i + 1];
         tangent = Normalize( tangent );
@@ -328,18 +340,25 @@ static void RenderFrame()
     if( !g_pDevice )
         return;
 
-    // camera slowly orbits the origin
     float t = g_time;
     Vec3 eye( cosf( t * 0.07f ) * 6.0f, sinf( t * 0.05f ) * 2.5f, sinf( t * 0.07f ) * 6.0f );
     Vec3 at( 0, 0, 0 ), up( 0, 1, 0 );
 
     D3DMATRIX world = MatIdentity();
     D3DMATRIX view  = MatLookAtLH( eye, at, up );
-    D3DMATRIX proj  = MatPerspectiveFovLH( 0.9f, (float)g_width / g_height, 0.1f, 100.0f );
+    D3DMATRIX proj  = MatPerspectiveFovLH( g_settings.fFov, (float)g_width / g_height, 0.1f, 100.0f );
+
+    // trail persistence: longer trail -> less darkening of the fed-back frame
+    int fadeByte = 200 + (int)( g_settings.fFade * 54.0f );
+    if( fadeByte > 254 ) fadeByte = 254;
+    D3DCOLOR fade = D3DCOLOR_ARGB( 255, fadeByte, fadeByte, fadeByte );
+
+    float halfWidth = ( g_settings.mode == MODE_LINES )
+                        ? g_settings.fWidth * 0.015f
+                        : g_settings.fWidth * 0.07f;
 
     int prev = g_cur ^ 1;
 
-    // --- pass 1: feedback (slightly darkened previous frame) into current RT
     g_pDevice->SetRenderTarget( 0, g_pTrailSurf[g_cur] );
     g_pDevice->SetDepthStencilSurface( NULL );
 
@@ -353,15 +372,16 @@ static void RenderFrame()
 
     if( g_pDevice->BeginScene() >= 0 )
     {
+        // feedback: the previous frame, slightly darkened
         g_pDevice->SetRenderState( D3DRS_ALPHABLENDENABLE, FALSE );
         g_pDevice->SetTextureStageState( 0, D3DTSS_COLOROP, D3DTOP_MODULATE );
         g_pDevice->SetTextureStageState( 0, D3DTSS_COLORARG1, D3DTA_TEXTURE );
         g_pDevice->SetTextureStageState( 0, D3DTSS_COLORARG2, D3DTA_DIFFUSE );
         g_pDevice->SetTextureStageState( 0, D3DTSS_ALPHAOP, D3DTOP_SELECTARG1 );
         g_pDevice->SetTextureStageState( 0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE );
-        DrawFullScreenQuad( g_pTrailTex[prev], D3DCOLOR_ARGB( 255, 0xF0, 0xF0, 0xF0 ) );
+        DrawFullScreenQuad( g_pTrailTex[prev], fade );
 
-        // --- pass 2: the filaments, additively, in 3D
+        // the strands, additively, in 3D
         g_pDevice->SetTransform( D3DTS_WORLD, &world );
         g_pDevice->SetTransform( D3DTS_VIEW, &view );
         g_pDevice->SetTransform( D3DTS_PROJECTION, &proj );
@@ -372,14 +392,13 @@ static void RenderFrame()
         g_pDevice->SetRenderState( D3DRS_SRCBLEND, D3DBLEND_ONE );
         g_pDevice->SetRenderState( D3DRS_DESTBLEND, D3DBLEND_ONE );
 
-        float halfWidth = g_settings.fWidth * 0.06f;
         for( int i = 0; i < g_settings.nCount; i++ )
             DrawFilament( g_pFil[i], eye, halfWidth );
 
         g_pDevice->EndScene();
     }
 
-    // --- pass 3: present the current trail texture to the back buffer
+    // present the current trail texture to the back buffer
     g_pDevice->SetRenderTarget( 0, g_pBackBuffer );
     if( g_pDevice->BeginScene() >= 0 )
     {
@@ -394,8 +413,6 @@ static void RenderFrame()
 
     if( g_pDevice->Present( NULL, NULL, NULL, NULL ) == D3DERR_DEVICELOST )
     {
-        // minimal device-lost handling: drop the targets and let the next
-        // frames rebuild once the device can be reset
         if( g_pDevice->TestCooperativeLevel() == D3DERR_DEVICENOTRESET )
         {
             ReleaseTargets();
@@ -430,13 +447,9 @@ static LRESULT CALLBACK SaverWndProc( HWND hWnd, UINT msg, WPARAM wParam, LPARAM
                 POINT pt;
                 GetCursorPos( &pt );
                 if( g_lastMouse.x < 0 )
-                {
                     g_lastMouse = pt;
-                }
                 else if( abs( pt.x - g_lastMouse.x ) > 3 || abs( pt.y - g_lastMouse.y ) > 3 )
-                {
                     PostMessageW( hWnd, WM_CLOSE, 0, 0 );
-                }
             }
             return 0;
 
@@ -490,10 +503,22 @@ static int RunSaver( HINSTANCE hInst, HWND hwndParent, bool preview )
     }
     else
     {
-        int cx = GetSystemMetrics( SM_CXSCREEN );
-        int cy = GetSystemMetrics( SM_CYSCREEN );
+        int x, y, cx, cy;
+        if( g_settings.bSpan )
+        {
+            x  = GetSystemMetrics( SM_XVIRTUALSCREEN );
+            y  = GetSystemMetrics( SM_YVIRTUALSCREEN );
+            cx = GetSystemMetrics( SM_CXVIRTUALSCREEN );
+            cy = GetSystemMetrics( SM_CYVIRTUALSCREEN );
+        }
+        else
+        {
+            x = 0; y = 0;
+            cx = GetSystemMetrics( SM_CXSCREEN );
+            cy = GetSystemMetrics( SM_CYSCREEN );
+        }
         g_hWnd = CreateWindowExW( WS_EX_TOPMOST, wc.lpszClassName, L"Filaments",
-                                  WS_POPUP | WS_VISIBLE, 0, 0, cx, cy,
+                                  WS_POPUP | WS_VISIBLE, x, y, cx, cy,
                                   NULL, NULL, hInst, NULL );
         ShowCursor( FALSE );
         SetForegroundWindow( g_hWnd );
@@ -523,14 +548,13 @@ static int RunSaver( HINSTANCE hInst, HWND hwndParent, bool preview )
         if( !running )
             break;
 
-        // preview dies with its parent
         if( preview && !IsWindow( hwndParent ) )
             break;
 
         ULONGLONG now = GetTickCount64();
         float dt = ( now - last ) * 0.001f;
         last = now;
-        if( dt > 0.1f ) dt = 0.1f;      // clamp after a stall
+        if( dt > 0.1f ) dt = 0.1f;
 
         UpdateScene( dt );
         RenderFrame();
@@ -553,12 +577,17 @@ static INT_PTR CALLBACK ConfigProc( HWND hDlg, UINT msg, WPARAM wParam, LPARAM l
     {
         case WM_INITDIALOG:
             LoadSettings();
+            CheckRadioButton( hDlg, IDC_MODE_LINES, IDC_MODE_RIBBONS,
+                              g_settings.mode == MODE_LINES ? IDC_MODE_LINES : IDC_MODE_RIBBONS );
             SendDlgItemMessageW( hDlg, IDC_COUNT, TBM_SETRANGE, TRUE, MAKELONG( 1, MAX_FIL ) );
             SendDlgItemMessageW( hDlg, IDC_COUNT, TBM_SETPOS, TRUE, g_settings.nCount );
             SendDlgItemMessageW( hDlg, IDC_WIDTH, TBM_SETRANGE, TRUE, MAKELONG( 1, 100 ) );
             SendDlgItemMessageW( hDlg, IDC_WIDTH, TBM_SETPOS, TRUE, (int)( g_settings.fWidth * 100.0f + 0.5f ) );
-            SendDlgItemMessageW( hDlg, IDC_SPEED, TBM_SETRANGE, TRUE, MAKELONG( 1, 100 ) );
-            SendDlgItemMessageW( hDlg, IDC_SPEED, TBM_SETPOS, TRUE, (int)( g_settings.fSpeed * 20.0f + 0.5f ) );
+            SendDlgItemMessageW( hDlg, IDC_FOV, TBM_SETRANGE, TRUE, MAKELONG( 50, 300 ) );
+            SendDlgItemMessageW( hDlg, IDC_FOV, TBM_SETPOS, TRUE, (int)( g_settings.fFov * 100.0f + 0.5f ) );
+            SendDlgItemMessageW( hDlg, IDC_FADE, TBM_SETRANGE, TRUE, MAKELONG( 0, 100 ) );
+            SendDlgItemMessageW( hDlg, IDC_FADE, TBM_SETPOS, TRUE, (int)( g_settings.fFade * 100.0f + 0.5f ) );
+            CheckDlgButton( hDlg, IDC_SPAN, g_settings.bSpan ? BST_CHECKED : BST_UNCHECKED );
             CheckDlgButton( hDlg, IDC_RAINBOW, g_settings.bRainbow ? BST_CHECKED : BST_UNCHECKED );
             return TRUE;
 
@@ -566,10 +595,15 @@ static INT_PTR CALLBACK ConfigProc( HWND hDlg, UINT msg, WPARAM wParam, LPARAM l
             switch( LOWORD( wParam ) )
             {
                 case IDOK:
+                    g_settings.mode    = ( IsDlgButtonChecked( hDlg, IDC_MODE_LINES ) == BST_CHECKED )
+                                            ? MODE_LINES : MODE_RIBBONS;
                     g_settings.nCount  = (int)SendDlgItemMessageW( hDlg, IDC_COUNT, TBM_GETPOS, 0, 0 );
                     g_settings.fWidth  = (int)SendDlgItemMessageW( hDlg, IDC_WIDTH, TBM_GETPOS, 0, 0 ) / 100.0f;
-                    g_settings.fSpeed  = (int)SendDlgItemMessageW( hDlg, IDC_SPEED, TBM_GETPOS, 0, 0 ) / 20.0f;
+                    g_settings.fFov    = (int)SendDlgItemMessageW( hDlg, IDC_FOV, TBM_GETPOS, 0, 0 ) / 100.0f;
+                    g_settings.fFade   = (int)SendDlgItemMessageW( hDlg, IDC_FADE, TBM_GETPOS, 0, 0 ) / 100.0f;
+                    g_settings.bSpan    = ( IsDlgButtonChecked( hDlg, IDC_SPAN ) == BST_CHECKED );
                     g_settings.bRainbow = ( IsDlgButtonChecked( hDlg, IDC_RAINBOW ) == BST_CHECKED );
+                    Clamp();
                     SaveSettings();
                     EndDialog( hDlg, IDOK );
                     return TRUE;
@@ -588,7 +622,6 @@ static INT_PTR CALLBACK ConfigProc( HWND hDlg, UINT msg, WPARAM wParam, LPARAM l
 //-----------------------------------------------------------------------------
 static HWND ParsePreviewParent( LPCWSTR cmd )
 {
-    // find the last number on the command line
     const WCHAR* p = cmd;
     const WCHAR* lastDigit = NULL;
     for( ; *p; p++ )
@@ -618,7 +651,6 @@ int WINAPI WinMain( HINSTANCE hInst, HINSTANCE, LPSTR, int )
         while( *lpCmdLine && *lpCmdLine != L' ' ) lpCmdLine++;
     }
 
-    // scan the command line for the mode flag
     WCHAR mode = L'c';
     for( const WCHAR* p = lpCmdLine; *p; p++ )
     {
@@ -642,7 +674,6 @@ int WINAPI WinMain( HINSTANCE hInst, HINSTANCE, LPSTR, int )
         return 0;
     }
 
-    DialogBoxParamW( hInst, MAKEINTRESOURCEW( IDD_CONFIG ), GetForegroundWindow(),
-                     ConfigProc, 0 );
+    DialogBoxParamW( hInst, MAKEINTRESOURCEW( IDD_CONFIG ), GetForegroundWindow(), ConfigProc, 0 );
     return 0;
 }

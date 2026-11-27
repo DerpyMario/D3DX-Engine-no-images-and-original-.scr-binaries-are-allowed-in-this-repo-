@@ -5,11 +5,12 @@ of anyone else's binaries. All the code here is original.
 
 ## Filaments
 
-A Direct3D 9 screen saver: glowing filaments are carried through a slowly
+A Direct3D 9 screen saver: glowing strands are carried through a slowly
 evolving 3D flow field and leave fading trails, while the camera drifts around
-them. It is built from the same handful of ideas that make the classic 3D
-"ribbon" savers look the way they do — additive blending, soft falloff, and a
-feedback buffer for the trails (described in
+them. There are two selectable looks — thin **lines** or wide camera-facing
+**ribbons** — chosen in the settings. It is built from the same handful of
+ideas that make the classic 3D "ribbon" savers look the way they do — additive
+blending, soft falloff, and a feedback buffer for the trails (described in
 [`../docs/mystify-ribbons-notes.md`](../docs/mystify-ribbons-notes.md)) — but
 the design, the maths and the code are my own:
 
@@ -25,9 +26,12 @@ the design, the maths and the code are my own:
   comet tails. No textures or images are needed or shipped.
 * **Colour** — an HSV ramp, optionally cycling across the whole set.
 
-There is a small settings dialog (filament count, width, flow speed, and a
-colour-cycling toggle), stored under
-`HKCU\Software\D3DXEngine\Filaments`.
+There is a small settings dialog — shape (lines or ribbons), number of
+strands, strand width, camera field of view, trail length, span-all-monitors,
+and a colour-cycling toggle — stored under `HKCU\Software\D3DXEngine\Filaments`.
+"Lines" and "ribbons" share one renderer and differ only in width scale, so
+every setting applies to both; "span all monitors" makes the full-screen run
+cover the whole virtual desktop instead of the primary monitor.
 
 ### Building
 
