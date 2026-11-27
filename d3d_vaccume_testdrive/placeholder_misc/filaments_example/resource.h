@@ -1,7 +1,3 @@
-//-----------------------------------------------------------------------------
-// resource.h - resource identifiers for the Filaments screen saver.
-// Original code for this repository.
-//-----------------------------------------------------------------------------
 #ifndef FILAMENTS_RESOURCE_H
 #define FILAMENTS_RESOURCE_H
 

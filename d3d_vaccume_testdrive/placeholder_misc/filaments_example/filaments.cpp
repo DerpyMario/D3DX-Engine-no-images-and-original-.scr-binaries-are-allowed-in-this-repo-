@@ -1,21 +1,3 @@
-//-----------------------------------------------------------------------------
-// filaments.cpp - "Filaments", an original Direct3D 9 screen saver.
-//
-// Original work for this repository (not a reconstruction of any shipping
-// screen saver).  Strands of light are advected through a slowly evolving
-// curl-noise flow field and leave fading trails, drawn either as thin lines
-// or as wide camera-facing ribbons.  The look is built from the three
-// ingredients described in docs/mystify-ribbons-notes.md -- additive
-// blending, soft per-vertex falloff, and a feedback buffer for the trails --
-// but the design, maths and code here are my own.
-//
-// Standard screen-saver command line:
-//     /s          run full screen
-//     /p <hwnd>   preview inside the given window
-//     /c[:<hwnd>] configure (modal dialog)
-//
-// Build: see original/CMakeLists.txt (links d3d9, comctl32; no D3DX).
-//-----------------------------------------------------------------------------
 #include <windows.h>
 #include <commctrl.h>
 #include <d3d9.h>

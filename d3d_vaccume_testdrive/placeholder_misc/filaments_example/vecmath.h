@@ -1,10 +1,3 @@
-//-----------------------------------------------------------------------------
-// vecmath.h - tiny left-handed vector / matrix helpers for Filaments.
-//
-// Original code for this repository.  Just enough linear algebra to drive the
-// fixed-function Direct3D 9 pipeline without pulling in D3DX; everything here
-// is written from the standard formulas.
-//-----------------------------------------------------------------------------
 #ifndef FILAMENTS_VECMATH_H
 #define FILAMENTS_VECMATH_H
 

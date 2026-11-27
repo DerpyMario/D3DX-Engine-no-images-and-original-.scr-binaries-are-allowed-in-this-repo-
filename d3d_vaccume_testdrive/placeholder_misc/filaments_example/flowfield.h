@@ -1,10 +1,3 @@
-//-----------------------------------------------------------------------------
-// flowfield.h - a slowly evolving 3D flow field used to push the filaments.
-//
-// Original code for this repository.  A hash-lattice value noise, plus a
-// divergence-free "curl noise" flow derived from it, so the filaments swirl
-// without all draining to a sink.
-//-----------------------------------------------------------------------------
 #ifndef FILAMENTS_FLOWFIELD_H
 #define FILAMENTS_FLOWFIELD_H
 
