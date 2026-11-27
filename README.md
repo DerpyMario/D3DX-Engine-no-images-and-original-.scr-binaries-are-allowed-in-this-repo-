@@ -1,7 +1,7 @@
-# Windows Vista and Windows XP screen savers – reconstructed source
+# Windows Vista+ and Windows XP screen savers – reconstructed source
 
 Readable, rebuildable C/C++ source, HLSL effects and resource scripts for the
-five Direct3D / GDI screen savers of Windows Vista (x64), and for the screen
+five Direct3D / GDI screen savers of Windows Vista (x64) and above, and for the screen
 savers of Windows XP / Windows Server 2003 x64 ([below](#windows-xp--windows-server-2003)),
 reconstructed from the shipped binaries and, where they exist, their public
 symbol files.
@@ -13,6 +13,8 @@ symbol files.
 | 3D Text         | `ssText3d.scr`  | 6.0.6001.18000   | `shell\osshell\control\scrnsave\text3d`             |
 | Windows Energy  | `ssBranded.scr` | 6.0.6001.18000   | `shell\osshell\control\scrnsave\branded\src`        |
 | Windows Logo    | `logon.scr`     | 6.0.6001.18000   | `shell\osshell\control\scrnsave\logon`              |
+| Mystify         | `Mystify.scr`   | 10.0.19041.4355  | `shell\osshell\control\scrnsave\mystify`            |
+| Ribbons         | `Ribbons.scr`   | 10.0.19041.4355  | `shell\osshell\control\scrnsave\ribbons`            |
 
 and the libraries they are built from:
 
