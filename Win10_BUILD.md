@@ -163,3 +163,23 @@ same build.
 **`muirct not found`** — not needed for these packages: the .rc scripts
 already contain the correct split and the verbatim `RT_MUI` records, so no
 post-build muirct step is required.
+
+## 8. Linux cross-compilation verification
+
+Both savers have been verified to cross-compile on Linux (Ubuntu, x86-64)
+with the system mingw-w64 package:
+
+| Saver   | Compiler               | Warnings | .scr size   | .mui size  |
+|---------|------------------------|----------|-------------|------------|
+| Mystify | x86_64-w64-mingw32-g++ 13 | 0        | 449,068 B   | 16,124 B   |
+| Ribbons | x86_64-w64-mingw32-g++ 13 | 0        | 450,770 B   | 16,636 B   |
+
+All four output files are valid PE32+ (x64) binaries.  The `.scr` files
+are GUI executables importing `Direct3DCreate9` from `d3d9.dll` alongside
+the expected Win32 libraries; the `.scr.mui` files are resource-only DLLs
+containing the dialog templates, string tables, version info and MUI
+records.
+
+**Wine note:** both savers link `d3d9` only (no D3DX), so they should run
+under Wine without the `d3dx9` `sampler_state` / `D3DXMESHOPT_VERTEXCACHE`
+limitations that affect `ssBranded.scr` (see [BUILDING.md](BUILDING.md)).
