@@ -192,6 +192,14 @@ ASSETS = {
     "logon.scr":
         [(2, "IDB_FLARE%02d" % n, "bmp", "logon/res/flare%02d.bmp" % n) for n in range(1, 46)] +
         [(2, "IDB_SMALLFLARE%02d" % n, "bmp", "logon/res/smallflare%02d.bmp" % n) for n in range(1, 46)],
+    "mystify.scr": [
+        (14, 101, "ico", "mystify/res/mystify.ico"),
+        ("BMP", 102, "raw", "mystify/res/sprite.bin"),
+    ],
+    "ribbons.scr": [
+        (14, 101, "ico", "ribbons/res/ribbons.ico"),
+        ("BMP", 102, "raw", "ribbons/res/sprite.bin"),
+    ],
 }
 
 

@@ -1,0 +1,188 @@
+//-----------------------------------------------------------------------------
+// File: mystify.rc
+//
+// Desc: Resources of the Mystify screen saver (Windows 10).
+//
+//       In the shipped product the language-neutral resources (icon, sprite,
+//       manifest, version, MUI record) live in Mystify.scr and the localisable
+//       ones (dialogs, strings) in en-US\Mystify.scr.mui; this script simply
+//       builds all of them into the .scr.
+//
+//       The binary assets (icon, sprite texture) are NOT part of this source
+//       tree.  Run tools\extract_assets.py against your own copy of
+//       Mystify.scr to create the res\ directory, or build with
+//       SCRNSAVE_NO_ASSETS defined.
+//
+//       Original binary:
+//           Mystify.scr 10.0.19041.4355 (x64, MSVC 14.20)
+//-----------------------------------------------------------------------------
+#include <windows.h>
+#include <commctrl.h>
+#include "resources.h"
+
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+
+//-----------------------------------------------------------------------------
+// Binary assets (extracted from the original, see above)
+//-----------------------------------------------------------------------------
+#ifndef SCRNSAVE_NO_ASSETS
+101 ICON "res/mystify.ico"
+102 BMP  "res/sprite.bin"
+#endif
+
+//-----------------------------------------------------------------------------
+// Application manifest (Per-Monitor DPI aware, Common Controls v6)
+//-----------------------------------------------------------------------------
+1 24 "res/mystify.manifest"
+
+//-----------------------------------------------------------------------------
+// Version information
+//-----------------------------------------------------------------------------
+1 VERSIONINFO
+ FILEVERSION 10,0,19041,4355
+ PRODUCTVERSION 10,0,19041,4355
+ FILEFLAGSMASK 0x3fL
+ FILEFLAGS 0x0L
+ FILEOS 0x40004L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904B0"
+        BEGIN
+            VALUE "CompanyName", "Microsoft Corporation"
+            VALUE "FileDescription", "Mystify Screen Saver"
+            VALUE "FileVersion", "10.0.19041.4355 (WinBuild.160101.0800)"
+            VALUE "InternalName", "Mystify"
+            VALUE "LegalCopyright", "\xa9 Microsoft Corporation. All rights reserved."
+            VALUE "OriginalFilename", "Mystify"
+            VALUE "ProductName", "Microsoft\xae Windows\xae Operating System"
+            VALUE "ProductVersion", "10.0.19041.4355"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+//-----------------------------------------------------------------------------
+// Dialogs (from the .mui satellite)
+//-----------------------------------------------------------------------------
+
+// "Mystify Settings" (12 controls)
+105 DIALOGEX 12, 0, 370, 193
+STYLE DS_SETFONT | DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Mystify Settings"
+FONT 8, "MS Shell Dlg", 400, 0, 0x0
+BEGIN
+    DEFPUSHBUTTON   "OK", IDOK, 282, 108, 78, 18
+    PUSHBUTTON      "Cancel", IDCANCEL, 282, 132, 78, 18
+    PUSHBUTTON      "&Display Settings...", IDC_BTN_DISPLAY_SETTINGS, 282, 156, 78, 18
+    GROUPBOX        "Number of Lines", IDC_TRK_NUM_LINES - 5, 6, 6, 174, 36
+    CONTROL         "", IDC_TRK_NUM_LINES, TRACKBAR_CLASS, TBS_BOTH | TBS_NOTICKS | WS_CHILD | WS_VISIBLE | WS_TABSTOP, 12, 18, 165, 18
+    GROUPBOX        "Line Width", IDC_TRK_LINE_WIDTH - 10, 186, 6, 174, 36
+    CONTROL         "", IDC_TRK_LINE_WIDTH, TRACKBAR_CLASS, TBS_BOTH | TBS_NOTICKS | WS_CHILD | WS_VISIBLE | WS_TABSTOP, 192, 18, 162, 18
+    RTEXT           "Screensaver by Stephen Coy", -1, 246, 180, 114, 12, SS_RIGHT | NOT WS_GROUP
+    AUTOCHECKBOX    "Span Multiple Monitors", IDC_CHK_SPAN_MONITORS, 192, 54, 102, 12
+    AUTOCHECKBOX    "Apply Blur and Fade", IDC_CHK_BLUR, 192, 73, 102, 12
+    GROUPBOX        "Camera Field of View Angle", IDC_TRK_CAMERA_FOV - 4, 6, 48, 174, 36
+    CONTROL         "", IDC_TRK_CAMERA_FOV, TRACKBAR_CLASS, TBS_BOTH | TBS_NOTICKS | WS_CHILD | WS_VISIBLE | WS_TABSTOP, 12, 60, 165, 18
+END
+
+// "Display Settings" (single monitor, 9 controls)
+200 DIALOGEX 197, 0, 255, 107
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Display Settings"
+FONT 8, "MS Shell Dlg", 400, 0, 0x0
+BEGIN
+    GROUPBOX        "Video adapter", -1, 7, 7, 241, 69
+    LTEXT           "Name:", -1, 13, 18, 33, 8
+    LTEXT           "", IDC_LBL_ADAPTER_NAME, 57, 18, 159, 8
+    LTEXT           "Rendering:", -1, 13, 31, 36, 8
+    LTEXT           "", IDC_LBL_RENDERING_DESC, 57, 31, 130, 17
+    PUSHBUTTON      "&Help", IDC_BTN_HELP, 194, 33, 50, 14
+    AUTOCHECKBOX    "&Disable hardware 3D rendering", IDC_CHK_DISABLE_HW, 14, 54, 215, 10
+    DEFPUSHBUTTON   "OK", IDOK, 143, 85, 50, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 197, 85, 50, 14
+END
+
+// "Display Settings" (multi-monitor, tabbed, 14 controls)
+201 DIALOGEX 7, 0, 270, 173
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Display Settings"
+FONT 8, "MS Shell Dlg", 400, 0, 0x0
+BEGIN
+    LTEXT           "Monitor %d", IDC_LBL_MONITOR, 214, 8, 32, 8, NOT WS_VISIBLE
+    GROUPBOX        "Video adapter", -1, 13, 23, 244, 65
+    LTEXT           "Name:", -1, 19, 35, 40, 8
+    LTEXT           "", IDC_LBL_ADAPTER_NAME, 65, 35, 168, 8
+    LTEXT           "Rendering:", -1, 19, 48, 40, 8
+    LTEXT           "", IDC_LBL_RENDERING_DESC, 65, 48, 132, 17
+    PUSHBUTTON      "&Help", IDC_BTN_HELP, 202, 49, 50, 14
+    AUTOCHECKBOX    "&Disable hardware 3D rendering on this monitor", IDC_CHK_DISABLE_HW, 19, 71, 215, 10
+    GROUPBOX        "Monitor usage", IDC_GRP_MONITOR_USAGE, 13, 94, 244, 44
+    AUTORADIOBUTTON "Display &screen saver on this monitor", IDC_RAD_DISPLAY_SAVER, 19, 107, 200, 10
+    AUTORADIOBUTTON "Display &nothing on this monitor", IDC_RAD_DISPLAY_NOTHING, 19, 120, 200, 10
+    DEFPUSHBUTTON   "OK", IDOK, 159, 153, 50, 14
+    PUSHBUTTON      "Cancel", IDCANCEL, 213, 153, 50, 14
+    CONTROL         "Tab1", IDC_TAB_MONITORS, WC_TABCONTROL, WS_CHILD | WS_VISIBLE | WS_TABSTOP, 7, 7, 256, 138
+END
+
+//-----------------------------------------------------------------------------
+// String tables (from the .mui satellite)
+//-----------------------------------------------------------------------------
+STRINGTABLE
+BEGIN
+    IDS_APP_NAME            "Mystify"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_SAVER_TITLE         "Mystify Screen Saver"
+    IDS_NO_OPTIONS          "No options"
+    IDS_NO_OPTIONS_DESC     "This screen saver has no options that you can set."
+END
+
+STRINGTABLE
+BEGIN
+    IDS_ERR_UNSPECIFIED     "There was an unspecified problem starting this screen saver.  Your hardware might not be capable of running this screen saver"
+    IDS_ERR_NO_DIRECT3D     "Direct3D 9.0 is needed to run this screen saver, but can't be found.  Please install the latest version of DirectX and try running the screen saver again."
+    IDS_ERR_GENERIC_START   "Windows could not start this screen saver.  Try previewing it in full screen mode."
+    IDS_ERR_COULD_NOT_START "Windows could not start this screen saver."
+    IDS_ERR_NEWER_CARD      "The screen saver can't run because it requires a newer video card or one that's compatible with Direct3D."
+    IDS_ERR_NO_HW_ACCEL     "The screen saver can't run because it requires hardware-acceleration functionality that is not available on the video card."
+    IDS_ERR_FUNC_UNAVAILABLE_HW "This screen saver can't run because it requires functionality that is not available on your hardware-accelerated video card."
+    IDS_ERR_TRY_LOWER_RES   "The screen saver can't run because it requires functionality that is not available on your video card with the current desktop display settings.  Try a lower screen resolution or change the color depth to one that's supported by your video card."
+    IDS_ERR_NO_TEXTURES     "Windows could not find the required textures for this screen saver.  You might try using a different screen saver."
+    IDS_ERR_DESKTOP_RES     "Windows could not change the desktop resolution to start the screen saver.  Choose a resolution for the screen saver settings that is the same as your desktop resolution."
+    IDS_ERR_NO_SYS_MEMORY   "There is not enough system memory to start this screen saver.  You might try closing some programs and then starting the screen saver again."
+    IDS_ERR_NO_VIDEO_MEMORY  "There is not enough video card memory to start this screen saver.  You might try lowering the desktop resolution, closing programs that are using video memory, or getting a new video card with more memory."
+END
+
+STRINGTABLE
+BEGIN
+    IDS_NO_PREVIEW          "No preview available"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_MON_HW_OK           "This video adapter supports hardware 3D rendering.  This screen saver can be displayed on this monitor."
+    IDS_MON_HW_SW_FALLBACK  "This video adapter supports hardware 3D rendering, but this screensaver requires functionality not available in hardware.  A software renderer will be used instead.  This screen saver can be displayed on this monitor."
+    IDS_MON_HW_UNSUPPORTED  "This video adapter supports hardware 3D rendering, but this screensaver requires functionality not available in hardware or software.  This screen saver cannot be displayed on this monitor."
+    IDS_MON_HW_NO_SW        "This video adapter supports hardware 3D rendering, but this screensaver requires functionality not available in hardware.  No software renderer is available.  This screen saver cannot be displayed on this monitor."
+    IDS_MON_NO_HW_SW_OK     "This video adapter does not support hardware 3D rendering.  A software renderer will be used instead.  This screen saver can be displayed on this monitor."
+    IDS_MON_NO_HW_SW_UNSUPPORTED "This video adapter does not support hardware 3D rendering.  This screensaver requires functionality not available in the software renderer.  This screen saver cannot be displayed on this monitor."
+    IDS_MON_NO_HW_NO_SW     "This video adapter does not support hardware 3D rendering.  No software renderer is available.  This screen saver cannot be displayed on this monitor."
+    IDS_MON_HW_DISABLED_SW_OK "The video adapter supports hardware 3D rendering, but it has been disabled.  A software renderer will be used instead.  This screen saver can be displayed on this monitor."
+END
+
+STRINGTABLE
+BEGIN
+    IDS_MON_HW_DISABLED_SW_UNSUPPORTED "This video adapter supports hardware 3D rendering, but it has been disabled.  This screensaver requires functionality not available in the software renderer.  This screen saver cannot be displayed on this monitor."
+    IDS_MON_HW_DISABLED_NO_SW "This video adapter supports hardware 3D rendering, but it has been disabled.  No software renderer is available.  This screen saver cannot be displayed on this monitor."
+    IDS_MON_CAN_HW          "The screen saver can use hardware 3D rendering on this monitor."
+    IDS_MON_CAN_SW          "The screen saver can use software 3D rendering on this monitor."
+    IDS_MON_CANNOT          "The screen saver cannot be displayed on this monitor."
+END

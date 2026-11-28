@@ -1,10 +1,10 @@
 # Windows Vista+ and Windows XP screen savers – reconstructed source
 
 Readable, rebuildable C/C++ source, HLSL effects and resource scripts for the
-five Direct3D / GDI screen savers of Windows Vista (x64) and above, and for the screen
-savers of Windows XP / Windows Server 2003 x64 ([below](#windows-xp--windows-server-2003)),
-reconstructed from the shipped binaries and, where they exist, their public
-symbol files.
+seven Direct3D / GDI screen savers of Windows Vista through Windows 10 (x64),
+and for the screen savers of Windows XP / Windows Server 2003 x64
+([below](#windows-xp--windows-server-2003)), reconstructed from the shipped
+binaries and, where they exist, their public symbol files.
 
 | Screen saver    | File            | Version          | Source directory (original build path)              |
 |-----------------|-----------------|------------------|-----------------------------------------------------|
@@ -46,8 +46,16 @@ original build layout; the build of this repository is CMake
 
 The text resources of Windows Energy – 13 effect files (`fx/*.fx`), 3 meshes
 (`media/*.x`) and 15 key frame animations (`media/*.anim`) – are source code
-and are included byte for byte.  The other four savers draw with the
+and are included byte for byte.  The other six savers draw with the
 fixed-function pipeline and have no shaders.
+
+Mystify and Ribbons are Windows 10 savers (MSVC 14.20 / VS 2019 builds,
+version 10.0.19041.4355) that use their own `D3DSaverWndClass` framework
+rather than `D3DSaver9.lib`, and link `d3d9` only – no D3DX dependency and
+no DirectX SDK required.  In the shipped product each has a separate MUI
+satellite (`.scr.mui`); the CMake build of this repository merges the
+localisable resources (dialogs, strings) into the `.scr`, as it does for
+the Vista savers.
 
 ## How the sources were recovered
 
@@ -83,15 +91,17 @@ fixed-function pipeline and have no shaders.
 * Under Wine, the rebuilt savers run like the originals (Windows Energy with
   the effect loader of the original, see [BUILDING.md](BUILDING.md)).
 * **Mystify and Ribbons** (Windows 10): both build warning-clean with
-  mingw-w64 g++ 13 on Linux (`-std=c++17`, four output files each: `.scr`
-  and `.scr.mui`).  PE analysis of the rebuilt binaries confirms correct
-  structure: `d3d9.dll:Direct3DCreate9` import, expected Win32 API imports
-  (`comctl32`, `user32`, `gdi32`, `advapi32`, `kernel32`, `ole32`), and all
-  resource types present (`"BMP"` 102 sprite, `RT_MUI` record, icons,
-  version, manifest in the `.scr`; dialog, string table, version, `RT_MUI`
-  in the `.mui`).  The savers link `d3d9` only (no D3DX dependency), so
-  they avoid the Wine `d3dx9` limitation that affects `ssBranded.scr`.
-  See [Win10_BUILD.md](Win10_BUILD.md) for the Win10 saver build.
+  mingw-w64 g++ 13 on Linux (`-std=c++17`) through the same CMake build as
+  the Vista savers.  The `"BMP"` 102 sprite texture (36,311 bytes) is
+  byte-identical between the original and the rebuild; the icon frames match
+  as well.  The original has an `RT_MUI` record (not needed in the unified
+  build); the rebuild has `RT_DIALOG` and `RT_STRING` instead (the dialogs
+  and strings merged from the `.mui` satellite).  The
+  `d3d9.dll:Direct3DCreate9` import matches exactly.  These savers link
+  `d3d9` only (no D3DX), so they avoid the Wine `d3dx9` limitation that
+  affects `ssBranded.scr`.  See also
+  [Win10_BUILD.md](Win10_BUILD.md) for standalone Makefile and MSVC builds
+  of the MUI-split originals.
 
 ## Windows XP / Windows Server 2003
 
@@ -145,14 +155,15 @@ See [BUILDING.md](BUILDING.md#windows-xp--windows-server-2003) for the build.
 ## Layout
 
 ```
-CMakeLists.txt                  build of the Vista savers (MinGW-w64 or Visual Studio)
+CMakeLists.txt                  build of all Vista / Win10 savers (MinGW-w64 or Visual Studio)
 cmake/                          MinGW-w64 toolchain files (x86_64, i686)
 external/winbrand/              import library definition of winbrand.dll (Vista)
 external/d3dx8/                 clean-room D3DX 8 subset (XP Direct3D savers)
 external/shlwapip/              import library definition: IsOS by ordinal (XP logo)
-shell/osshell/control/scrnsave/ the Vista sources, in their original places
+shell/osshell/control/scrnsave/ the Vista / Win10 sources, in their original places
 winxp/CMakeLists.txt            build of the Windows XP / 2003 savers
 winxp/shell/osshell/control/scrnsave/  the Windows XP / 2003 sources
 tools/extract_assets.py         copies the artwork out of your originals
 tools/verify/                   differential tests against the originals (Vista)
+Win10_BUILD.md                  standalone build guide for the Win10 MUI-split savers
 ```
