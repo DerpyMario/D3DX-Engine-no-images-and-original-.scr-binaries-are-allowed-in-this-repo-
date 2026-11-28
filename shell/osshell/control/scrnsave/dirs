@@ -12,4 +12,6 @@ DIRS= \
     bubbles   \
     text3d    \
     branded   \
+    mystify   \
+    ribbons   \
     logon
