@@ -205,6 +205,35 @@ if(MSVC)
 endif()
 
 #------------------------------------------------------------------------------
+# Windows 10 screen savers (Mystify, Ribbons)
+#
+# These two savers have their own D3D9 framework (D3DSaverWndClass) and do
+# not use D3DSaver9.lib, Helpers.lib or D3DX.  They need C++17.
+#------------------------------------------------------------------------------
+
+add_screensaver(Mystify OUTPUT_NAME Mystify ASSETS mystify
+    SOURCES
+        ${SCRNSAVE}/mystify/screensaver.cpp
+        ${SCRNSAVE}/mystify/engine.cpp
+        ${SCRNSAVE}/mystify/noise.cpp
+        ${SCRNSAVE}/mystify/settings.cpp
+        ${SCRNSAVE}/mystify/mystify.rc
+    LIBRARIES d3d9 comctl32 user32 gdi32 advapi32 winmm uuid ole32)
+target_include_directories(Mystify PRIVATE ${SCRNSAVE}/mystify)
+target_compile_features(Mystify PRIVATE cxx_std_17)
+
+add_screensaver(Ribbons OUTPUT_NAME Ribbons ASSETS ribbons
+    SOURCES
+        ${SCRNSAVE}/ribbons/screensaver.cpp
+        ${SCRNSAVE}/ribbons/engine.cpp
+        ${SCRNSAVE}/ribbons/noise.cpp
+        ${SCRNSAVE}/ribbons/settings.cpp
+        ${SCRNSAVE}/ribbons/ribbons.rc
+    LIBRARIES d3d9 comctl32 user32 gdi32 advapi32 winmm uuid ole32)
+target_include_directories(Ribbons PRIVATE ${SCRNSAVE}/ribbons)
+target_compile_features(Ribbons PRIVATE cxx_std_17)
+
+#------------------------------------------------------------------------------
 # Differential tests (tools/verify)
 #
 # Each test maps YOUR original screen saver into its process and compares

@@ -47,7 +47,7 @@ cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DDXSDK_DIR="C:/Program Files
 ```
 
 The result is `build/Aurora.scr`, `Bubbles.scr`, `ssText3d.scr`,
-`ssBranded.scr` and `logon.scr`.
+`ssBranded.scr`, `logon.scr`, `Mystify.scr` and `Ribbons.scr`.
 
 | Option                 | Default    | Meaning                                                   |
 |------------------------|------------|-----------------------------------------------------------|
@@ -65,8 +65,9 @@ Right-click a `.scr` file and choose *Install*, or copy it to
 `C:\Windows\System32`.  Command line: `/s` runs it, `/c` opens its settings,
 `/p <hwnd>` previews it.
 
-* The Direct3D savers need `d3dx9_43.dll` (DirectX End-User Runtime); the
-  originals had D3DX linked in.
+* The Vista Direct3D savers need `d3dx9_43.dll` (DirectX End-User Runtime);
+  the originals had D3DX linked in.  Mystify and Ribbons link `d3d9` only
+  and do not need D3DX or the DirectX SDK.
 * 3D Text and Windows Logo use `winbrand.dll` (part of Windows since Vista;
   Windows Logo loads it only when needed).
 * **Wine:** Wine's `d3dx9` cannot compile the effects of Windows Energy
